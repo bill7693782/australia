@@ -10,12 +10,16 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
+.fs-s{--fs:16px}
+.fs-m{--fs:18px}
+.fs-l{--fs:20.5px}
+.fs-xl{--fs:23px}
 :root{
   --paper:#F2F4F3; --paper2:#E7EBE9; --ink:#16211E; --ink2:#4A5B55; --dim:#7C8C86;
   --line:#CFD8D4; --go:#1F6F5C; --go-d:#175443; --red:#B3261E; --red-bg:#FBEAE8;
   --gold:#C8842B; --sea:#24608C; --white:#FFFFFF;
   --sp:16px; --r:10px;
-  --fs:16px;
+  --fs:18px;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0}
@@ -36,98 +40,116 @@ button{font-family:inherit;font-size:inherit;cursor:pointer;border:0;background:
 header{position:sticky;top:0;z-index:40;background:var(--ink);color:var(--paper);
   padding:calc(env(safe-area-inset-top) + 10px) 14px 0}
 .hrow{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding-bottom:8px}
-.hrow h1{font-size:17px}
-.clock{margin-left:auto;font-variant-numeric:tabular-nums;font-size:15px;color:#B9C7C2}
+.hrow h1{font-size:1.02em}
+.clock{margin-left:auto;font-variant-numeric:tabular-nums;font-size:.86em;color:#B9C7C2}
 .clock b{color:#fff}
 nav{display:flex;gap:6px;overflow-x:auto;padding:0 0 8px;scrollbar-width:none}
 nav::-webkit-scrollbar{display:none}
-nav button{flex:0 0 auto;min-height:40px;padding:0 13px;border-radius:20px;
-  background:#2B3A35;color:#C9D6D1;font-size:14px;white-space:nowrap}
+nav button{flex:0 0 auto;min-height:44px;padding:0 14px;border-radius:20px;
+  background:#2B3A35;color:#C9D6D1;font-size:.85em;white-space:nowrap}
 nav button.on{background:var(--paper);color:var(--ink);font-weight:700}
-nav button.dl{box-shadow:inset 0 0 0 2px var(--red)}
+nav button{position:relative}
+nav button.today{background:var(--gold);color:#2A1B05;font-weight:700}
+nav button.today.on{background:var(--paper);color:var(--ink);box-shadow:inset 0 0 0 2px var(--gold)}
+nav button.dl::after{content:"";position:absolute;top:7px;right:8px;width:6px;height:6px;
+  border-radius:50%;background:var(--red)}
+nav button.dl{padding-right:20px}
 
 /* ── 內容 ── */
 main{padding:var(--sp) 14px 90px;max-width:720px;margin:0 auto}
 .dayhead{margin-bottom:14px}
-.dayhead .dt{font-size:13px;color:var(--dim);font-variant-numeric:tabular-nums}
-.dayhead h2{font-size:22px;line-height:1.3;margin:2px 0 4px}
-.dayhead .sub{font-size:14px;color:var(--ink2)}
+.dayhead .dt{font-size:.78em;color:var(--dim);font-variant-numeric:tabular-nums}
+.dayhead h2{font-size:1.55em;line-height:1.24;margin:3px 0 5px;letter-spacing:-.025em;
+  text-wrap:balance;word-break:break-word}
+.dayhead h2.long{font-size:1.24em;line-height:1.3;letter-spacing:-.01em}
+.dayhead .sub{font-size:.85em;color:var(--ink2)}
 
 /* ── 時間軸 ── */
-.slot{display:grid;grid-template-columns:58px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--line)}
-.slot:first-of-type{border-top:0}
-.slot.dead{background:var(--red-bg);margin:0 -10px;padding:14px 10px;border-radius:var(--r);
-  border-top:0;box-shadow:inset 3px 0 0 var(--red)}
-.slot.dead + .slot{border-top:1px solid var(--line)}
-.tm{font-variant-numeric:tabular-nums;font-size:14px;line-height:1.35;color:var(--ink2);padding-top:2px}
-.tm b{display:block;font-size:16px;color:var(--ink)}
-.tm .shift{display:block;color:var(--red);font-weight:700;font-size:13px}
-.st{font-size:17px;font-weight:700;line-height:1.4}
+.rail{position:relative;padding-left:18px}
+.rail::before{content:"";position:absolute;left:4px;top:14px;bottom:14px;width:2px;background:var(--line)}
+.slot{position:relative;padding:16px 0 18px}
+.slot::before{content:"";position:absolute;left:-18px;top:22px;width:10px;height:10px;
+  border-radius:50%;background:var(--paper);box-shadow:0 0 0 2px var(--go)}
+.slot.dead::before{background:var(--red);box-shadow:0 0 0 2px var(--red)}
+.slot.dead{background:var(--red-bg);margin:0 -12px 0 -12px;padding:16px 12px 18px 12px;border-radius:var(--r)}
+.slot.dead::before{left:-6px}
+.tm{font-variant-numeric:tabular-nums;font-size:.82em;color:var(--dim);letter-spacing:.02em}
+.tm b{font-size:.94em;color:var(--ink)}
+.tm .shift{color:var(--red);font-weight:700}
+.st{font-size:1.1em;font-weight:700;line-height:1.38;margin-top:3px}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin:7px 0 0}
-.tag{font-size:12.5px;padding:3px 8px;border-radius:5px;background:var(--paper2);color:var(--ink2)}
-.tag.t-warn{background:#FDF0DC;color:#8A5A12}
+.tag{font-size:.76em;padding:3px 8px;border-radius:5px;background:var(--paper2);color:var(--ink2)}
+.tag.t-warn{background:var(--red);color:#fff;font-weight:700}
 .tag.t-open{background:#DEF0E8;color:var(--go-d);font-weight:700}
 .tag.t-soon{background:#FDF0DC;color:#8A5A12;font-weight:700}
 .tag.t-shut{background:var(--red-bg);color:var(--red);font-weight:700}
-.x{margin:9px 0 0;font-size:15px;line-height:1.65;color:var(--ink2)}
+.x{margin:10px 0 0;font-size:.95em;line-height:1.7;color:var(--ink2)}
 .x ul{margin:0;padding-left:19px}
 .x li{margin:4px 0}
 .x b{color:var(--ink)}
-.deadline{margin:9px 0 0;font-size:14px;font-weight:700;color:var(--red)}
-.arrived{margin:8px 0 0;font-size:13px;color:var(--go-d);font-weight:700}
+.deadline{margin:10px 0 0;font-size:.9em;font-weight:700;color:var(--red)}
+.arrived{margin:9px 0 0;font-size:.82em;color:var(--go-d);font-weight:700}
 
 /* ── 按鈕列 ── */
-.acts{display:flex;flex-wrap:wrap;gap:7px;margin:11px 0 0}
-.btn{min-height:44px;padding:0 14px;border-radius:8px;font-size:14.5px;font-weight:700;
-  display:inline-flex;align-items:center;gap:6px}
+.acts{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 0;align-items:center}
+.btn{min-height:44px;padding:0 14px;border-radius:9px;font-size:.88em;font-weight:700;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn.ico{width:48px;padding:0;font-size:1.05em}
 .btn.go{background:var(--go);color:#fff}
 .btn.sec{background:var(--white);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
 .btn.on{background:var(--go-d);color:#fff}
 .more{display:flex;flex-wrap:wrap;gap:7px;margin:9px 0 0}
-.more button,.more a{min-height:30px;padding:0 10px;border-radius:6px;font-size:13px;
+.more button,.more a{min-height:36px;padding:0 12px;border-radius:6px;font-size:.82em;
   background:var(--paper2);color:var(--ink2);display:inline-flex;align-items:center;text-decoration:none}
 details{margin:9px 0 0}
-details summary{min-height:30px;display:flex;align-items:center;font-size:13.5px;
-  font-weight:700;color:var(--go-d);cursor:pointer}
-details .body{font-size:14.5px;color:var(--ink2);padding:6px 0 0;line-height:1.65}
+details summary{min-height:34px;display:flex;align-items:center;
+  font-weight:700;color:var(--go-d);cursor:pointer;font-size:.85em}
+details .body{font-size:.92em;color:var(--ink2);padding:6px 0 0;line-height:1.65}
 details ol{margin:0;padding-left:20px}
 details li{margin:5px 0}
 
 /* ── 通用區塊 ── */
 .card{background:var(--white);border-radius:var(--r);padding:14px;margin:0 0 12px;
   box-shadow:inset 0 0 0 1px var(--line)}
-.card h3{font-size:16px;margin:0 0 8px}
-.note{font-size:14px;color:var(--ink2);line-height:1.65}
+.card h3{font-size:1.02em;margin:0 0 8px}
+.note{font-size:.92em;color:var(--ink2);line-height:1.7}
 .warn{background:var(--red-bg);box-shadow:inset 0 0 0 1px #E9C4C0}
 .warn h3{color:var(--red)}
 .ok{background:#E4F1EB;box-shadow:inset 0 0 0 1px #B9D9CC}
-.sec-t{font-size:13px;color:var(--dim);margin:20px 0 8px;font-weight:700}
-table{width:100%;border-collapse:collapse;font-size:14.5px}
+.sec-t{font-size:.8em;color:var(--dim);margin:20px 0 8px;font-weight:700}
+.empty{text-align:center;padding:26px 16px}
+.empty b{display:block;font-size:1.05em;margin-bottom:5px}
+table{width:100%;border-collapse:collapse;font-size:.92em}
 th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
-th{color:var(--dim);font-weight:700;font-size:13px}
+th{color:var(--dim);font-weight:700;font-size:.85em}
 input,select,textarea{font-family:inherit;font-size:16px;padding:10px;border-radius:8px;
   border:1px solid var(--line);background:var(--white);color:var(--ink);width:100%}
-label{font-size:13px;color:var(--dim);display:block;margin:0 0 4px}
+label{font-size:.82em;color:var(--dim);display:block;margin:0 0 4px}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;margin:0 0 10px}
 .row>div{flex:1 1 120px}
 .mono{font-variant-numeric:tabular-nums}
-.av{width:38px;height:38px;border-radius:50%;background:var(--go);color:#fff;
+.av{width:42px;height:42px;border-radius:50%;background:var(--go);color:#fff;
   display:inline-flex;flex-direction:column;align-items:center;justify-content:center;
-  font-size:11px;line-height:1.15;font-weight:700;flex:0 0 auto;overflow:hidden}
+  font-size:.62em;line-height:1.15;font-weight:700;flex:0 0 auto;overflow:hidden}
 .av img{width:100%;height:100%;object-fit:cover}
-.av .n{font-size:9px;opacity:.85}
-.av.sm{width:26px;height:26px;font-size:12px}
-.pill{display:inline-block;padding:3px 9px;border-radius:12px;font-size:12.5px;
+.av .n{font-size:.52em;opacity:.85}
+.av.sm{width:30px;height:30px;font-size:.78em}
+.pill{display:inline-block;padding:3px 9px;border-radius:12px;font-size:.78em;
   background:var(--paper2);color:var(--ink2)}
 .paid{opacity:.45;text-decoration:line-through}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:99;
-  background:var(--ink);color:#fff;padding:11px 18px;border-radius:22px;font-size:14.5px;
+  background:var(--ink);color:#fff;padding:11px 18px;border-radius:22px;font-size:.92em;
   max-width:88vw;text-align:center;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+
+.fsbar{display:flex;gap:6px;align-items:center;margin-left:auto}
+.fsbar button{min-width:40px;min-height:36px;border-radius:8px;background:#2B3A35;color:#C9D6D1;font-weight:700}
+.fsbar button.on{background:var(--paper);color:var(--ink)}
 </style>
 </head>
 <body>
 <header>
   <div class="hrow"><h1>澳洲 11 天</h1><div class="clock" id="clk"></div></div>
+  <div class="hrow" style="padding-bottom:10px"><span style="font-size:.8em;color:#8FA39D">文字大小</span><div class="fsbar" id="fsbar"></div></div>
   <nav id="nav"></nav>
 </header>
 <main id="main"></main>
@@ -268,7 +290,7 @@ var ST={members:["","","",""],avatars:["","","",""],
   adhoc:{},edit:{},hide:{},done:{},arr:{},
   exp:[],paid:{},diet:[],dietOn:[],
   shop:[],budget:0,pack:[],packHide:{},
-  room:"",tab:"help",tts:1,lastEdit:0};
+  room:"",tab:"help",fs:"m",lastEdit:0};
 var CAN=false;
 try{
   var raw=localStorage.getItem(LSKEY); if(raw) ST=Object.assign(ST,JSON.parse(raw));
@@ -332,11 +354,14 @@ function lagOf(id){
 var TABS=[{k:"help",n:"使用說明"}].concat(DAYS.map(function(d){return {k:d.id,n:"D"+d.id.slice(1)+" "+d.date}}))
  .concat([{k:"split",n:"分帳"},{k:"shop",n:"購物"},{k:"pack",n:"行李"},{k:"info",n:"資訊"},
           {k:"sos",n:"緊急"},{k:"plan",n:"備案"},{k:"share",n:"分享"},{k:"prep",n:"準備"}]);
-function hasDead(id){ return slotsOf(id).some(function(s){return s.dead}) }
+function isToday(k){ var d=DAYS.filter(function(x){return x.id===k})[0];
+  return d? todayIs(d.date) : false }
+function hasDead(id){ return /^d\d+$/.test(id) && slotsOf(id).some(function(s){return s.dead}) }
 function renderNav(){
   document.getElementById("nav").innerHTML=TABS.map(function(t){
-    var dl=(t.k.charAt(0)==="d"&&/^d\d+$/.test(t.k)&&hasDead(t.k))?" dl":"";
-    return '<button class="'+(ST.tab===t.k?"on":"")+dl+'" data-tab="'+t.k+'">'+esc(t.n)+'</button>';
+    var c=[]; if(ST.tab===t.k)c.push("on"); if(isToday(t.k))c.push("today"); if(hasDead(t.k))c.push("dl");
+    return '<button class="'+c.join(" ")+'" data-tab="'+t.k+'" '+
+      (hasDead(t.k)?'title="這天有死線"':'')+'>'+esc(t.n)+'</button>';
   }).join("");
 }
 function go(k){ ST.tab=k; save(); render(); window.scrollTo(0,0); }
@@ -347,7 +372,6 @@ function slotHTML(s,d,lag){
   var tagH=tags.map(function(t){
     var c=t.indexOf("🚨")===0?"t-warn":""; return '<span class="tag '+c+'">'+esc(t)+'</span>' }).join("");
   if(st) tagH='<span class="tag '+st.c+'">'+st.s+'</span>'+tagH;
-  var shift=lag? '<span class="shift">→ '+fmt(mins(s.a)+lag)+'</span>' : "";
   var arr=ST.arr[s._k]!=null? '<div class="arrived">✓ 已抵達 '+fmt(ST.arr[s._k])+
       (ST.arr[s._k]-mins(s.a)>0?'（晚 '+(ST.arr[s._k]-mins(s.a))+' 分）':'（準時）')+'</div>' : "";
   var dead=s.dead? '<div class="deadline">🔴 死線：'+esc(s.dead)+(lag?'　→ 順延後 '+fmt(mins(s.a)+lag):'')+'</div>' : "";
@@ -355,19 +379,20 @@ function slotHTML(s,d,lag){
   var dietWarn=(isFood&&ST.dietOn.length)? '<div class="deadline">🍽️ 飲食限制：'+esc(ST.dietOn.join("、"))+'</div>' : "";
   var q=s.q||s.t;
   return '<div class="slot'+(s.dead?" dead":"")+'" id="s_'+esc(s._k)+'">'+
-   '<div class="tm"><b>'+esc(s.a)+'</b>'+(s.b?esc(s.b):"")+shift+'</div>'+
-   '<div><div class="st">'+esc(s.t)+'</div>'+
+   '<div class="tm"><b>'+esc(s.a)+'</b>'+(s.b?' – '+esc(s.b):"")+
+     (lag?' <span class="shift">→ '+fmt(mins(s.a)+lag)+'</span>':"")+'</div>'+
+   '<div class="st">'+esc(s.t)+'</div>'+
      (tagH?'<div class="tags">'+tagH+'</div>':"")+
      (s.x?'<div class="x">'+s.x+'</div>':'<div class="x">（尚未填寫）</div>')+
      dead+dietWarn+arr+
    '<div class="acts">'+
      '<button class="btn go" data-nav="'+esc(q)+'">📍 帶我去</button>'+
-     '<button class="btn sec" data-say="'+esc(s._k)+'">🔊</button>'+
-     '<button class="btn '+(ST.arr[s._k]!=null?"on":"sec")+'" data-arr="'+esc(s._k)+'">✓ 到了</button>'+
-     '<button class="btn sec" data-mo="'+esc(s._k)+'">⋯</button>'+
+     '<button class="btn sec ico" data-say="'+esc(s._k)+'" aria-label="朗讀">🔊</button>'+
+     '<button class="btn ico '+(ST.arr[s._k]!=null?"on":"sec")+'" data-arr="'+esc(s._k)+'" aria-label="標記已抵達">✓</button>'+
+     '<button class="btn sec ico" data-mo="'+esc(s._k)+'" aria-label="更多">⋯</button>'+
    '</div>'+
    '<div id="mo_'+esc(s._k)+'" style="display:none">'+moreHTML(s,q)+'</div>'+
-   '</div></div>';
+   '</div>';
 }
 function moreHTML(s,q){
   var h='<div class="more">'+
@@ -388,14 +413,15 @@ function renderDay(id){
   var d=DAYS.filter(function(x){return x.id===id})[0], ss=slotsOf(id), lag=lagOf(id);
   var h='<div class="dayhead"><div class="dt">9月'+d.date.split("/")[1]+'日（'+d.dow+'）'+
     (dayUsesTW(id)?'．台灣時間':'．澳洲東部時間 UTC+10')+'</div>'+
-    '<h2>'+esc(d.title)+'</h2><div class="sub">'+esc(d.sub)+'</div></div>';
+    '<h2'+(d.title.length>12?' class="long"':'')+'>'+esc(d.title)+'</h2>'+
+    '<div class="sub">'+esc(d.sub)+'</div></div>';
   if(lag) h+='<div class="card warn"><h3>🔴 目前落後 '+lag+' 分鐘</h3>'+
     '<div class="note">下面每一格都已算出順延後的實際時間。受影響的死線：'+
     (ss.filter(function(s){return s.dead}).map(function(s){return esc(s.dead)+" → "+fmt(mins(s.a)+lag)}).join("；")||"無")+
     '</div></div>';
   h+='<div class="card"><h3>📍 今天走散的集合點</h3><div class="note">'+esc(MEET[id]||"—")+
     '<br>原地站 5 分鐘 → 打電話／傳訊息 → 到集合點等 30 分鐘 → 回住處</div></div>';
-  h+=ss.map(function(s){return slotHTML(s,d,lag)}).join("");
+  h+='<div class="rail">'+ss.map(function(s){return slotHTML(s,d,lag)}).join("")+'</div>';
   h+='<div class="acts" style="margin-top:16px"><button class="btn sec" data-add="'+id+'">＋ 加一格</button>'+
      (lag?'<button class="btn sec" data-clearlag="'+id+'">重設抵達紀錄</button>':'')+'</div>';
   return h;
@@ -423,7 +449,17 @@ function settle(){
 }
 function renderSplit(){
   var h='<div class="dayhead"><h2>分帳</h2><div class="sub">幣別 AUD．四人</div></div>';
-  h+='<div class="card"><h3>新增一筆</h3>'+
+  if(ST.exp.length){
+    var tr0=settle(),left0=tr0.filter(function(_,i){return !ST.paid["t"+i]}).length;
+    var tot0=ST.exp.reduce(function(a,e){return a+(e.type==="each"?(e.each||[]).reduce(function(x,y){return x+(+y||0)},0):e.amt)},0);
+    h+='<div class="card ok"><h3>目前狀況</h3>'+
+      '<div class="note">共 '+ST.exp.length+' 筆，總額 <b class="mono">AU$'+tot0.toFixed(2)+'</b>　'+
+      (left0? '還有 <b>'+left0+'</b> 筆沒還' : '<b>全部結清了</b>')+'</div></div>';
+  } else {
+    h+='<div class="card"><div class="empty"><b>還沒有任何一筆</b>'+
+      '<div class="note">吃完飯誰付的、多少錢，記在這裡。最後 App 會算出誰該還誰。</div></div></div>';
+  }
+  h+='<details class="card"'+(ST.exp.length?'':' open')+'><summary style="font-size:16px;font-weight:700;min-height:36px">＋ 新增一筆</summary><div class="body">'+
    '<div class="row"><div><label>項目</label><input id="e_t" placeholder="例：Porteño 晚餐"></div></div>'+
    '<div class="row"><div><label>方式</label><select id="e_type">'+
      '<option value="even">平分</option><option value="each">各付各的</option></select></div>'+
@@ -434,7 +470,7 @@ function renderSplit(){
         return '<div><label style="display:flex;gap:6px;align-items:center;color:var(--ink)"><input type="checkbox" class="e_w" value="'+i+'" checked style="width:auto"> '+esc(mem(i))+'</label></div>'}).join("")+'</div></div>'+
    '<div id="e_each" style="display:none"><label>各自的金額 AU$（買藥妝伴手禮這種一起結帳但各買各的）</label><div class="row">'+
      MEMBERS.map(function(_,i){ return '<div><label>'+esc(mem(i))+'</label><input class="e_ea" type="number" inputmode="decimal" placeholder="0"></div>'}).join("")+'</div></div>'+
-   '<button class="btn go" id="e_add">加入</button></div>';
+   '<button class="btn go" id="e_add">加入</button></div></details>';
   if(ST.exp.length){
     h+='<div class="sec-t">明細</div><div class="card"><table><tr><th>項目</th><th>付</th><th class="mono">金額</th><th></th></tr>'+
      ST.exp.map(function(e,i){ var amt=e.type==="each"?(e.each||[]).reduce(function(a,b){return a+(+b||0)},0):e.amt;
@@ -473,7 +509,7 @@ function renderShop(){
       '<div style="flex:1"><b>'+esc(s.n)+'</b>'+(s.w?'<br>'+(isURL?'<a href="'+esc(s.w)+'" target="_blank" rel="noopener">開地圖</a>':'<span class="note">'+esc(s.w)+'</span>'):"")+'</div>'+
       '<div class="mono">AU$'+(+s.price||0).toFixed(2)+'</div>'+
       '<button data-dels="'+i+'">✕</button></div>' }).join("")+'</div>'
-   : '<div class="card"><div class="note">清單是空的。買什麼先寫下來，TRS 退稅要同一家店滿 AU$300。</div></div>';
+   : '<div class="card"><div class="empty"><b>清單是空的</b><div class="note">想買什麼先寫下來。TRS 退稅要同一家店累計滿 AU$300，先記帳才知道有沒有到。</div></div></div>';
   h+='<div class="card ok"><h3>💴 TRS 退稅提醒</h3><div class="note">同一個 ABN 累計滿 <b>AU$300</b>（含稅）．購買日在離境前 60 天內．要<b>原始紙本 tax invoice</b>．單筆滿 AU$1,000 發票要有護照英文姓名．退稅品放<b>隨身行李</b>．9/27 在墨爾本 T2，<b>最晚 09:45</b>。</div></div>';
   return h;
 }
@@ -829,7 +865,7 @@ function sayerSlot(k){
 }
 /* ===== 主渲染 ===== */
 function render(){
-  renderNav();
+  applyFS(); renderNav(); renderFS();
   var k=ST.tab,h="";
   if(k==="help")h=renderHelp();
   else if(/^d\d+$/.test(k))h=renderDay(k);
@@ -844,16 +880,27 @@ function render(){
   document.getElementById("main").innerHTML=h;
   var t=document.querySelector("nav button.on"); if(t)t.scrollIntoView({block:"nearest",inline:"center"});
 }
+function applyFS(){
+  var b=document.body; if(!b)return;
+  b.className=(b.className||"").replace(/\bfs-\w+\b/g,"").trim()+" fs-"+(ST.fs||"m");
+}
+function renderFS(){
+  var el=document.getElementById("fsbar"); if(!el)return;
+  el.innerHTML=[["s","小"],["m","中"],["l","大"],["xl","特大"]].map(function(o){
+    return '<button class="'+(ST.fs===o[0]?"on":"")+'" data-fs="'+o[0]+'" aria-label="文字'+o[1]+'">'+o[1]+'</button>';
+  }).join("");
+}
 function tick(){ var n=auNow();
   document.getElementById("clk").innerHTML='澳洲 <b>'+fmt(auMins())+'</b>　台灣 '+
     fmt(twNow().getHours()*60+twNow().getMinutes()); }
 /* ===== 事件 ===== */
 document.addEventListener("click",function(ev){
-  var el=ev.target.closest("[data-tab],[data-nav],[data-say],[data-sayen],[data-arr],[data-mo],"+
+  var el=ev.target.closest("[data-fs],[data-tab],[data-nav],[data-say],[data-sayen],[data-arr],[data-mo],"+
     "[data-edit],[data-del],[data-remind],[data-add],[data-clearlag],[data-delx],[data-paid],"+
     "[data-dels],[data-delp],#e_add,#s_add,#p_add,#d_add,#rm_new,#rm_up,#rm_dn,#rm_ck,#sc_cp,#pc_go,#bk_cp,#bk_dl,#bk_sh,#ics_dl");
   if(!el)return;
   var d=el.dataset,id=el.id;
+  if(d.fs){ ST.fs=d.fs; save(); applyFS(); renderFS(); toast("文字大小已調整"); return }
   if(d.tab){ go(d.tab); return }
   if(d.nav){ window.open("https://www.google.com/maps/dir/?api=1&destination="+encodeURIComponent(d.nav),"_blank"); return }
   if(d.say){ sayerSlot(d.say); return }
@@ -930,7 +977,7 @@ document.addEventListener("change",function(ev){
       img.src=r.result }; r.readAsDataURL(f); return }
 });
 /* ===== 啟動 ===== */
-renderNav(); render(); tick(); setInterval(tick,20000); setInterval(render,60000);
+applyFS(); renderNav(); render(); tick(); setInterval(tick,20000); setInterval(render,60000);
 fbCheck(function(){ if(ST.tab==="share")render() });
 if("serviceWorker" in navigator){ window.addEventListener("load",function(){
   navigator.serviceWorker.register("sw.js").catch(function(){}) }) }
