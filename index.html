@@ -676,7 +676,7 @@ function renderShare(){
   h+='<div class="card"><h3>完整備份</h3><div class="note">四種取回方式：① 複製代碼 ② 下載檔案 ③ 分享給自己 ④ 貼回上面的框還原。</div>'+
    '<div class="acts"><button class="btn sec" id="bk_cp">複製備份碼</button>'+
    '<button class="btn sec" id="bk_dl">下載備份檔</button>'+
-   '<button class="btn sec" id="bk_sh">分享備份</button></div></div>';
+   '<button class="btn sec" id="bk_sh">分享備份</button></div></div><div class="card"><h3>📅 匯出行事曆</h3><div class="note">產生 .ics 檔，可匯入 iPhone 行事曆、Google 日曆。每個死線都會自動設 30 分鐘前的提醒。</div><div class="acts"><button class="btn go" id="ics_dl">下載行事曆檔</button></div></div>';
   return h;
 }
 /* ===== 準備 ===== */
@@ -733,6 +733,83 @@ function renderHelp(){
   '<div class="card"><h3>離線</h3><div class="note">加到主畫面後可離線使用。地圖、食記、官網這些外部連結需要網路。<br>'+
    '大洋路沿線訊號會變差，<b>出發前把離線地圖存好</b>。</div></div>';
 }
+/* ===== ICS 匯出（RFC 5545） ===== */
+/* 澳洲東部標準時間 UTC+10，2026/9 全程不換夏令時間；Day0/Day1 用台灣 UTC+8 */
+function icsEsc(s){ return String(s==null?"":s)
+  .replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\r?\n/g,"\\n") }
+/* RFC 5545 §3.1：內容行不得超過 75 octet，續行以單一空白開頭 */
+function icsFold(line){
+  /* 依「字元」迭代，不是 code unit —— emoji 是代理對，逐 code unit 切會產生孤立代理對 */
+  var chars = Array.from ? Array.from(line) : line.split("");
+  var out=[], cur="", n=0;
+  for(var i=0;i<chars.length;i++){
+    var ch=chars[i], w;
+    try{ w=unescape(encodeURIComponent(ch)).length }catch(e){ w=4 }
+    if(n+w>73){
+      out.push(cur);
+      /* 折行標記本身就是一個空白；若內容剛好在此處是空白，吞掉它，
+         避免解析器移除折行空白後留下多餘空格（RFC 5545 §3.1） */
+      if(ch===" "){ cur=" "; n=1 } else { cur=" "+ch; n=1+w }
+    } else { cur+=ch; n+=w }
+  }
+  out.push(cur); return out.join("\r\n");
+}
+function pad(v){ return (v<10?"0":"")+v }
+/* 把某天某時刻換算成 UTC 的 YYYYMMDDTHHMMSSZ */
+function icsUTC(dayDate,hm,tzOffsetHours){
+  var mo=+dayDate.split("/")[0], da=+dayDate.split("/")[1];
+  var h=+hm.split(":")[0], mi=+hm.split(":")[1];
+  var t=Date.UTC(2026,mo-1,da,h-tzOffsetHours,mi,0);
+  var d=new Date(t);
+  return d.getUTCFullYear()+pad(d.getUTCMonth()+1)+pad(d.getUTCDate())+"T"+
+         pad(d.getUTCHours())+pad(d.getUTCMinutes())+pad(d.getUTCSeconds())+"Z";
+}
+function icsStamp(){ var d=new Date();
+  return d.getUTCFullYear()+pad(d.getUTCMonth()+1)+pad(d.getUTCDate())+"T"+
+         pad(d.getUTCHours())+pad(d.getUTCMinutes())+pad(d.getUTCSeconds())+"Z" }
+/* UID 唯一：命名空間＋日＋時刻＋序號 */
+function icsUID(dayId,i,a){ return "au2026-"+dayId+"-"+i+"-"+a.replace(":","")+"@australia.trip" }
+function buildICS(){
+  var L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//australia//trip v001//ZH-TW",
+         "CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:澳洲 11 天","X-WR-TIMEZONE:Australia/Melbourne"];
+  var stamp=icsStamp();
+  DAYS.forEach(function(d){
+    var tz=dayUsesTW(d.id)?8:10;
+    slotsOf(d.id).forEach(function(s,i){
+      var st=icsUTC(d.date,s.a,tz);
+      var endHM=s.b||s.a;
+      /* 跨日（如 20:05 → 07:20）：結束時間落在隔天 */
+      var crossDay = mins(endHM)<mins(s.a);
+      var da=+d.date.split("/")[1] + (crossDay?1:0);
+      var en=icsUTC(d.date.split("/")[0]+"/"+da,endHM,tz);
+      if(en===st) en=icsUTC(d.date,fmt(mins(s.a)+30),tz);
+      var desc=(s.x||"").replace(/<li>/g,"・").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
+      if(s.dead) desc="【死線】"+s.dead+" ／ "+desc;
+      L.push("BEGIN:VEVENT");
+      L.push("UID:"+icsUID(d.id,i,s.a));
+      L.push("DTSTAMP:"+stamp);
+      L.push("DTSTART:"+st);
+      L.push("DTEND:"+en);
+      L.push("SUMMARY:"+icsEsc(s.t));
+      if(desc) L.push("DESCRIPTION:"+icsEsc(desc.slice(0,700)));
+      if(s.q) L.push("LOCATION:"+icsEsc(s.q));
+      if((s.g||[]).length) L.push("CATEGORIES:"+icsEsc(s.g.join(",")));
+      if(s.dead){ L.push("BEGIN:VALARM"); L.push("TRIGGER:-PT30M");
+        L.push("ACTION:DISPLAY"); L.push("DESCRIPTION:"+icsEsc("30 分鐘後："+s.t)); L.push("END:VALARM") }
+      L.push("END:VEVENT");
+    });
+  });
+  L.push("END:VCALENDAR");
+  return L.map(icsFold).join("\r\n")+"\r\n";
+}
+function dlICS(){
+  var t=buildICS(), b=new Blob([t],{type:"text/calendar;charset=utf-8"});
+  var u=URL.createObjectURL(b), a=document.createElement("a");
+  a.href=u; a.download="australia-2026.ics"; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(u) },1000);
+  toast("行事曆檔已下載，用行事曆 App 開啟即可匯入");
+}
+
 /* ===== 朗讀 ===== */
 function say(txt,lang){
   if(!("speechSynthesis" in window)){ toast("這支手機不支援朗讀"); return }
@@ -774,7 +851,7 @@ function tick(){ var n=auNow();
 document.addEventListener("click",function(ev){
   var el=ev.target.closest("[data-tab],[data-nav],[data-say],[data-sayen],[data-arr],[data-mo],"+
     "[data-edit],[data-del],[data-remind],[data-add],[data-clearlag],[data-delx],[data-paid],"+
-    "[data-dels],[data-delp],#e_add,#s_add,#p_add,#d_add,#rm_new,#rm_up,#rm_dn,#rm_ck,#sc_cp,#pc_go,#bk_cp,#bk_dl,#bk_sh");
+    "[data-dels],[data-delp],#e_add,#s_add,#p_add,#d_add,#rm_new,#rm_up,#rm_dn,#rm_ck,#sc_cp,#pc_go,#bk_cp,#bk_dl,#bk_sh,#ics_dl");
   if(!el)return;
   var d=el.dataset,id=el.id;
   if(d.tab){ go(d.tab); return }
@@ -822,6 +899,7 @@ document.addEventListener("click",function(ev){
   if(id==="rm_ck"){ FBST="檢查中…"; render(); fbCheck(function(){ render() }); return }
   if(id==="sc_cp"){ cp(mkSync(),"同步碼"); return }
   if(id==="pc_go"){ applyCode(document.getElementById("pc").value); return }
+  if(id==="ics_dl"){ dlICS(); return }
   if(id==="bk_cp"){ cp(mkBackup(),"備份碼"); return }
   if(id==="bk_dl"){ var b=new Blob([mkBackup()],{type:"text/plain"}),u=URL.createObjectURL(b),a3=document.createElement("a");
     a3.href=u; a3.download="australia-backup-"+new Date().toISOString().slice(0,10)+".txt"; a3.click();
