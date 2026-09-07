@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#16211E">
-<title>澳洲 11 天 v007</title>
+<title>澳洲 11 天 v008</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -122,7 +122,13 @@ details li{margin:5px 0}
 table{width:100%;border-collapse:collapse;font-size:.92em}
 th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line);vertical-align:middle}
 td:first-child{padding-right:10px}
-.card.warn td:first-child{min-width:8.2em}
+.card.warn td:first-child{min-width:min(8.2em,42vw)}
+table{table-layout:fixed}
+td,th{overflow-wrap:anywhere;word-break:break-word}
+@media (max-width:340px){
+  .tel{padding:0 10px;font-size:.9em}
+  .card.warn td:first-child{min-width:0}
+}
 th{color:var(--dim);font-weight:700;font-size:.85em}
 input,select,textarea{font-family:inherit;font-size:16px;padding:10px;border-radius:8px;
   border:1px solid var(--line);background:var(--white);color:var(--ink);width:100%}
@@ -151,7 +157,7 @@ label{font-size:.82em;color:var(--dim);display:block;margin:0 0 4px}
 .tel{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;
   border-radius:9px;background:var(--white);color:var(--sea);font-weight:700;
   text-decoration:none;white-space:nowrap;box-shadow:inset 0 0 0 1px var(--line);
-  font-variant-numeric:tabular-nums}
+  font-variant-numeric:tabular-nums;max-width:100%}
 .tel.urgent{background:var(--red);color:#fff;box-shadow:none;font-size:1.05em}
 td .tel{margin:2px 0}
 /* 勾選晶片 */
@@ -779,7 +785,8 @@ function readCode(c){
 }
 function applyCode(c){
   var r=readCode(c); if(!r.ok){ toast(r.msg); return }
-  if(r.kind==="backup"){ if(!confirm("還原備份會覆蓋這支手機上的所有資料，確定？")) return;
+  if(r.kind==="backup"){
+    if(!confirm("還原備份會覆蓋這支手機上的所有資料，確定？")){ toast("已取消，沒有變更任何資料"); return }
     ST=Object.assign(ST,r.data); save(); render(); toast("已還原備份"); return }
   merge(r.data); save(); render(); toast("已合併同步資料");
 }
@@ -871,7 +878,7 @@ function renderPrep(){
 /* ===== 使用說明 ===== */
 function renderHelp(){
   var d=auNow();
-  return '<div class="dayhead"><h2>澳洲 11 天</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v007</div></div>'+
+  return '<div class="dayhead"><h2>澳洲 11 天</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v008</div></div>'+
   '<div class="card ok"><h3>現在澳洲時間 '+fmt(auMins())+'</h3><div class="note">'+
    (d.getMonth()===8&&d.getDate()>=17&&d.getDate()<=27? '旅程進行中。':'旅程尚未開始。')+
    ' 澳洲東部時間比台灣快 2 小時，全程不換夏令時間。</div></div>'+
@@ -1156,7 +1163,7 @@ function fareCard(){
 }
 
 /* ===== 版本與更新 ===== */
-var APP_VER="007";
+var APP_VER="008";
 var UPD={latest:null,checking:false,err:""};
 function checkUpdate(cb){
   if(UPD.checking){cb&&cb();return}
