@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#16211E">
-<title>澳洲 11 天</title>
+<title>澳洲之旅</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png">
@@ -153,7 +153,7 @@ label{font-size:.82em;color:var(--dim);display:block;margin:0 0 4px}
   background:var(--ink);color:#fff;padding:11px 18px;border-radius:22px;font-size:.92em;
   max-width:88vw;text-align:center;box-shadow:0 6px 24px rgba(0,0,0,.25)}
 
-.fsbar{display:flex;gap:6px;align-items:center;margin-left:auto}
+.fsbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-left:auto}
 .fsbar button{min-width:44px;min-height:44px;border-radius:8px;background:#2B3A35;color:#C9D6D1;font-weight:700}
 .fsbar button.on{background:var(--paper);color:var(--ink)}
 .vbtn{margin-left:auto;min-height:44px;padding:0 13px;border-radius:22px;font-size:.78em;
@@ -199,16 +199,16 @@ td .tel{margin:2px 0}
 </head>
 <body>
 <header>
-  <div class="hrow"><h1>澳洲 11 天</h1>
-    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v014 ⋯</button>
+  <div class="hrow"><h1>澳洲</h1>
+    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v018 ⋯</button>
     <div class="clock" id="clk"></div></div>
   <div class="hrow" style="padding-bottom:10px"><span style="font-size:.8em;color:#8FA39D">文字大小</span><div class="fsbar" id="fsbar"></div></div>
   <nav id="nav"></nav>
 </header>
 <main id="main"></main>
 <script>
-/* ===== 澳洲 11 天 · 行程資料 ===== */
-var TRIP={name:"澳洲 11 天",tz:10,start:"2026-09-17",end:"2026-09-27"};
+/* ===== 澳洲之旅 · 行程資料 ===== */
+var TRIP={name:"澳洲之旅",tz:10,start:"2026-09-17",end:"2026-09-27"};
 var MEMBERS=["A","B","C","D"];
 var HOTELS={
  mel1:{n:"370 Queen St",a:"370 Queen St, Melbourne VIC 3000",note:"A'Beckett St 轉角．Agoda 公寓．無櫃檯"},
@@ -254,10 +254,30 @@ var DAYS=[
 
 {id:"d2",date:"9/18",dow:"五",title:"抵達墨爾本 · Victor Churchill",sub:"落地當天最硬的一天",slots:[
  {a:"07:20",b:"08:30",t:"🛬 抵達墨爾本 T2",q:"Melbourne Airport Terminal 2",g:["🚨 生物安全檢查"],x:"<ul><li>入境 → 生物安全 → 提行李</li><li>行李會過 X 光、緝私犬會聞</li><li>不確定的東西就打勾申報，最多當場沒收，不會罰款</li></ul>"},
- {a:"08:30",b:"09:15",t:"🚕 maxi taxi 進市區",g:["💴 約 AU$65–81 含過路費","🕐 25–35 分"],x:"<ul><li>四人四件行李，<b>普通轎車裝不下，要 maxi taxi</b></li><li>13cabs：撥 <b>13 2227</b></li><li>四人搭計程車比四張 SkyBus（AU$21.70×4）便宜</li></ul>",q:"370 Queen St Melbourne CBD VIC 3000"},
+ {a:"08:30",b:"09:15",t:"🚕 maxi taxi 進市區",g:["💴 約 AU$65–81 含過路費","🕐 25–35 分"],
+  walk:["墨爾本機場 T2 → 370 Queen St，18.3 km",
+   ["出關後跟著 <b>Taxi</b> 指標走到航廈外的排班區",
+    "🚨 <b>跟排班人員說要 maxi taxi</b>——四人四件行李普通轎車裝不下",
+    "沒有排班就打 <b>13cabs：13 2227</b>",
+    "上車給司機看地址：<b>370 Queen St, Melbourne CBD</b>",
+    "車資含過路費約 AU$65–81，可刷卡但會收附加費"],
+   "看到 A'Beckett St 與 Queen St 的路口就對了。過了 Elizabeth St 代表司機開過頭，出聲提醒"],x:"<ul><li>四人四件行李，<b>普通轎車裝不下，要 maxi taxi</b></li><li>13cabs：撥 <b>13 2227</b></li><li>四人搭計程車比四張 SkyBus（AU$21.70×4）便宜</li></ul>",q:"370 Queen St Melbourne CBD VIC 3000"},
  {a:"09:15",b:"10:30",t:"🏠 放行李、盥洗、換衣服",g:["🚨 公寓可能 14:00 後才能入住"],x:"<ul><li>370 Queen St 是 Agoda 公寓，<b>沒有櫃檯</b></li><li>屋主不讓寄放 → <b>Urloker 339 Queen St</b>，走 1 分鐘（55 m），08:00–21:00，+61 489 198 299</li><li>備用：O2shop 118 A'Beckett St（走 2 分，宣稱 24h，但評價 3.1★，有人說去了沒開）</li></ul>",q:"Urloker 339 Queen Street Melbourne"},
- {a:"10:30",b:"11:30",t:"🚶 走到 Melbourne Central 站",g:["🕐 走 4 分（355 m）"],x:"<ul><li>從 370 Queen St 走到 <b>La Trobe St</b>（一個街廓，看到路牌就是）</li><li><b>370 Queen St 在免費電車區的北邊界外</b>，要搭電車請走到 La Trobe St 的站牌</li></ul>",q:"Melbourne Central Station"},
- {a:"11:30",b:"12:10",t:"🚆 火車到 Armadale",q:"Armadale Station Melbourne",g:["🚨 很多快車過站不停"],x:"<ul><li>搭<b>往 Frankston 方向</b>的火車</li><li><b>上車前用 PTV App 或看月台顯示牌確認該班車有停 Armadale</b>，搭錯要坐到下一站折返</li><li>維多利亞州公共運輸 2026/6/1–2027/1/1 全面半價</li></ul>",dead:"11:30 最晚上車"},
+ {a:"10:30",b:"11:30",t:"🚶 走到 Melbourne Central 站",g:["🕐 走 4 分（355 m）"],
+  walk:["370 Queen St → Melbourne Central 車站，355 公尺，走 4 分鐘",
+   ["出住處走到 <b>La Trobe St</b>（一個街廓，看路牌）",
+    "沿 La Trobe St 走到 <b>Swanston St</b> 路口",
+    "車站入口在 <b>Melbourne Central 購物中心</b>裡，跟著 <b>Trains</b> 指標往下",
+    "🚨 <b>買票或直接刷卡感應</b>，維州公共運輸 2026 年全面半價"],
+   "看到 Melbourne Central 購物中心的招牌就對了"],x:"<ul><li>從 370 Queen St 走到 <b>La Trobe St</b>（一個街廓，看到路牌就是）</li><li><b>370 Queen St 在免費電車區的北邊界外</b>，要搭電車請走到 La Trobe St 的站牌</li></ul>",q:"Melbourne Central Station"},
+ {a:"11:30",b:"12:10",t:"🚆 火車到 Armadale",q:"Armadale Station Melbourne",g:["🚨 很多快車過站不停"],
+  walk:["Melbourne Central → Armadale 站，約 20 分鐘",
+   ["月台看顯示牌，找<b>往 Frankston 方向</b>的班次",
+    "🚨 <b>上車前一定要確認該班車有停 Armadale</b>——很多快車直接過站",
+    "顯示牌上會列出每一站，看得到 Armadale 才上",
+    "坐約 20 分鐘，注意廣播與車廂螢幕",
+    "Armadale 站下車，出口就在 High Street 上"],
+   "看到 Armadale 站牌就對了。坐過站到 Toorak 或 Malvern 就是過頭了，下車搭反方向折返"],x:"<ul><li>搭<b>往 Frankston 方向</b>的火車</li><li><b>上車前用 PTV App 或看月台顯示牌確認該班車有停 Armadale</b>，搭錯要坐到下一站折返</li><li>維多利亞州公共運輸 2026/6/1–2027/1/1 全面半價</li></ul>",dead:"11:30 最晚上車"},
  {a:"12:15",b:"14:30",t:"🥩 Victor Churchill Melbourne",g:["🕐 12:15–14:30","🚨 14:30 硬性結束","💴 高價位"],x:"<ul><li><b>Armadale 站出站走 2 分鐘（144 m）</b></li><li>訂位編號 #7EZM6S3FKFA2，4 人，Storefront Dining</li><li><b>必點</b>：steak tartare、beef croquettes、côte de boeuf 或 chateaubriand、king prawn</li><li><b>吃法</b>：① <b>開場的溫麵包配打發奶油可以續</b>，多篇食記提到有人加點第二份 ② 先看櫃檯後的玻璃熟成室，喜馬拉雅岩鹽磚牆、28 天熟成 ③ 大塊肉講熟度要說 rare，多筆評論說比預期熟 ④ 整塊先展示再切，手機先準備好 ⑤ 馬蹄形吧檯約 13 席，主廚就在面前，可以直接問 ⑥ <b>進門處就是肉舖本身</b>，可以買熟成牛排、莎樂美腸帶走——但🚨 <b>肉製品絕對不能帶回台灣</b>，初犯罰 NT$20 萬</li><li>2026 年 World's Best Steaks 榜上有名，訂位常要提前數月</li><li>🚨 <b>不要拖行李來，放不下</b></li></ul>",q:"Victor Churchill Armadale",dead:"12:15 到店",
   walk:["Armadale 站 → 953 High St，144 公尺，走 2 分鐘",
    ["出站後往 High Street 方向（車站就在 High St 上）",
@@ -310,7 +330,10 @@ var DAYS=[
  {a:"08:00",b:"09:00",t:"🧳 退房、行李帶著",q:"370 Queen St Melbourne CBD VIC 3000",g:[],x:"<ul><li>370 Queen St 是公寓，退房方式跟屋主確認過的方法</li><li>行李先寄放或直接帶去餐廳附近</li></ul>"},
  {a:"09:15",b:"10:30",t:"☕ Cuff",g:["🕐 週一 07:00–16:00","💴 中價位"],dead:"09:15 訂位",x:"<ul><li>住處走 12 分鐘（931 m）／325 Flinders Lane</li><li><b>必點</b>：crispy skin barramundi（脆皮金目鱸）、corn fritters、French toast with bacon、caramelised brioche</li><li><b>吃法</b>：① 先點咖啡再看菜單，咖啡要等 ② 金目鱸底下的野生米有嚼勁，跟魚一起吃不要分開 ③ 角落座位較難叫到人，進門可以說想坐靠走道</li></ul>",q:"Cuff Flinders Lane Melbourne"},
  {a:"10:30",b:"13:30",t:"🚶 市區自由時間",g:["🚨 買伴手禮不要留到晚上"],x:"<ul><li>維多利亞女王市場距 370 Queen St 走 4 分鐘（324 m）</li><li>澳洲商店多半 17–18 點關門</li><li>💴 TRS 退稅：同一 ABN 滿 AU$300 才能退，<b>結帳當下就要拿 tax invoice</b></li></ul>",q:"Queen Victoria Market"},
- {a:"13:30",b:"14:00",t:"🚕 前往墨爾本機場 T3",g:["💴 maxi taxi 約 AU$65–81"],x:"<ul><li>13cabs：<b>13 2227</b></li><li>或 Southern Cross 搭 SkyBus（10–15 分一班，車程 30 分、尖峰 45 分）</li></ul>",q:"Melbourne Airport Terminal 3"},
+ {a:"13:30",b:"14:00",t:"🚕 前往墨爾本機場 T3",
+  walk:["370 Queen St → 墨爾本機場 T3，約 30 分鐘",
+   ["打 <b>13cabs：13 2227</b> 叫 <b>maxi taxi</b>（四人四件行李）","或走到 <b>Southern Cross 車站</b>搭 SkyBus，10–15 分一班","🚨 <b>T3 是國內線</b>，不是入境時的 T2","下車後找 <b>Virgin Australia</b> 的報到櫃檯","🚨 <b>14:30 硬性截止</b>，15:00 起飛"],
+   "看到 Virgin 的紅色招牌就對了"],g:["💴 maxi taxi 約 AU$65–81"],x:"<ul><li>13cabs：<b>13 2227</b></li><li>或 Southern Cross 搭 SkyBus（10–15 分一班，車程 30 分、尖峰 45 分）</li></ul>",q:"Melbourne Airport Terminal 3"},
  {a:"14:00",b:"14:30",t:"🛄 T3 報到、託運行李",q:"Melbourne Airport Terminal 3",g:["🚨 14:30 硬性截止"],x:"<ul><li>訂位代號 <b>WXYJYO</b>（Virgin Australia）</li><li>Virgin 建議託運行李於起飛前 60 分鐘完成，<b>硬性截止 30 分鐘</b></li><li>線上報到 9/19 15:00 就開放了</li></ul>",dead:"14:30 報到截止"},
  {a:"15:00",b:"16:25",t:"✈️ VA 0853 墨爾本 → 雪梨",g:["🕐 飛行 1:25","座位 21B–21E"],x:"<ul><li>波音 737-800，抵達雪梨 <b>T2 國內線</b></li></ul>"},
  {a:"16:25",b:"17:30",t:"🚆 前往 View Sydney",g:["🚨 機場站有通行費"],
@@ -328,7 +351,13 @@ var DAYS=[
 ,
 {id:"d6",date:"9/22",dow:"二",title:"雪梨 · Porteño",sub:"住北雪梨，餐廳都在橋的南邊",slots:[
  {a:"09:00",b:"17:00",t:"🗺️ 雪梨自由時間",g:["🚨 從北雪梨每趟都要過橋","🍽️ 今天只排了晚餐"],x:"<ul><li>🚨 <b>今天行程只有 18:00 的 Porteño，早餐和午餐要自己找</b></li><li>飯店就在北雪梨車站旁 120 公尺，出門即上車</li><li>火車到 Central 約 10 分鐘</li><li>Opal 週五、六、日與假日每日上限 AU$9.65，週一至週四 AU$19.30</li><li>晚上是重肉的阿根廷烤肉，<b>午餐吃清淡一點</b></li></ul>"},
- {a:"17:15",b:"18:00",t:"🚆 出發往 Surry Hills",g:["🕐 抓 45 分鐘"],x:"<ul><li>北雪梨 → Central 火車約 10 分鐘</li><li>Central 走到 50 Holt St 約 12 分鐘</li></ul>",q:"Porteno Surry Hills"},
+ {a:"17:15",b:"18:00",t:"🚆 出發往 Surry Hills",
+  walk:["View Sydney → Porteño（50 Holt St），抓 45 分鐘",
+   ["北雪梨站就在飯店旁 <b>120 公尺</b>","搭 <b>T1 線往 City</b> 到 <b>Central</b>，約 10 分鐘",
+    "走 <b>Devonshire Street 出口</b>（不是 Eddy Ave 那側）",
+    "沿 Devonshire St 直走，右轉 Bourke St，左轉進 Holt St",
+    "約 12 分鐘"],
+   "看到門口炭火坑烤著整隻豬羊就對了"],g:["🕐 抓 45 分鐘"],x:"<ul><li>北雪梨 → Central 火車約 10 分鐘</li><li>Central 走到 50 Holt St 約 12 分鐘</li></ul>",q:"Porteno Surry Hills"},
  {a:"18:00",b:"20:15",t:"🔥 Porteño",g:["🕐 18:00–20:15","💴 高價位"],x:"<ul><li>50 Holt Street, Surry Hills／<b>+61 2 8399 1440</b>。<b>週二晚餐 17:45 開門</b>，你們 18:00 是第一輪</li><li><b>必點</b>：8 小時炭烤乳豬或羊、<b>Provoleta</b>（烤 provolone 起司配奧勒岡與辣油，多來源列為第一次來必點）、<b>Bife de Chorizo</b>（沙朗）、fried Brussels sprouts（配<b>扁豆與薄荷</b>）、empanadas、morcilla（血腸）、wood-fired bone marrow</li><li><b>另一種點法</b>：官網有 <b>Signature Banquet</b> 與 <b>Grand Banquet</b> 兩種套餐，四人分食可能比單點省事</li><li>牛肉由 Boutique Butcher <b>熟成 5 週</b></li><li><b>吃法</b>：① <b>坐下第一件事就是點 asado</b>——豬羊在炭火上架 8 小時，賣完就沒 ② 進門先看門口的炭火坑，豬羊是十字架式架著烤 ③ asado 一板一板出，四人建議點兩份不同的 ④ 全部分食制，4 前菜＋2 asado＋3 配菜最順 ⑤ <b>要求一次上一道主菜</b>，一次全上會冷掉</li><li>🚨 骨髓上的孜然沒寫在菜單上，不吃就說 <b>no cumin</b></li><li>隔壁是同集團的 <b>Bastardo</b>，用同一套訂位系統。私人包廂入口在 <b>Gladstone Street</b>，不是 Holt St 正門</li></ul>",q:"Porteno Surry Hills",dead:"18:00 訂位",
   walk:["Central 站 → 50 Holt Street, Surry Hills，走約 12 分鐘",
    ["從 Central 站的 <b>Devonshire Street 出口</b>出來（不是 Eddy Ave 那側）",
@@ -338,14 +367,23 @@ var DAYS=[
     "17:45 開門，你們 18:00 是第一輪"],
    "聞到炭火味就對了。Holt St 是小街，車不多"],
   photo:"<b>門口的炭火坑</b>是這家最有名的畫面——整隻豬羊用十字架撐開，斜靠著炭火慢烤。<br>進門前先拍，坐下後就背對它了。"},
- {a:"20:15",b:"21:30",t:"🚆 回北雪梨",g:["🕐 火車末班約午夜"],x:"<ul><li>午夜後改 NightRide 公車</li></ul>",q:"View Sydney North Sydney"}
+ {a:"20:15",b:"21:30",t:"🚆 回北雪梨",
+  walk:["Surry Hills → View Sydney，約 45 分鐘",
+   ["走回 <b>Central 站</b>，約 12 分鐘","搭 <b>T1 線往 North Sydney</b> 方向","北雪梨站下車，找 <b>Blue Street</b> 出口","沿 Blue St 走 120 公尺，飯店在右手邊","🚨 火車末班約午夜，之後改 <b>NightRide 公車</b>"],
+   "看到 View Sydney 的招牌就對了。走到 Miller St 大馬路代表走過頭，退回來"],g:["🕐 火車末班約午夜"],x:"<ul><li>午夜後改 NightRide 公車</li></ul>",q:"View Sydney North Sydney"}
 ]},
 
 {id:"d7",date:"9/23",dow:"三",title:"Something for Jess · Totti's Bondi",sub:"今天橫跨半個雪梨",slots:[
- {a:"09:15",b:"10:00",t:"🚆 出發往 Chippendale",q:"Chippendale NSW",g:["⚠️ 地點待確認"],x:"<ul><li>北雪梨 → Central 或 Redfern</li><li>⚠️ 訂位確認信<b>只寫店名，沒有地址</b>。我比對到雪梨 Chippendale 的「Something for Jess - SFJ Cafe & Coffee」，27 Abercrombie St，但<b>沒有確認</b></li><li>出發前回訂位信問地址</li></ul>"},
+ {a:"09:15",b:"10:00",t:"🚆 出發往 Chippendale",
+  walk:["View Sydney → Chippendale，約 45 分鐘",
+   ["北雪梨站搭 <b>T1 線</b>到 <b>Central</b> 或 <b>Redfern</b>","Chippendale 在兩站中間，走路都約 10 分鐘","🚨 <b>地址待確認</b>——訂位信只寫店名。出發前先回訂位信問","比對到的是 <b>27 Abercrombie St</b>，但沒有確認","找不到就打 <b>+61 468 602 770</b>"],
+   "看門牌號碼找 27 號。走到 Broadway 大路口代表過頭，退回來"],q:"Chippendale NSW",g:["⚠️ 地點待確認"],x:"<ul><li>北雪梨 → Central 或 Redfern</li><li>⚠️ 訂位確認信<b>只寫店名，沒有地址</b>。我比對到雪梨 Chippendale 的「Something for Jess - SFJ Cafe & Coffee」，27 Abercrombie St，但<b>沒有確認</b></li><li>出發前回訂位信問地址</li></ul>"},
  {a:"10:00",b:"11:30",t:"🥑 Something for Jess",g:["🕐 週三 07:00–14:00（待確認）","💴 中價位"],x:"<ul><li>27 Abercrombie St, Chippendale（<b>待確認</b>）／+61 468 602 770</li><li><b>必點</b>：breakfast wrap／Golden Wrap、corn fritter benedict、cold brew、Verde Vibes</li><li><b>吃法</b>：① 玉米餅是核心，三道招牌都有玉米餅，四人不要重複點 ② <b>有評論說食物送來是冷的、水波蛋像預做的</b>，上桌摸一下，冷了當場退 ③ 店裡有書，10:00 人不多可以慢慢吃</li></ul>",q:"Something for Jess Chippendale",dead:"10:00 訂位"},
  {a:"11:30",b:"17:00",t:"🗺️ 雪梨自由時間",g:["🍽️ 早餐到晚餐間隔 8 小時"],x:"<ul><li>🚨 <b>10:00 吃完早餐，18:15 才是 Totti's，中間要自己補一餐</b></li><li>🚨 若順道去海灘：<b>只在有救生員的沙灘、紅黃旗之間下水</b></li><li>澳洲水域每年約 280 人溺水，遠超蛇（1–2 人）與蜘蛛（自 1979–80 年後無死亡紀錄）</li><li>被離岸流帶走<b>不要逆游</b>，舉手握拳呼救，讓身體浮著</li></ul>"},
- {a:"17:15",b:"18:15",t:"🚌 出發往 Bondi",g:["🕐 抓滿 60 分鐘","🚨 今天最長的一段"],x:"<ul><li>北雪梨 → 火車到 <b>Bondi Junction</b> → 轉 <b>333 或 380 公車</b></li><li>🚨 <b>在 Bondi Rd 下車，不是 Bondi Beach</b>，餐廳比海灘早一站</li><li>四人叫 Uber 從北雪梨直達約 25–30 分，塞車時反而比火車慢</li></ul>",q:"Tottis Bondi"},
+ {a:"17:15",b:"18:15",t:"🚌 出發往 Bondi",
+  walk:["View Sydney → 283 Bondi Rd，抓滿 60 分鐘",
+   ["北雪梨站搭火車到 <b>Bondi Junction</b>（要過雪梨港灣大橋）","出站到公車總站，找 <b>333 或 380</b> 號公車","🚨 <b>在 Bondi Rd 下車，不是 Bondi Beach</b>——餐廳比海灘早一站","找 <b>The Royal Hotel</b>，一棟有陽台的舊式酒吧","<b>餐廳在酒吧樓上</b>，從一樓內的樓梯上去"],
+   "站在沙灘上代表坐過站，往回走一站"],g:["🕐 抓滿 60 分鐘","🚨 今天最長的一段"],x:"<ul><li>北雪梨 → 火車到 <b>Bondi Junction</b> → 轉 <b>333 或 380 公車</b></li><li>🚨 <b>在 Bondi Rd 下車，不是 Bondi Beach</b>，餐廳比海灘早一站</li><li>四人叫 Uber 從北雪梨直達約 25–30 分，塞車時反而比火車慢</li></ul>",q:"Tottis Bondi"},
  {a:"18:15",b:"20:30",t:"🍝 Totti's Bondi",g:["🕐 18:15","💴 中價位"],x:"<ul><li>283 Bondi Road, Bondi／<b>+61 2 9114 7371</b>／訂位 #TOTB-A87WAW4P7FPS。餐廳在 The Royal 酒吧樓上</li><li>🚨 <b>雪梨有三家 Totti's，不要走錯</b>：你們訂的是 <b>Totti's Bondi</b>（283 Bondi Rd）。另外兩家是 <b>Bar Totti's</b>（CBD，Wynyard 站附近）和 <b>Totti's Rozelle</b>（內西區）。Google 搜「Totti's」很容易導到 CBD 那家</li><li><b>必點</b>：wood-fired bread（<b>每人各一份</b>）、burrata、pappardelle with lamb ragù、rigatoni milk-braised pork & chilli、chocolate torte</li><li><b>吃法</b>：① 麵包現點現烤，<b>48 小時發酵的麵團</b>在高溫窯中烤到蓬鬆。<b>剛上桌最蓬，放久會慢慢塌軟</b>，所以要趁熱先吃，不要等菜到齊 ② <b>布拉塔放到接近室溫再吃</b>——冷藏是硬的，放五分鐘會變流心，這是關鍵 ③ 撕麵包 → 舀布拉塔內餡 → 疊生火腿或 'nduja → 一口吃掉 ④ 麵包也用來抹乾義大利麵的醬</li><li>🚨 <b>水要說 tap water</b>，不然會送 1 公升瓶裝水（約 AU$12.60）。這是這家最常見的踩雷點</li><li>🚨 螃蟹義大利麵評價兩極，想穩就點羊肉寬麵</li></ul>",q:"Tottis Bondi",dead:"18:15 訂位",
   walk:["333／380 公車 Bondi Rd 站 → 283 Bondi Road",
    ["🚨 <b>在 Bondi Rd 下車，不是 Bondi Beach</b>，餐廳比海灘早一站",
@@ -358,7 +396,12 @@ var DAYS=[
 ]},
 
 {id:"d8",date:"9/24",dow:"四",title:"NOMAD 午餐 · 今晚要早睡",sub:"明天 05:30 就要出門",slots:[
- {a:"11:45",b:"12:30",t:"🚆 出發往 Surry Hills",g:[],x:"<ul><li>北雪梨 → Central，走到 16 Foster St</li></ul>",q:"NOMAD Sydney Surry Hills"},
+ {a:"11:45",b:"12:30",t:"🚆 出發往 Surry Hills",
+  walk:["View Sydney → NOMAD（16 Foster St），抓 45 分鐘",
+   ["北雪梨站搭 <b>T1 線</b>到 <b>Central</b>","走 <b>Devonshire Street 出口</b>",
+    "Foster St 在 Surry Hills 西側，離 Central 約 10 分鐘",
+    "🚨 <b>14:30 收午餐</b>，不要拖"],
+   "看到門牌 16 號就對了。走到 Elizabeth St 代表過頭，退回來"],g:[],x:"<ul><li>北雪梨 → Central，走到 16 Foster St</li></ul>",q:"NOMAD Sydney Surry Hills"},
  {a:"12:30",b:"14:30",t:"🍞 NOMAD Sydney",g:["🕐 週四午餐 12:00–14:30","💴 高價位"],x:"<ul><li>16 Foster Street, Surry Hills／<b>+61 2 9280 3395</b>／訂位 #7GHF26353W7Y</li><li><b>必點</b>：woodfired flatbread with Persian lime & wattleseed za'atar（<b>每人一份</b>）、charcuterie 拼盤、wagyu tongue、fried olives stuffed with 'nduja、Portuguese-style spatchcock、olive oil ice-cream sandwich</li><li><b>吃法</b>：① 薄餅配胡蘿蔔鷹嘴豆泥，一人一片不然會搶 ② <b>和牛舌切得極薄會很快變冷，直接從串上吃掉</b> ③ charcuterie 是輪替的，<b>問服務生今天有哪四種</b>再決定 ④ 四人單點比套餐划算</li><li>🚨 <b>14:30 收午餐</b></li><li>這家和墨爾本的 Reine & La Rue 同集團同主廚，<b>點菜避開重複品項</b></li></ul>",q:"NOMAD Sydney Surry Hills",dead:"12:30 訂位"},
  {a:"14:30",b:"18:00",t:"🛍️ 雪梨最後一個下午",g:["🚨 在雪梨買的東西今天要整理好"],x:"<ul><li>💴 <b>tax invoice 今天全部整理好</b>——明天離開雪梨就回不去了</li><li>單筆滿 AU$1,000 的發票要有護照英文姓名</li></ul>"},
  {a:"18:00",b:"20:00",t:"🍽️ 晚餐（自由）",g:[],x:"<ul><li>飯店附近北雪梨有餐廳，不用再過橋</li></ul>"},
@@ -368,10 +411,24 @@ var DAYS=[
 
 {id:"d9",date:"9/25",dow:"五",title:"飛回墨爾本 · La Cucina",sub:"🚨 維多利亞州公定假日",slots:[
  {a:"05:00",b:"05:30",t:"⏰ 起床",g:["🚨 全程最早的一天","🚨 到午餐前有 7 小時"],x:"<ul><li>飯店吃不到早餐——櫃檯 24 小時但餐廳沒開</li><li>🚨 <b>05:00 起床，12:30 才吃 La Cucina，中間 7 個半小時</b></li><li><b>前一晚就在便利商店買好早餐</b>，或到 T2 過安檢後買。機上 1.5 小時的短程航線餐食有限</li><li>四個人都設兩個鬧鐘</li></ul>"},
- {a:"05:30",b:"06:15",t:"🚕 maxi taxi 到雪梨機場 T2",q:"Sydney Airport Terminal 2",g:["🕐 清晨約 20–30 分","💴 夜間費率"],x:"<ul><li>北雪梨 → 雪梨機場 T2 約 13–14 公里</li><li>🚨 <b>不要賭第一班火車</b>——T8 機場線首班時間各來源不一致（5am／4:30am），且要在 Central 轉車</li><li>05:30 落在夜間費率（10pm–6am），maxi 附加費最高可到一般上限的 150%</li></ul>",dead:"05:30 離開飯店"},
+ {a:"05:30",b:"06:15",t:"🚕 maxi taxi 到雪梨機場 T2",
+  walk:["View Sydney → 雪梨機場 T2，約 13 km",
+   ["🚨 <b>前一晚就要訂好車</b>——13cabs <b>13 2227</b> 或請櫃檯代訂",
+    "05:30 在 <b>飯店一樓大廳</b>等，櫃檯 24 小時有人，門口就是 Blue Street",
+    "🚨 <b>不要賭第一班火車</b>，首班時間各來源不一致且要在 Central 轉車",
+    "<b>T2 是國內線</b>，找 Virgin Australia 櫃檯",
+    "🚨 <b>06:45 報到硬性截止</b>"],
+   "看到 Virgin Australia 的紅色招牌就對了。05:30 落在夜間費率，訂車時直接問總價"],q:"Sydney Airport Terminal 2",g:["🕐 清晨約 20–30 分","💴 夜間費率"],x:"<ul><li>北雪梨 → 雪梨機場 T2 約 13–14 公里</li><li>🚨 <b>不要賭第一班火車</b>——T8 機場線首班時間各來源不一致（5am／4:30am），且要在 Central 轉車</li><li>05:30 落在夜間費率（10pm–6am），maxi 附加費最高可到一般上限的 150%</li></ul>",dead:"05:30 離開飯店"},
  {a:"06:15",b:"06:45",t:"🛄 T2 報到、託運行李",q:"Sydney Airport Terminal 2",g:["🚨 06:45 硬性截止"],x:"<ul><li>訂位代號 <b>WXYJYO</b></li><li>Virgin 建議起飛前 60 分鐘完成託運，硬性截止 30 分鐘</li></ul>",dead:"06:45 報到截止"},
  {a:"07:15",b:"08:50",t:"✈️ VA 0810 雪梨 → 墨爾本",g:["🕐 飛行 1:35","座位 20B–20E"],x:"<ul><li>抵達墨爾本 <b>T3</b></li></ul>"},
- {a:"08:50",b:"10:00",t:"🚕 進市區",g:["✅ SkyBus 公定假日時刻表不變"],x:"<ul><li>四人叫 maxi taxi，或 T3 外搭 SkyBus</li><li>SkyBus 官方 FAQ：墨爾本市區線在維多利亞州公定假日<b>維持原時刻表</b></li></ul>",q:"557 Little Lonsdale St Melbourne CBD VIC 3000"},
+ {a:"08:50",b:"10:00",t:"🚕 進市區",
+  walk:["墨爾本機場 T3 → 557 Little Lonsdale St",
+   ["T3 出來跟著 <b>Taxi</b> 指標，跟排班人員說要 <b>maxi taxi</b>",
+    "或走到 T3 外面搭 <b>SkyBus</b> 到 Southern Cross",
+    "🚨 <b>SkyBus 在公定假日維持原時刻表</b>（官方 FAQ）",
+    "Southern Cross → 557 Little Lonsdale St 走 <b>8 分鐘</b>（622 m）",
+    "🚨 公寓可能 15:00 才能入住，行李先寄放"],
+   "看到 Little Lonsdale St 的路牌就對了。走到 La Trobe St 代表過頭一個街廓，退回來"],g:["✅ SkyBus 公定假日時刻表不變"],x:"<ul><li>四人叫 maxi taxi，或 T3 外搭 SkyBus</li><li>SkyBus 官方 FAQ：墨爾本市區線在維多利亞州公定假日<b>維持原時刻表</b></li></ul>",q:"557 Little Lonsdale St Melbourne CBD VIC 3000"},
  {a:"10:00",b:"12:00",t:"🧳 行李寄放",g:["🚨 公寓可能 15:00 才能入住"],x:"<ul><li>557 Little Lonsdale St 是公寓，<b>沒有櫃檯</b>。9/24 在雪梨時就要問過屋主</li><li>寄放不了 → <b>Urloker 339 Queen St</b>（走 5 分／413 m，08:00–21:00）或 Urloker 190 Queen St（465 m，09:00–23:00）</li></ul>",q:"Urloker 339 Queen Street Melbourne"},
  {a:"12:30",b:"14:00",t:"🍕 La Cucina Melbourne",g:["🕐 12:30–14:00","🚨 公定假日加收約 15%"],x:"<ul><li>住處走 <b>3 分鐘（270 m）</b>／628 Little Bourke St（Cosgrave Lane 轉角，Holey Moley 對面）</li><li>☎ 訂位信寫 <b>03 8450 7682</b>，Google 登錄 03 8456 7682。<b>兩個號碼不一致，先打訂位信那支</b></li><li><b>必點</b>：carbonara、amatriciana rigatoni、calamari fritti、ortolana pizza、tiramisu</li><li><b>吃法</b>：① 薄脆餅皮，兩人可分一整個。四人點兩 pizza 加兩份麵剛好 ② <b>附的辣油很辣</b>，先沾一點試 ③ 份量偏大，不要每人各點一份主餐</li><li>🚨 <b>手機存好訂位確認信的離線截圖</b>——有一則 2026/4 的四人訂位評論寫，客人明明訂了位，店家卻說「你們沒有訂位、只能坐半小時」，並在五分鐘內送上帳單要求離席</li><li>🚨 多筆評論提到<b>訂了位、收到確認信，到現場仍要排隊</b>。準時到，不要早到太多</li><li>官網訂位政策：預授權 <b>$0</b>（不實際扣款）、取消或更改要<b>提前 1 小時</b>通知</li><li>🚨 有評論說坐滿 1 小時 40 分被請走。你們的訂位正好 90 分鐘</li></ul>",q:"La Cucina Melbourne Little Bourke",dead:"12:30 訂位"},
  {a:"14:00",b:"18:00",t:"🗺️ 市區自由",g:["🚨 全州放假，銀行不開"],x:"<ul><li>AFL Grand Final Friday，維多利亞州公定假日</li><li>部分商店縮短營業，餐廳普遍加收約 15%</li><li>Yarra Park 有 Footy Fest（9/23–9/26），MCG 周邊人潮</li></ul>"}
@@ -379,7 +436,7 @@ var DAYS=[
 
 {id:"d10",date:"9/26",dow:"六",title:"Reine & La Rue",sub:"🚨 AFL 總決賽日",slots:[
  {a:"09:00",b:"12:30",t:"🗺️ 市區自由",g:["🚨 10 萬人往 MCG 移動"],x:"<ul><li>AFL 總決賽 14:30 於 MCG 開賽，約 17:00 結束</li><li><b>12:00–14:00 正是人潮往 MCG 移動的時段</b></li></ul>"},
- {a:"12:40",b:"13:00",t:"🚶 走去 Reine & La Rue",g:["🕐 走 9 分（694 m）","🚨 提早 20 分鐘出門"],x:"<ul><li>住處到 380 Collins St 走 9 分鐘</li><li>380 Collins St 到 MCG 直線約 1.9 公里，比想像中近，市區會很擠</li></ul>",q:"Reine and La Rue Melbourne"},
+ {a:"12:40",b:"13:00",t:"🚶 走去 380 Collins St",g:["🕐 走 9 分（694 m）","🚨 提早 20 分鐘出門"],x:"<ul><li>住處到 380 Collins St 走 9 分鐘</li><li>380 Collins St 到 MCG 直線約 1.9 公里，比想像中近，市區會很擠</li></ul>",q:"Reine and La Rue Melbourne"},
  {a:"13:00",b:"15:30",t:"🥂 Reine & La Rue",g:["🕐 13:00","🚨 週六加收 10%","👔 elegant smart casual"],x:"<ul><li>380 Collins Street（Queen St 轉角，ANZ 銀行大廳後方）／<b>+61 3 9021 5241</b>／訂位 #5JP2ZF37DD95</li><li>🚨 <b>全程唯一有明文服裝要求的一家。不要穿短褲拖鞋</b></li><li><b>必點</b>：duck liver & foie gras parfait（約 AU$28）、生蠔、beef tartare 與 scallop gratin（單顆各約 AU$12）、Great Ocean duck（半隻約 AU$140）或 striploin 300g（約 AU$80）、cassoulet</li><li><b>主廚 Jacqui Challinor 親自推薦</b>：生蠔配<b>煙燻橄欖油與海藻 mignonette</b>、<b>Long Paddock 發酵奶油配 All Are Welcome 的長棍</b>（她說是全場的 showstopper）、<b>手潛女王扇貝配松露奶油</b>火烤、confit rabbit、saucisson、wood-roasted leeks</li><li>店內另有<b>生蠔吧</b>與<b>推車式起司車</b>，起司車會推到桌邊選</li><li><b>吃法</b>：① 進門先看空間——這是<b>墨爾本舊證券交易所</b>，哥德式拱頂與彩繪玻璃，這是一半的價值 ② <b>小點是單顆計價，四人各點一顆就能全部試到</b>，這是最划算的點法 ③ 鴨肝慕斯配麵包（baguette 另計約 AU$10），<b>要厚塗</b> ④ 隔壁有 <b>8 座</b>的小酒吧 La Rue，可以直接走進去不用訂位 ⑤ 這是 <b>138 年歷史的 Gothic Bank</b>，<b>2024 年拿下澳洲室內設計大獎首獎</b>，150 席</li><li>⚠️ 網路上有頁面把這家電話寫成 (02) 9280 3395——<b>那是 NOMAD 雪梨的號碼</b>。這家是 <b>+61 3 9021 5241</b></li></ul>",q:"Reine and La Rue Melbourne",dead:"13:00 訂位",
   walk:["557 Little Lonsdale St → 380 Collins St，694 公尺，走 9 分鐘",
    ["出門走到 Lonsdale St，朝門牌號碼變小的方向",
@@ -395,7 +452,14 @@ var DAYS=[
 
 {id:"d11",date:"9/27",dow:"日",title:"墨爾本 → 香港 → 桃園",sub:"總決賽隔天的週日早上",slots:[
  {a:"06:30",b:"07:00",t:"🧳 最後檢查",g:["🚨 退稅品放隨身"],x:"<ul><li>tax invoice 原始紙本、退稅品在隨身行李</li><li>公寓鑰匙依屋主指定方式歸還</li></ul>"},
- {a:"07:00",b:"07:15",t:"🚕 前往墨爾本機場 T2",g:["💴 maxi taxi 約 AU$65–81"],x:"<ul><li>總決賽隔天的週日早上，時間抓寬一點</li></ul>",q:"Melbourne Airport Terminal 2"},
+ {a:"07:00",b:"07:15",t:"🚕 前往墨爾本機場 T2",
+  walk:["557 Little Lonsdale St → 墨爾本機場 T2",
+   ["🚨 <b>前一晚就要訂好車</b>——公寓沒有櫃檯可以幫忙，13cabs <b>13 2227</b>",
+    "07:00 在樓下等，四人四件行李要 <b>maxi taxi</b>",
+    "<b>T2 是國際線</b>，找澳洲航空 Qantas 櫃檯",
+    "🚨 <b>退稅品要放隨身行李</b>，報到前先給 ABF 驗超大件或液體",
+    "🚨 <b>TRS 最晚 09:45</b>，排太長就放棄退稅，不要賭班機"],
+   "看到 Qantas 的紅色袋鼠招牌就對了。走到 T3 代表走過頭，T2 才是國際線"],g:["💴 maxi taxi 約 AU$65–81"],x:"<ul><li>總決賽隔天的週日早上，時間抓寬一點</li></ul>",q:"Melbourne Airport Terminal 2"},
  {a:"07:15",b:"09:45",t:"🛄 報到、TRS 退稅",q:"Melbourne Airport Terminal 2",g:["🚨 09:45 前完成 TRS"],x:"<ul><li>澳航櫃檯起飛前 3 小時開櫃、<b>起飛前 60 分鐘關閉</b></li><li>超大件或液體退稅品要在 check-in <b>前</b>先給 ABF 驗</li><li>🚨 <b>TRS 最晚在起飛前 30 分鐘受理</b></li><li>排太長就放棄退稅，不要賭班機</li></ul>",dead:"09:45 TRS 截止"},
  {a:"10:15",b:"17:55",t:"✈️ QF 29 墨爾本 → 香港",g:["🕐 飛行 9:40","🍽️ 機上供餐"],x:"<ul><li>抵達香港第一航廈</li><li>9 小時 40 分的航程，機上會供餐兩次</li><li>落地香港後<b>手錶調回台灣時間</b>（香港與台灣同時區）</li></ul>"},
  {a:"17:55",b:"20:10",t:"🔁 香港轉機（135 分鐘）",g:["🕐 比去程寬鬆"],x:"<ul><li>比去程的 95 分鐘寬鬆，就算要重新報到也夠</li><li>先看螢幕確認 CI920 的登機門，再去吃東西</li><li>🚨 <b>香港買的東西也算入台灣的免稅額</b>：行李物品 NT$35,000、酒 1.5 公升、菸 200 支</li></ul>"},
@@ -977,7 +1041,7 @@ function renderPrep(){
 /* ===== 使用說明 ===== */
 function renderHelp(){
   var d=auNow();
-  return '<div class="dayhead"><h2>澳洲 11 天</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v014</div></div>'+
+  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v018</div></div>'+
   '<div class="card ok"><h3>現在澳洲時間 '+fmt(auMins())+'</h3><div class="note">'+
    (d.getMonth()===8&&d.getDate()>=17&&d.getDate()<=27? '旅程進行中。':'旅程尚未開始。')+
    ' 澳洲東部時間比台灣快 2 小時，全程不換夏令時間。</div></div>'+
@@ -1040,7 +1104,7 @@ function icsStamp(){ var d=new Date();
 function icsUID(dayId,i,a){ return "au2026-"+dayId+"-"+i+"-"+a.replace(":","")+"@australia.trip" }
 function buildICS(){
   var L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//australia//trip v001//ZH-TW",
-         "CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:澳洲 11 天","X-WR-TIMEZONE:Australia/Melbourne"];
+         "CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:澳洲之旅","X-WR-TIMEZONE:Australia/Melbourne"];
   var stamp=icsStamp();
   DAYS.forEach(function(d){
     var tz=dayUsesTW(d.id)?8:10;
@@ -1279,8 +1343,8 @@ function fareCard(){
 }
 
 /* ===== 版本與更新（依規格：抓 sw.js 讀 CACHE，繞過 SW 生命週期）===== */
-var APP_VER="014";
-var APPVER="australia-v14";            /* 與 sw.js 的 CACHE 一致 */
+var APP_VER="018";
+var APPVER="australia-v18";            /* 與 sw.js 的 CACHE 一致 */
 var VST={state:"...",note:"",latest:null};   /* ok / new / warn / ... */
 
 /* 直接抓 sw.js（約 3 KB），讀它的 CACHE 版本。
@@ -1308,12 +1372,21 @@ function swVer(cb){
     navigator.serviceWorker.controller.postMessage({type:"VER"},[ch.port2]);
   }catch(e){ fin(null) }
 }
+/* 🚨 旗標必須放在 VST 外面 —— setVst 每次都重建 VST，放裡面會被沖掉，
+   結果每檢查一次就跳一次 toast，切出去切回來幾次就洗版。 */
+var _newAlerted=null;      /* 記住已提醒過哪一版 */
 function setVst(st,note,latest){
   VST={state:st,note:note||"",latest:latest||null};
   paintVer();
   if(st==="new"){
-    try{ if(navigator.vibrate) navigator.vibrate(180) }catch(e){}
-    if(!VST._toasted){ VST._toasted=true; toast("有新版本，點右上角的版本鈕更新") }
+    /* 同一個新版本只提醒一次；出現「更新的新版」時才再提醒 */
+    if(_newAlerted!==latest){
+      _newAlerted=latest;
+      try{ if(navigator.vibrate) navigator.vibrate(180) }catch(e){}
+      toast("有新版本，點右上角的版本鈕更新");
+    }
+  } else if(st==="ok"){
+    _newAlerted=null;      /* 更新完成後重置，下次有新版才會再提醒 */
   }
 }
 function refreshVst(){
@@ -1510,6 +1583,8 @@ function geoCard(where){
   if(errTxt) h+='<div class="note" style="margin-top:8px">'+errTxt+'</div>';
   if(where!=="sos") h+='<div class="note" style="margin-top:8px">'+
     '<b>開了就是互相看得到</b>，不做單向追蹤——誰開了大家都知道。清單在「緊急」頁。<br>'+
+    '🚨 <b>行程裡的「帶我去」只用你自己的位置</b>，跟其他人在哪無關。要導航到某個人，'+
+    '請到「緊急」頁的位置清單按那個人旁邊的「帶我去」。<br>'+
     '🚨 <b>網頁 App 拿不到背景定位</b>，這是瀏覽器的限制不是權限問題。App 關掉或切到背景太久就不會更新。'+
     '<b>要真正的背景共享請用 Google 地圖的「位置共享」功能。</b><br>'+
     '位置只送自己那一筆（約 55 bytes），不會跟分帳資料一起傳。</div>';
@@ -1630,7 +1705,7 @@ document.addEventListener("click",function(ev){
   if(id==="bk_dl"){ var b=new Blob([mkBackup()],{type:"text/plain"}),u=URL.createObjectURL(b),a3=document.createElement("a");
     a3.href=u; a3.download="australia-backup-"+new Date().toISOString().slice(0,10)+".txt"; a3.click();
     setTimeout(function(){URL.revokeObjectURL(u)},1000); toast("備份檔已下載"); return }
-  if(id==="bk_sh"){ if(navigator.share) navigator.share({title:"澳洲 11 天 備份",text:mkBackup()}).catch(function(){});
+  if(id==="bk_sh"){ if(navigator.share) navigator.share({title:"澳洲之旅 備份",text:mkBackup()}).catch(function(){});
     else cp(mkBackup(),"備份碼"); return }
 });
 function cp(t,n){ if(navigator.clipboard&&navigator.clipboard.writeText)
