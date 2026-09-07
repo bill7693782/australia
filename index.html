@@ -123,6 +123,7 @@ details li{margin:5px 0}
 .sec-t{font-size:.8em;color:var(--dim);margin:20px 0 8px;font-weight:700}
 .empty{text-align:center;padding:26px 16px}
 .empty b{display:block;font-size:1.05em;margin-bottom:5px}
+mark{background:#FDF0DC;color:var(--ink);padding:0 2px;border-radius:3px;font-weight:700}
 table{width:100%;border-collapse:collapse;font-size:.92em}
 th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line);vertical-align:middle}
 td:first-child{padding-right:10px}
@@ -200,7 +201,7 @@ td .tel{margin:2px 0}
 <body>
 <header>
   <div class="hrow"><h1>澳洲</h1>
-    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v018 ⋯</button>
+    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v019 ⋯</button>
     <div class="clock" id="clk"></div></div>
   <div class="hrow" style="padding-bottom:10px"><span style="font-size:.8em;color:#8FA39D">文字大小</span><div class="fsbar" id="fsbar"></div></div>
   <nav id="nav"></nav>
@@ -479,7 +480,8 @@ var ST={members:["","","",""],avatars:["","","",""],
   exp:[],paid:{},diet:[],dietOn:[],
   shop:[],budget:0,pack:[],packHide:{},
   room:"",tab:"help",fs:"m",lastEdit:0,
-  me:null,pos:{},geoOn:false,geoRate:1};
+  me:null,pos:{},geoOn:false,geoRate:1,
+  q:"",myPlaces:[],expDel:[]};
 var CAN=false;
 try{
   var raw=localStorage.getItem(LSKEY); if(raw) ST=Object.assign(ST,JSON.parse(raw));
@@ -493,7 +495,7 @@ function ensureST(){
     if(!ST[k]||typeof ST[k]!=="object"||Array.isArray(ST[k])) ST[k]={};
   });
   /* 陣列欄位：不是陣列就重設，並濾掉 null／undefined */
-  ["exp","diet","dietOn","shop","pack","members","avatars"].forEach(function(k){
+  ["exp","diet","dietOn","shop","pack","members","avatars","myPlaces","expDel"].forEach(function(k){
     if(!Array.isArray(ST[k])) ST[k]=[];
     ST[k]=ST[k].filter(function(x){ return x!==null&&x!==undefined });
   });
@@ -527,6 +529,9 @@ function ensureST(){
   });
   /* 購物每筆要有品名 */
   ST.shop=ST.shop.filter(function(x){ return x&&typeof x==="object"&&typeof x.n==="string"&&x.n });
+  ST.myPlaces=ST.myPlaces.filter(function(x){ return x&&typeof x==="object"&&typeof x.n==="string"&&x.n });
+  ST.expDel=ST.expDel.filter(function(x){ return x&&typeof x==="object" });
+  if(typeof ST.q!=="string") ST.q="";
   ST.shop.forEach(function(x){ if(typeof x.price!=="number"||!isFinite(x.price)) x.price=0 });
   /* 位置：每一筆都要有合法經緯度 */
   Object.keys(ST.pos).forEach(function(k){
@@ -588,7 +593,7 @@ function lagOf(id){
 }
 /* ===== 導覽 ===== */
 var TABS=[{k:"help",n:"使用說明"}].concat(DAYS.map(function(d){return {k:d.id,n:"D"+d.id.slice(1)+" "+d.date}}))
- .concat([{k:"split",n:"分帳"},{k:"shop",n:"購物"},{k:"pack",n:"行李"},{k:"info",n:"資訊"},
+  .concat([{k:"find",n:"🔍 搜尋"},{k:"split",n:"分帳"},{k:"shop",n:"購物"},{k:"pack",n:"行李"},{k:"info",n:"資訊"},
           {k:"sos",n:"緊急"},{k:"plan",n:"備案"},{k:"share",n:"分享"},{k:"prep",n:"準備"}]);
 function isToday(k){ var d=DAYS.filter(function(x){return x.id===k})[0];
   return d? todayIs(d.date) : false }
@@ -705,6 +710,7 @@ function renderSplit(){
       '<div class="note">共 '+ST.exp.length+' 筆，總額 <b class="mono">AU$'+tot0.toFixed(2)+'</b>　'+
       (left0? '還有 <b>'+left0+'</b> 筆沒還' : '<b>全部結清了</b>')+'</div></div>';
   } else {
+    h+=delListHTML();
     h+='<div class="card"><div class="empty"><b>還沒有任何一筆</b>'+
       '<div class="note">吃完飯誰付的、多少錢，記在這裡。最後 App 會算出誰該還誰。</div></div></div>';
   }
@@ -735,6 +741,7 @@ function renderSplit(){
          '<div class="mono"><b>AU$'+t.v.toFixed(2)+'</b></div></div>' }).join("")+
        '<div class="note">還剩 '+left+' 筆</div>'
       : '<div class="note">目前不用互相轉帳。</div>')+'</div>';
+  h+=delListHTML();
   } else h+='<div class="card"><div class="note">還沒有任何一筆。上面加第一筆。</div></div>';
   return h;
 }
@@ -853,6 +860,7 @@ function renderInfo(){
    '<tr><td>在澳洲打澳洲</td><td class="mono">直接撥 03 9978 1968</td></tr>'+
    '<tr><td>在澳洲打台灣</td><td class="mono">0011 + 886 + 去 0 的號碼</td></tr>'+
    '<tr><td>在台灣打澳洲</td><td class="mono">002 + 61 + 去 0 的號碼</td></tr></table></div>';
+  h+=pointHTML();
   h+='<div class="card"><h3>🗣️ 當地日常用語</h3><table>'+PHRASES.map(function(p){
    return '<tr><td><b>'+esc(p[0])+'</b><br><span class="note">'+esc(p[1])+'</span></td>'+
      '<td style="width:44px"><button class="btn sec" data-sayen="'+esc(p[0])+'">🔊</button></td></tr>' }).join("")+'</table></div>';
@@ -1041,8 +1049,8 @@ function renderPrep(){
 /* ===== 使用說明 ===== */
 function renderHelp(){
   var d=auNow();
-  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v018</div></div>'+
-  '<div class="card ok"><h3>現在澳洲時間 '+fmt(auMins())+'</h3><div class="note">'+
+  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v019</div></div>'+
+  countdownHTML()+'<div class="card ok"><h3>現在澳洲時間 '+fmt(auMins())+'</h3><div class="note">'+
    (d.getMonth()===8&&d.getDate()>=17&&d.getDate()<=27? '旅程進行中。':'旅程尚未開始。')+
    ' 澳洲東部時間比台灣快 2 小時，全程不換夏令時間。</div></div>'+
   '<div class="card"><h3>主列三顆按鈕</h3><table>'+
@@ -1172,9 +1180,12 @@ function wxCard(){
     return '<div class="sec-t">'+CITY[k].n+'</div><table>'+d.time.slice(0,5).map(function(t,i){
       var w=wxDesc(d.weather_code[i]), p=d.precipitation_probability_max[i], uv=d.uv_index_max[i];
       var md=t.slice(5).replace("-","/");
+      var lo=d.temperature_2m_min[i], hiT=d.temperature_2m_max[i];
+      var wear=wearAdvice(lo,hiT,p,uv);
       return '<tr><td class="mono">'+md+'</td><td>'+w[0]+' '+w[1]+'</td>'+
-        '<td class="mono">'+Math.round(d.temperature_2m_min[i])+'–'+Math.round(d.temperature_2m_max[i])+'°C</td>'+
-        '<td class="mono">'+(p!=null?'💧'+p+'%':'')+(uv!=null&&uv>=3?'　☀️UV'+Math.round(uv):'')+'</td></tr>';
+        '<td class="mono">'+Math.round(lo)+'–'+Math.round(hiT)+'°C</td>'+
+        '<td class="mono">'+(p!=null?'💧'+p+'%':'')+(uv!=null&&uv>=3?'　☀️UV'+Math.round(uv):'')+'</td></tr>'+
+        (wear?'<tr><td></td><td colspan="3" class="note">👕 '+wear+'</td></tr>':'');
     }).join("")+'</table>';
   }
   return '<div class="card"><h3>🌤️ 未來五天</h3>'+rows("mel")+rows("syd")+
@@ -1343,8 +1354,8 @@ function fareCard(){
 }
 
 /* ===== 版本與更新（依規格：抓 sw.js 讀 CACHE，繞過 SW 生命週期）===== */
-var APP_VER="018";
-var APPVER="australia-v18";            /* 與 sw.js 的 CACHE 一致 */
+var APP_VER="019";
+var APPVER="australia-v19";            /* 與 sw.js 的 CACHE 一致 */
 var VST={state:"...",note:"",latest:null};   /* ok / new / warn / ... */
 
 /* 直接抓 sw.js（約 3 KB），讀它的 CACHE 版本。
@@ -1591,6 +1602,174 @@ function geoCard(where){
   return h+'</div>';
 }
 
+/* ===== 行程搜尋 ===== */
+function searchAll(kw){
+  kw=(kw||"").trim().toLowerCase(); if(kw.length<1) return [];
+  var out=[];
+  DAYS.forEach(function(d){
+    slotsOf(d.id).forEach(function(s){
+      var hay=(s.t+" "+(s.g||[]).join(" ")+" "+(s.x||"").replace(/<[^>]+>/g," ")+" "+(s.q||"")+
+        " "+(s.dead||"")+" "+d.date+" "+d.title).toLowerCase();
+      if(hay.indexOf(kw)>=0) out.push({d:d,s:s});
+    });
+  });
+  return out;
+}
+function hi(txt,kw){
+  if(!kw) return esc(txt);
+  var i=txt.toLowerCase().indexOf(kw.toLowerCase());
+  if(i<0) return esc(txt);
+  return esc(txt.slice(0,i))+'<mark>'+esc(txt.slice(i,i+kw.length))+'</mark>'+esc(txt.slice(i+kw.length));
+}
+function searchHTML(){
+  var kw=ST.q||"";
+  var h='<div class="card"><h3>🔍 搜尋行程</h3>'+
+   '<div class="row"><div><input id="q_in" value="'+esc(kw)+'" placeholder="店名、地點、關鍵字…"></div></div>'+
+   '<div class="acts"><button class="btn go" id="q_go">搜尋</button>'+
+   (kw?'<button class="btn sec" id="q_cl">清除</button>':'')+'</div></div>';
+  if(!kw) return h;
+  var r=searchAll(kw);
+  if(!r.length) return h+'<div class="card"><div class="empty"><b>找不到「'+esc(kw)+'」</b>'+
+    '<div class="note">試試店名的一部分，或改用中文／英文。</div></div></div>';
+  h+='<div class="sec-t">找到 '+r.length+' 筆</div>';
+  h+=r.map(function(x){
+    var plain=(x.s.x||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
+    var i=plain.toLowerCase().indexOf(kw.toLowerCase());
+    var snip=i>=0? plain.slice(Math.max(0,i-30),i+70) : plain.slice(0,80);
+    return '<div class="plan"><b>'+hi(x.s.t,kw)+'</b>'+
+      '<div class="note"><span class="pill">'+esc(x.d.date)+'（'+esc(x.d.dow)+'）'+esc(x.s.a)+'</span>'+
+      (x.s.dead?' <span class="tag t-warn">🔴 '+esc(x.s.dead)+'</span>':'')+
+      '<br>'+hi(snip,kw)+'…</div>'+
+      '<div class="acts"><button class="btn sec" data-goday="'+esc(x.d.id)+'">看這一天</button>'+
+      (x.s.q?'<button class="btn go" data-nav="'+esc(x.s.q)+'">📍 帶我去</button>':'')+'</div></div>';
+  }).join("");
+  return h;
+}
+/* ===== 倒數計時：距離下一個死線 ===== */
+function nextDead(){
+  var today=auDateStr(), now=auMins(), best=null;
+  DAYS.forEach(function(d){
+    var isToday=todayIs(d.date);
+    var future=(+d.date.split("/")[1])>(+today.split("/")[1]);
+    if(!isToday&&!future) return;
+    slotsOf(d.id).forEach(function(s){
+      if(!s.dead) return;
+      var m=mins(s.a), diff;
+      if(isToday){ if(m<now) return; diff=m-now; }
+      else { diff=((+d.date.split("/")[1])-(+today.split("/")[1]))*1440+m-now; }
+      if(!best||diff<best.diff) best={d:d,s:s,diff:diff};
+    });
+  });
+  return best;
+}
+function countdownHTML(){
+  var b=nextDead(); if(!b) return "";
+  var h=Math.floor(b.diff/60), m=b.diff%60;
+  var txt = b.diff<60? '<b style="color:var(--red)">'+m+' 分鐘後</b>'
+    : b.diff<1440? '<b>'+h+' 小時 '+m+' 分後</b>'
+    : '<b>'+Math.floor(b.diff/1440)+' 天 '+(h%24)+' 小時後</b>';
+  var urgent=b.diff<=60;
+  return '<div class="card '+(urgent?'warn':'ok')+'"><h3>⏳ 下一個死線</h3>'+
+   '<div class="note">'+txt+'　'+esc(b.d.date)+'（'+esc(b.d.dow)+'）'+esc(b.s.a)+
+   '<br><b>'+esc(b.s.dead)+'</b>　'+esc(b.s.t)+
+   (urgent?'<br>🚨 <b>不到一小時了</b>':'')+'</div>'+
+   '<div class="acts"><button class="btn sec" data-goday="'+esc(b.d.id)+'">看那一天</button></div></div>';
+}
+/* ===== 我的地點：路上看到想去的存起來 ===== */
+function myPlacesHTML(){
+  var h='<div class="card"><h3>📌 我的地點</h3>'+
+   '<div class="note">路上看到想去的地方，存起來不用記在別的 App。四支手機會同步。</div>'+
+   '<div class="row" style="margin-top:10px"><div><label>名稱</label><input id="mp_n" placeholder="例：Brunetti 咖啡"></div></div>'+
+   '<div class="row"><div><label>備註（可貼 Google Maps 連結）</label><input id="mp_w" placeholder="貼連結或打地址"></div></div>'+
+   '<button class="btn go" id="mp_add">加入</button>';
+  if(ST.myPlaces.length){
+    h+='<div style="margin-top:12px">'+ST.myPlaces.map(function(p,i){
+      var isURL=/^https?:\/\//.test(p.w||"");
+      return '<div class="plan" style="margin-bottom:8px"><b>'+esc(p.n)+'</b>'+
+        (p.w?'<div class="note">'+(isURL?'<a href="'+esc(p.w)+'" target="_blank" rel="noopener">開連結</a>':esc(p.w))+'</div>':'')+
+        '<div class="acts"><button class="btn go" data-nav="'+esc(p.q||p.n)+'">📍 帶我去</button>'+
+        '<button class="btn sec" data-delmp="'+i+'">✕ 刪</button></div></div>';
+    }).join("")+'</div>';
+  } else h+='<div class="empty" style="padding:16px 0"><b>還沒有存任何地點</b></div>';
+  return h+'</div>';
+}
+/* ===== 天氣穿搭建議 ===== */
+function wearAdvice(lo,hi,rain,uv){
+  var a=[];
+  if(hi==null) return "";
+  if(hi<14) a.push("<b>厚外套</b>必備");
+  else if(hi<19) a.push("<b>薄外套或針織衫</b>");
+  else if(hi<24) a.push("長袖或薄長袖");
+  else a.push("短袖就夠");
+  if(lo!=null&&hi-lo>=10) a.push("<b>早晚溫差 "+Math.round(hi-lo)+" 度，洋蔥式穿法</b>");
+  if(lo!=null&&lo<10) a.push("清晨很冷，<b>加圍巾或毛帽</b>");
+  if(rain!=null&&rain>=50) a.push("<b>降雨機率 "+rain+"%，帶傘</b>");
+  else if(rain!=null&&rain>=30) a.push("可能有雨，帶折傘");
+  if(uv!=null&&uv>=6) a.push("<b>UV "+Math.round(uv)+"，防曬帽子太陽眼鏡</b>");
+  else if(uv!=null&&uv>=3) a.push("UV "+Math.round(uv)+"，擦防曬");
+  return a.join("・");
+}
+
+/* ===== 指差對話：講不通就把螢幕轉給對方看 ===== */
+var POINT=[
+ ["點餐","A table for four, please.","四位"],
+ ["點餐","Just tap water, thank you.","給自來水就好"],
+ ["點餐","Could we get one at a time, please?","主菜請一道一道上"],
+ ["點餐","No cumin, please.","不要孜然"],
+ ["點餐","Could I have this rare?","這個要三分熟"],
+ ["點餐","Can we get the bill, please?","結帳"],
+ ["點餐","Can I have a tax invoice with my name on it?","發票要打我的名字"],
+ ["交通","Does this train stop at Armadale?","這班車有停 Armadale 嗎"],
+ ["交通","Which platform for the Frankston line?","Frankston 線在幾號月台"],
+ ["交通","I need a maxi taxi for four people with four suitcases.","四人四件行李，要大車"],
+ ["交通","Please take me to this address.","請載我到這個地址"],
+ ["交通","How much will it cost, roughly?","大概多少錢"],
+ ["購物","Do you do tax free / TRS?","可以退稅嗎"],
+ ["購物","What is your ABN?","你們的 ABN 是多少"],
+ ["購物","Is there a card surcharge?","刷卡要另外收費嗎"],
+ ["求助","I'm lost. Where is this place?","我迷路了，這個地方在哪"],
+ ["求助","Can I leave my bags here?","行李可以寄放嗎"],
+ ["求助","Where is the nearest chemist?","最近的藥局在哪"],
+ ["求助","I need help. Please call 000.","我需要幫忙，請打 000"],
+ ["求助","I am allergic to this. Does the dish contain it?","我對這個過敏，菜裡有嗎"]];
+function pointHTML(){
+  var cats=[]; POINT.forEach(function(p){ if(cats.indexOf(p[0])<0)cats.push(p[0]) });
+  return '<div class="card"><h3>👉 指差對話</h3>'+
+   '<div class="note">講不通就<b>把螢幕轉過去給對方看</b>。英文大字在上，中文在下。</div>'+
+   cats.map(function(c){
+     return '<div class="sec-t">'+esc(c)+'</div>'+POINT.filter(function(p){return p[0]===c})
+      .map(function(p){
+        return '<div class="plan" style="margin-bottom:8px">'+
+         '<div style="font-size:1.25em;font-weight:700;line-height:1.35">'+esc(p[1])+'</div>'+
+         '<div class="note" style="margin-top:4px">'+esc(p[2])+'</div>'+
+         '<div class="acts"><button class="btn sec" data-sayen="'+esc(p[1])+'">🔊 念出來</button></div></div>';
+      }).join("");
+   }).join("")+'</div>';
+}
+/* ===== 分帳：刪除可還原 ===== */
+function delExp(i){
+  var e=ST.exp[i]; if(!e) return;
+  ST.expDel.unshift(Object.assign({},e,{_at:Date.now()}));
+  if(ST.expDel.length>20) ST.expDel.length=20;
+  ST.exp.splice(i,1); ST.paid={}; save(); render();
+  toast("已刪除，可在下方「最近刪除」還原");
+}
+function undoExp(i){
+  var e=ST.expDel[i]; if(!e) return;
+  delete e._at; ST.exp.push(e); ST.expDel.splice(i,1);
+  ST.paid={}; save(); render(); toast("已還原");
+}
+function delListHTML(){
+  if(!ST.expDel.length) return "";
+  return '<div class="sec-t">最近刪除（可還原）</div><div class="card">'+
+   ST.expDel.map(function(e,i){
+     var amt=e.type==="each"?(e.each||[]).reduce(function(a,b){return a+(+b||0)},0):e.amt;
+     return '<div class="row" style="align-items:center;margin-bottom:8px">'+
+      '<div style="flex:1">'+esc(e.t)+'<br><span class="note">AU$'+(+amt||0).toFixed(2)+'</span></div>'+
+      '<button class="btn sec" data-undox="'+i+'">↩ 還原</button></div>';
+   }).join("")+'<div class="note">只保留最近 20 筆，重新整理不會消失。</div></div>';
+}
+
 /* ===== 朗讀 ===== */
 function say(txt,lang){
   if(!("speechSynthesis" in window)){ toast("這支手機不支援朗讀"); return }
@@ -1614,6 +1793,7 @@ function render(){
   var k=ST.tab,h="";
   if(k==="help")h=renderHelp();
   else if(/^d\d+$/.test(k))h=renderDay(k);
+  else if(k==="find")h=searchHTML()+countdownHTML()+myPlacesHTML();
   else if(k==="split")h=renderSplit();
   else if(k==="shop")h=renderShop();
   else if(k==="pack")h=renderPack();
@@ -1640,11 +1820,19 @@ function tick(){ var n=auNow();
     fmt(twNow().getHours()*60+twNow().getMinutes()); }
 /* ===== 事件 ===== */
 document.addEventListener("click",function(ev){
-  var el=ev.target.closest("[data-fs],[data-tab],[data-nav],[data-say],[data-sayen],[data-arr],[data-mo],"+
+  var el=ev.target.closest("[data-goday],[data-delmp],[data-undox],[data-fs],[data-tab],[data-nav],[data-say],[data-sayen],[data-arr],[data-mo],"+
     "[data-edit],[data-del],[data-remind],[data-add],[data-clearlag],[data-delx],[data-paid],"+
-    "[data-dels],[data-delp],#e_add,#s_add,#p_add,#d_add,#rm_new,#rm_up,#rm_dn,#rm_ck,#sc_cp,#pc_go,#bk_cp,#bk_dl,#bk_sh,#ics_dl,#wx_go,#fx_go,#upd_ck,#upd_go,#geo_go,#geo_rate");
+    "[data-dels],[data-delp],#e_add,#s_add,#p_add,#d_add,#rm_new,#rm_up,#rm_dn,#rm_ck,#sc_cp,#pc_go,#bk_cp,#bk_dl,#bk_sh,#ics_dl,#wx_go,#fx_go,#upd_ck,#upd_go,#geo_go,#geo_rate,#q_go,#q_cl,#mp_add");
   if(!el)return;
   var d=el.dataset,id=el.id;
+  if(d.goday){ go(d.goday); return }
+  if(d.delmp!=null){ ST.myPlaces.splice(+d.delmp,1); save(); render(); return }
+  if(id==="q_go"){ var v=document.getElementById("q_in"); ST.q=v?v.value.trim():""; save(); render(); return }
+  if(id==="q_cl"){ ST.q=""; save(); render(); return }
+  if(id==="mp_add"){ var n1=document.getElementById("mp_n").value.trim();
+    if(!n1){ toast("請填名稱"); return }
+    ST.myPlaces.push({n:n1,w:document.getElementById("mp_w").value.trim(),q:n1});
+    save(); render(); toast("已加入"); return }
   if(id==="geo_go"){ if(ST.geoOn) geoStop(); else geoStart(); return }
   if(id==="geo_rate"){ ST.geoRate=((ST.geoRate|0)+1)%GEORATE.length; save();
     if(ST.geoOn) geoStart(); else render();
@@ -1671,7 +1859,8 @@ document.addEventListener("click",function(ev){
     ST.adhoc[d.add]=ST.adhoc[d.add]||[]; ST.adhoc[d.add].push({a:a2,b:"",t:t2,g:[],x:"<ul><li>自己加的行程</li></ul>"});
     save(); render(); return }
   if(d.clearlag){ slotsOf(d.clearlag).forEach(function(s){ delete ST.arr[s._k] }); save(); render(); toast("已重設"); return }
-  if(d.delx!=null){ ST.exp.splice(+d.delx,1); ST.paid={}; save(); render(); return }
+  if(d.delx!=null){ delExp(+d.delx); return }
+  if(d.undox!=null){ undoExp(+d.undox); return }
   if(d.paid){ ST.paid[d.paid]=!ST.paid[d.paid]; save(); render(); return }
   if(d.dels!=null){ ST.shop.splice(+d.dels,1); save(); render(); return }
   if(d.delp){ ST.packHide[d.delp]=1; save(); render(); return }
