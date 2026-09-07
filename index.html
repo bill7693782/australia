@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#16211E">
-<title>澳洲 11 天 v001</title>
+<title>澳洲 11 天 v005</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -120,7 +120,9 @@ details li{margin:5px 0}
 .empty{text-align:center;padding:26px 16px}
 .empty b{display:block;font-size:1.05em;margin-bottom:5px}
 table{width:100%;border-collapse:collapse;font-size:.92em}
-th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line);vertical-align:middle}
+td:first-child{padding-right:10px}
+.card.warn td:first-child{min-width:8.2em}
 th{color:var(--dim);font-weight:700;font-size:.85em}
 input,select,textarea{font-family:inherit;font-size:16px;padding:10px;border-radius:8px;
   border:1px solid var(--line);background:var(--white);color:var(--ink);width:100%}
@@ -144,6 +146,37 @@ label{font-size:.82em;color:var(--dim);display:block;margin:0 0 4px}
 .fsbar{display:flex;gap:6px;align-items:center;margin-left:auto}
 .fsbar button{min-width:40px;min-height:36px;border-radius:8px;background:#2B3A35;color:#C9D6D1;font-weight:700}
 .fsbar button.on{background:var(--paper);color:var(--ink)}
+
+/* 電話：不斷行、做成可按的樣子 */
+.tel{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;
+  border-radius:9px;background:var(--white);color:var(--sea);font-weight:700;
+  text-decoration:none;white-space:nowrap;box-shadow:inset 0 0 0 1px var(--line);
+  font-variant-numeric:tabular-nums}
+.tel.urgent{background:var(--red);color:#fff;box-shadow:none;font-size:1.05em}
+td .tel{margin:2px 0}
+/* 勾選晶片 */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+.chip{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:0 13px;
+  border-radius:20px;background:var(--white);color:var(--ink);font-size:.88em;
+  box-shadow:inset 0 0 0 1px var(--line);cursor:pointer}
+.chip input{width:18px;height:18px;margin:0;flex:0 0 auto}
+.chip.on{background:#DEF0E8;box-shadow:inset 0 0 0 2px var(--go)}
+/* 檔案上傳 */
+.file{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;min-height:44px;padding:0 14px;border-radius:9px;
+  background:var(--paper2);color:var(--ink2);font-size:.85em;font-weight:700;cursor:pointer;white-space:nowrap}
+.file input{display:none}
+/* 大頭貼：名字移到圈外 */
+.avwrap{display:flex;align-items:center;gap:9px;flex:0 0 auto;min-width:7.4em}
+.avwrap .nm{font-size:.85em;color:var(--ink2)}
+.av{width:44px;height:44px;font-size:1em}
+.av .n{display:none}
+/* 備案分組 */
+.grp{margin:22px 0 10px;font-size:.9em;font-weight:700;color:var(--ink)}
+.grp span{font-weight:400;color:var(--dim);font-size:.86em}
+.plan{background:var(--white);border-radius:var(--r);padding:13px 14px;margin:0 0 9px;
+  box-shadow:inset 0 0 0 1px var(--line)}
+.plan.hot{box-shadow:inset 0 0 0 1px #E9C4C0;background:var(--red-bg)}
+.plan b{display:block;font-size:1.02em;margin-bottom:4px}
 </style>
 </head>
 <body>
@@ -162,9 +195,27 @@ var HOTELS={
  syd:{n:"View Sydney",a:"17 Blue St, North Sydney NSW 2060",note:"+61 2 9955 0499．櫃檯 24 小時．北雪梨車站旁 120 m"},
  mel2:{n:"557 Little Lonsdale St",a:"557 Little Lonsdale St, Melbourne VIC 3000",note:"Agoda 公寓．無櫃檯．Flagstaff 站 167 m"}
 };
-var MEET={d0:"家",d1:"桃園機場第二航廈 長榮報到櫃檯",d2:"370 Queen St 樓下",d3:"370 Queen St 樓下",d4:"370 Queen St 樓下",
- d5:"Southern Cross 車站售票大廳",d6:"View Sydney 大廳",d7:"View Sydney 大廳",d8:"View Sydney 大廳",
- d9:"557 Little Lonsdale St 樓下",d10:"557 Little Lonsdale St 樓下",d11:"墨爾本機場 T2 澳航報到櫃檯"};
+var MEET={
+ d0:{p:"",f:"",skip:1},
+ d1:{p:"桃園 T2 長榮報到櫃檯（報到前）",
+     f:"<b>直接去登機門</b>——桃園是 BR871 的門，香港是 QF30 的門。<br>機場走散不要找出口，看螢幕找登機門，那是唯一大家都會到的地方。"},
+ d2:{p:"370 Queen St 樓下",f:"回 <b>370 Queen St</b>"},
+ d3:{p:"大洋路：跟緊導遊，各景點停留 10–90 分鐘",
+     f:"<b>先找導遊或司機</b>，車不會等人。真的落單就打 <b>03 8080 2288</b>，再自行回 370 Queen St"},
+ d4:{p:"370 Queen St 樓下",
+     f:"<b>先找導遊</b>。菲利普島在市區外 2 小時車程，落單很麻煩。真的落單就叫車回 370 Queen St"},
+ d5:{p:"上午：Southern Cross 車站售票大廳<br>下午起：雪梨機場 T2 國內線到站大廳",
+     f:"<b>14:00 前</b>：墨爾本機場 T3 Virgin 報到櫃檯<br><b>14:00 後</b>：<b>View Sydney</b>，17 Blue St"},
+ d6:{p:"View Sydney 大廳",f:"回 <b>View Sydney</b>，櫃檯 24 小時有人"},
+ d7:{p:"白天：View Sydney 大廳<br>晚上在 Bondi：Totti's 門口（283 Bondi Rd）",
+     f:"回 <b>View Sydney</b>，櫃檯 24 小時有人"},
+ d8:{p:"View Sydney 大廳",f:"回 <b>View Sydney</b>，櫃檯 24 小時有人"},
+ d9:{p:"清晨：雪梨機場 T2 Virgin 報到櫃檯<br>抵墨後：557 Little Lonsdale St 樓下",
+     f:"<b>08:50 前</b>：雪梨機場 T2 Virgin 報到櫃檯——<b>飯店已退房，不要回去</b><br><b>抵墨後</b>：557 Little Lonsdale St"},
+ d10:{p:"557 Little Lonsdale St 樓下",f:"回 <b>557 Little Lonsdale St</b>"},
+ d11:{p:"墨爾本機場 T2 澳航報到櫃檯",
+      f:"<b>直接去登機門</b>——已退房，不要回市區。<br>過了安檢就在登機門等，QF29 10:15 起飛"}
+};
 
 var DAYS=[
 {id:"d0",date:"9/16",dow:"三",title:"出發前夜",sub:"台灣時間",slots:[
@@ -178,7 +229,7 @@ var DAYS=[
  {a:"14:40",b:"16:40",t:"✈️ 桃園機場第二航廈報到",g:["🕐 起飛前 2 小時","🚨 櫃檯會查澳洲簽證"],x:"<ul><li>訂位代號 <b>EAYH8Q</b>（澳洲航空開票，四段同一張票）</li><li>四人票號 081-2387398847～850</li><li>櫃檯問一句：<b>行李能不能直掛墨爾本？QF30 的登機證能不能一起發？</b></li></ul>",q:"桃園國際機場第二航廈",dead:"16:40 起飛"},
  {a:"16:40",b:"18:30",t:"🛫 BR 871 桃園 → 香港",g:["🕐 飛行 1:50","Boeing 787-10"],x:"<ul><li>抵達香港第一航廈</li><li>下機不要先逛，先看螢幕確認 QF30 的登機門</li></ul>"},
  {a:"18:30",b:"20:05",t:"🔁 香港轉機（95 分鐘）",g:["🚨 澳航櫃檯 19:05 關閉"],x:"<ul><li><b>行李有直掛 → 直接走轉機通道去登機門</b></li><li>行李沒直掛 → 要出關提行李、重新報到，35 分鐘幾乎不可能。立刻找澳航人員</li><li>澳航香港站報到櫃檯在 <b>Aisle J</b></li></ul>",dead:"19:05 澳航報到截止"},
- {a:"20:05",b:"07:20",t:"🛫 QF 30 香港 → 墨爾本",g:["🕐 飛行 9:15","Airbus A330"],x:"<ul><li>隔日 07:20 抵達墨爾本第二航廈</li><li><b>空服員會發 Incoming Passenger Card，這是法律文件</b></li><li>有食物、藥品、木製品就打勾。申報不會罰，沒申報被查到才罰</li><li>機上發的水果不要帶下飛機</li></ul>"}
+ {a:"20:05",b:"07:20",t:"🛫 QF 30 香港 → 墨爾本（機上過夜）",g:["🕐 飛行 9:15","Airbus A330","🚨 這一夜睡在機上"],x:"<ul><li>隔日 07:20 抵達墨爾本第二航廈</li><li>🚨 <b>這是全程唯一在機上過夜的一晚，而且落地當天中午就有 12:15 的訂位。上機就睡，不要看電影</b></li><li>墨爾本比台灣快 2 小時——上機後<b>立刻把手錶調成澳洲時間</b>，用當地時間決定何時睡</li><li>機上供餐約在起飛後 1 小時與落地前 1.5 小時</li><li><b>空服員會發 Incoming Passenger Card，這是法律文件</b></li><li>有食物、藥品、木製品就打勾。申報不會罰，沒申報被查到才罰</li><li>機上發的水果不要帶下飛機</li></ul>"}
 ]},
 
 {id:"d2",date:"9/18",dow:"五",title:"抵達墨爾本 · Victor Churchill",sub:"落地當天最硬的一天",slots:[
@@ -187,7 +238,15 @@ var DAYS=[
  {a:"09:15",b:"10:30",t:"🏠 放行李、盥洗、換衣服",g:["🚨 公寓可能 14:00 後才能入住"],x:"<ul><li>370 Queen St 是 Agoda 公寓，<b>沒有櫃檯</b></li><li>屋主不讓寄放 → <b>Urloker 339 Queen St</b>，走 1 分鐘（55 m），08:00–21:00，+61 489 198 299</li><li>備用：O2shop 118 A'Beckett St（走 2 分，宣稱 24h，但評價 3.1★，有人說去了沒開）</li></ul>",q:"Urloker 339 Queen Street Melbourne"},
  {a:"10:30",b:"11:30",t:"🚶 走到 Melbourne Central 站",g:["🕐 走 4 分（355 m）"],x:"<ul><li>從 370 Queen St 往南走到 La Trobe St 方向</li><li><b>370 Queen St 在免費電車區的北邊界外</b>，要搭電車請走到 La Trobe St 的站牌</li></ul>",q:"Melbourne Central Station"},
  {a:"11:30",b:"12:10",t:"🚆 火車到 Armadale",g:["🚨 很多快車過站不停"],x:"<ul><li>搭<b>往 Frankston 方向</b>的火車</li><li><b>上車前用 PTV App 或看月台顯示牌確認該班車有停 Armadale</b>，搭錯要坐到下一站折返</li><li>維多利亞州公共運輸 2026/6/1–2027/1/1 全面半價</li></ul>",dead:"11:30 最晚上車"},
- {a:"12:15",b:"14:30",t:"🥩 Victor Churchill Melbourne",g:["🕐 12:15–14:30","🚨 14:30 硬性結束","💴 高價位"],x:"<ul><li><b>Armadale 站出站走 2 分鐘（144 m）</b></li><li>訂位編號 #7EZM6S3FKFA2，4 人，Storefront Dining</li><li><b>必點</b>：steak tartare、beef croquettes、côte de boeuf 或 chateaubriand、king prawn</li><li><b>吃法</b>：① 先看櫃檯後的玻璃熟成室，喜馬拉雅岩鹽磚牆、28 天熟成 ② 大塊肉講熟度要說 rare，多筆評論說比預期熟 ③ 整塊先展示再切，手機先準備好 ④ 馬蹄形吧檯約 13 席，主廚就在面前，可以直接問</li><li>🚨 <b>不要拖行李來，放不下</b></li></ul>",q:"Victor Churchill Armadale",dead:"12:15 到店"},
+ {a:"12:15",b:"14:30",t:"🥩 Victor Churchill Melbourne",g:["🕐 12:15–14:30","🚨 14:30 硬性結束","💴 高價位"],x:"<ul><li><b>Armadale 站出站走 2 分鐘（144 m）</b></li><li>訂位編號 #7EZM6S3FKFA2，4 人，Storefront Dining</li><li><b>必點</b>：steak tartare、beef croquettes、côte de boeuf 或 chateaubriand、king prawn</li><li><b>吃法</b>：① <b>開場的溫麵包配打發奶油可以續</b>，多篇食記提到有人加點第二份 ② 先看櫃檯後的玻璃熟成室，喜馬拉雅岩鹽磚牆、28 天熟成 ③ 大塊肉講熟度要說 rare，多筆評論說比預期熟 ④ 整塊先展示再切，手機先準備好 ⑤ 馬蹄形吧檯約 13 席，主廚就在面前，可以直接問 ⑥ <b>進門處就是肉舖本身</b>，可以買熟成牛排、莎樂美腸帶走——但🚨 <b>肉製品絕對不能帶回台灣</b>，初犯罰 NT$20 萬</li><li>2026 年 World's Best Steaks 榜上有名，訂位常要提前數月</li><li>🚨 <b>不要拖行李來，放不下</b></li></ul>",q:"Victor Churchill Armadale",dead:"12:15 到店",
+  walk:["Armadale 站 → 953 High St，144 公尺，走 2 分鐘",
+   ["出站後往 High Street 方向（車站就在 High St 上）",
+    "面向 High St，往 <b>東北</b>走（Kooyong Rd 的反方向）",
+    "沿路都是精品店與咖啡館，走約 2 分鐘",
+    "找<b>深色門面、招牌寫 VICTOR CHURCHILL、兩把交叉切肉刀的標誌</b>",
+    "櫥窗看得到掛著的整塊熟成肉，看到就是了"],
+   "看到掛肉的櫥窗就對了。走過頭會到 Kooyong Rd 大路口，那就退回來"],
+  photo:"櫃檯後方的<b>玻璃熟成室</b>與<b>喜馬拉雅岩鹽磚牆</b>是這家的招牌畫面。<br>整塊肉<b>會先端出來展示再拿去切</b>，那是唯一能拍到全貌的時機，手機先解鎖等著。<br>吧檯只有約 13 席，拍照時注意不要擋到別人。"},
  {a:"14:30",b:"18:00",t:"🚶 回市區、休息",g:[],x:"<ul><li>時差只有 2 小時，但飛了 14 小時</li><li>明天 08:00 出發大洋路，今天早點睡</li></ul>",q:"370 Queen St Melbourne CBD VIC 3000"},
  {a:"18:00",b:"20:00",t:"🍽️ 晚餐（自由）",g:["🚨 澳洲商店多半 17–18 點關"],x:"<ul><li>超市 Coles、Woolworths 開到 21–22 點</li><li>超市不賣酒，要去 bottle shop（Dan Murphy's、BWS、Liquorland）</li></ul>"}
 ]}
@@ -196,48 +255,76 @@ var DAYS=[
  {a:"07:00",b:"07:50",t:"🍞 早餐要在出發前吃完",g:["🚨 車上全程禁止飲食"],x:"<ul><li>訂單第 3 條：法規要求，<b>車內禁止任何食物與飲料</b></li><li>下一次正式用餐是 <b>13:40</b> 在動物園，中間五個半小時</li><li>會暈車的人現在吃藥，車上不能吃東西</li></ul>"},
  {a:"07:55",b:"08:00",t:"🚌 抵達上車點",g:["🚨 提前 5 分鐘","🚨 過時視為放棄，不退費"],x:"<ul><li>訂單 26KK213944869（RZ260812ZT4455），成人 ×4</li><li>⚠️ <b>上車點待查</b>——訂單上沒有寫地址</li><li>打 <b>03 8080 2288</b> 問：上車點地址、上車時間、公寓能不能上門接</li><li>查到後用 ✎ 編輯改成正確地點與時間</li></ul>",dead:"07:55 到上車點"},
  {a:"08:00",b:"10:00",t:"🚌 出發前往大洋路",g:["🕐 冬令時 08:00 出發"],x:"<ul><li><b>你們是冬令時那一欄</b>——澳洲夏令時間 10/4 才開始</li><li>訂單上的 1000／1115／1255 那組時間就是你們的時間，不用順延</li></ul>"},
- {a:"10:00",b:"10:15",t:"☕ Colac 小鎮休息",g:["🕐 約 15 分鐘"],x:"<ul><li>上廁所。下一站是十二門徒</li></ul>"},
- {a:"11:15",b:"12:45",t:"🪨 十二門徒石",g:["🕐 約 90 分鐘","💴 直升機自費 AU$195／成人"],x:"<ul><li>直升機當天跟導遊訂</li><li>🚨 <b>沒有遮蔽的海崖，風很大</b>。帽子要能綁住或收進包包，會被直接吹走</li><li>海岸紫外線反射強，防曬要擦</li></ul>",q:"Twelve Apostles Great Ocean Road"},
- {a:"12:55",b:"13:25",t:"🌊 洛克阿德峽谷",g:["🕐 約 30 分鐘"],x:"<ul><li>海水沖刷出的峽谷，有階梯下到海灘</li></ul>",q:"Loch Ard Gorge"},
+ {a:"10:00",b:"10:15",t:"☕ Colac 小鎮休息",g:["🕐 約 15 分鐘","🚻 上廁所"],x:"<ul><li>維多利亞州西部的農業小鎮，位在 Colac 湖畔</li><li>🚨 <b>下一次停靠是 11:15 的十二門徒，中間 1 小時在車上，而且車上禁止飲食</b>——現在上廁所</li><li>只停 15 分鐘，不要走遠</li><li>小鎮有超市與麵包店，想補行動糧可以趁現在（但要等下車後才能吃）</li></ul>"},
+ {a:"11:15",b:"12:45",t:"🪨 十二門徒石",g:["🕐 約 90 分鐘","💴 直升機自費 AU$195／成人"],x:"<ul><li>直升機當天跟導遊訂</li><li>🚨 <b>沒有遮蔽的海崖，風很大</b>。帽子要能綁住或收進包包，會被直接吹走</li><li>海岸紫外線反射強，防曬要擦</li></ul>",q:"Twelve Apostles Great Ocean Road",
+  photo:"🚨 <b>現存只有 7 根</b>，名字叫十二門徒但不是十二根。<br>主觀景台往<b>西</b>看能一次帶到最多根石柱。<br>從停車場要走一段步道穿過公路下方的地道才到觀景台，<b>時間要抓進 90 分鐘裡</b>。<br>海崖沒有遮蔽、風極大，<b>帽子要能綁住或收起來</b>，手機握緊。"},
+ {a:"12:55",b:"13:25",t:"🌊 洛克阿德峽谷",g:["🕐 約 30 分鐘","🚨 有階梯要走"],x:"<ul><li>名字來自 1878 年在此觸礁的鐵殼船 Loch Ard，船上只有兩人生還，兩人就是漂到這個峽谷上岸的</li><li>石灰岩被海水掏空形成的內凹海灣，兩側是垂直峭壁</li><li>🚨 <b>要走一段木階梯下到沙灘再走回來</b>，30 分鐘扣掉上下階梯的時間並不寬裕</li><li>階梯可能濕滑，<b>穿好走的鞋</b></li><li>不下沙灘的話，上方的觀景平台也看得到全景</li></ul>",q:"Loch Ard Gorge",
+  photo:"<b>從上方觀景台拍全景</b>——能同時帶到兩側峭壁與中間的沙灘，這是明信片角度。<br>下到沙灘後往回拍，峭壁的高度才有壓迫感。<br>海風大，<b>手機用手腕帶或握緊</b>。"},
  {a:"13:40",b:"14:40",t:"🦘 大洋路動物園 · 午餐",g:["🕐 約 60 分鐘","💴 門票 AU$37／成人","💴 午餐自費"],x:"<ul><li>Great Ocean Road Wildlife Park，自費入園</li><li><b>今天唯一的正餐</b></li><li>餵袋鼠時手掌攤平，不要用手指夾食物</li></ul>"},
- {a:"15:40",b:"16:00",t:"🏖️ 阿波羅灣",g:["🕐 約 20 分鐘"],x:"<ul><li>半月形海灣，一樣是空曠海邊，風大</li></ul>",q:"Apollo Bay Victoria"},
- {a:"17:10",b:"17:20",t:"📸 大洋路紀念門牌",g:["🕐 約 10 分鐘"],x:"<ul><li>Memorial Arch，明信片拍照點</li><li>只停 10 分鐘，下車就拍</li></ul>",q:"Great Ocean Road Memorial Arch"},
- {a:"17:20",b:"19:30",t:"🚌 返程",g:["🕐 約 19:30 抵墨爾本市區"],x:"<ul><li>💴 <b>下車前把小費給導遊：AU$5／人 × 4 ＝ AU$20 現金</b></li><li>澳洲一般不給小費，但中文團有這個慣例，訂單上明列</li></ul>"},
- {a:"19:30",b:"20:30",t:"📧 回住處後看信",g:["🚨 今晚一定要看信"],x:"<ul><li>9/20 的供應商會在 <b>今晚 20:00 前</b>寄出明天的確切出發時間</li><li>沒收到就打 Klook 客服，不要等到明天早上</li><li>明天出發區間是 08:00–11:00，不知道時間就不知道幾點起床</li></ul>",dead:"20:30 前確認收到信"}
+ {a:"15:40",b:"16:00",t:"🏖️ 阿波羅灣",g:["🕐 約 20 分鐘","🌬️ 風大"],x:"<ul><li>大洋路上的漁港小鎮，半月形海灣，背後是奧特威山脈</li><li>只停 20 分鐘，<b>下車就是拍照與伸展腿</b>，不夠時間走到海灘再走回來</li><li>鎮上主街有咖啡與冰淇淋店</li><li>🚨 空曠海邊，<b>帽子會被吹走</b></li></ul>",q:"Apollo Bay Victoria"},
+ {a:"17:10",b:"17:20",t:"📸 大洋路紀念門牌",g:["🕐 只停 10 分鐘"],x:"<ul><li>Memorial Arch，紀念一次大戰後修築這條路的三千名退伍軍人——大洋路本身就是世界最大的戰爭紀念物</li><li>🚨 <b>只停 10 分鐘，下車就拍，不要先上廁所</b></li><li>木造拱門橫跨公路，旁邊有紀念雕像</li></ul>",q:"Great Ocean Road Memorial Arch",
+  photo:"<b>站在公路中線往拱門拍</b>能拍到門framing 整條路，但<b>要注意來車</b>，有人在旁邊看車。<br>四個人一起站在拱門下是最常見的合照角度。<br>17:10 的九月澳洲天色開始轉暗，<b>光線偏暖，順光在拱門的西側</b>。"},
+ {a:"17:20",b:"19:30",t:"🚌 返程",g:["🕐 約 19:30 抵墨爾本市區","🚨 車上就開始收信"],x:"<ul><li>💴 <b>下車前把小費給導遊：AU$5／人 × 4 ＝ AU$20 現金</b></li><li>澳洲一般不給小費，但中文團有這個慣例，訂單上明列</li><li>🚨 <b>車上就開始刷信箱</b>——9/20 的供應商今晚 20:00 前會寄出明天的出發時間。大洋路是 11.5 小時長途，訂單註明行程可能因天氣、路況調整，回市區可能晚於預定，不要等回住處才看</li></ul>"},
+ {a:"19:30",b:"20:30",t:"📧 確認收到 9/20 的出發時間",g:["🚨 今晚一定要處理完"],x:"<ul><li>供應商應在 <b>今晚 20:00 前</b>寄出明天的確切出發時間</li><li><b>還沒收到就現在打 Klook 客服</b>，愈晚人愈少，不要拖到明天早上</li><li>明天出發區間是 08:00–11:00，不知道時間就不知道幾點起床</li><li>收到後用 <b>⋯ → ✎ 改</b>，把 Day 4 第一格的時間改成正確時間</li></ul>",dead:"20:30 前確認收到信"}
 ]},
 
 {id:"d4",date:"9/20",dow:"日",title:"普芬比利蒸汽火車 · 菲利普島企鵝",sub:"上下車都在住處門口",slots:[
  {a:"08:00",b:"11:00",t:"🚐 370 Queen St 門口上車",g:["🚨 確切時間昨晚才知道","🚨 提前 5 分鐘在樓下等"],x:"<ul><li>方案：選項 2 · CBD 飯店接載</li><li><b>共乘接送</b>，訂單註明實際時間可能提早或延遲</li><li>查到確切時間後用 ✎ 編輯改掉</li></ul>",dead:"通知時間前 5 分鐘"},
- {a:"11:00",b:"13:00",t:"🚂 普芬比利蒸汽小火車",g:["✅ 含單程票"],x:"<ul><li>1900 年起行駛於丹頓農山脈，志願者營運的遺產蒸汽火車</li><li>票是<b>單程</b>，不是來回</li></ul>",q:"Puffing Billy Railway"},
+ {a:"11:00",b:"13:00",t:"🚂 普芬比利蒸汽小火車",g:["✅ 含單程票"],x:"<ul><li>1900 年起行駛於丹頓農山脈，志願者營運的遺產蒸汽火車</li><li>票是<b>單程</b>，不是來回</li><li>山區林間，比市區冷，<b>外套先穿上</b></li></ul>",q:"Puffing Billy Railway"},
  {a:"13:00",b:"14:30",t:"🐨 Maru 動物園",g:["💴 自費 成人 AU$33","⚠️ 不保證能參加"],x:"<ul><li>訂單註明「視火車時刻表而定，不保證一定能搭乘」</li><li>可以抱無尾熊、親手餵袋鼠</li></ul>",q:"Maru Koala and Animal Park"},
+ {a:"14:30",b:"15:30",t:"🍽️ 午餐（自費，行程未包含）",g:["🚨 全天唯一的正餐機會","💴 自費"],x:"<ul><li>🚨 <b>訂單的費用不含任何一餐</b>。08:00 出發、23:59 才回住處，中間 16 小時</li><li>導遊會安排用餐停留，但<b>時間與地點都不固定</b>，也可能只有便利商店</li><li><b>出門前先買好行動糧</b>：麵包、能量棒、水。企鵝島晚上很冷，餓著更冷</li><li>晚餐時間卡在企鵝歸巢，多半來不及好好吃</li></ul>"},
  {a:"17:30",b:"20:30",t:"🐧 菲利普島企鵝歸巢",g:["✅ 含普通觀景臺門票","🚨 全面禁止拍照"],x:"<ul><li>世界上最小的企鵝，日落後成群上岸回巢</li><li>🚨 <b>自 2025 年起手機、相機一律不得拍攝企鵝</b>，為保護企鵝視力。園方提供 QR code 看影像</li><li>🚨 <b>觀景臺是露天水泥階梯</b>，吹的是巴斯海峽的風。<b>厚外套、毛帽、圍巾都要</b></li><li>座位又冷又硬，建議帶條薄毯或坐墊</li></ul>",q:"Penguin Parade Phillip Island"},
  {a:"21:30",b:"23:59",t:"🚐 送回 370 Queen St 門口",g:["🕐 訂單載明的回程窗口"],x:"<ul><li>💴 <b>導遊服務費金額訂單沒寫</b>，先按 AU$5／人備現金</li><li>回到住處可能已超過 22:00</li><li>🚨 <b>明天 09:15 有 Cuff、15:00 有飛機。行李今天出門前就打包好</b></li></ul>"}
 ]},
 
 {id:"d5",date:"9/21",dow:"一",title:"Cuff 早餐 → 飛雪梨",sub:"VA0853 · 換城市",slots:[
  {a:"08:00",b:"09:00",t:"🧳 退房、行李帶著",g:[],x:"<ul><li>370 Queen St 是公寓，退房方式跟屋主確認過的方法</li><li>行李先寄放或直接帶去餐廳附近</li></ul>"},
- {a:"09:15",b:"10:30",t:"☕ Cuff",g:["🕐 週一 07:00–16:00","💴 中價位"],x:"<ul><li>住處走 12 分鐘（931 m）／325 Flinders Lane</li><li><b>必點</b>：crispy skin barramundi（脆皮金目鱸）、corn fritters、French toast with bacon、caramelised brioche</li><li><b>吃法</b>：① 先點咖啡再看菜單，咖啡要等 ② 金目鱸底下的野生米有嚼勁，跟魚一起吃不要分開 ③ 角落座位較難叫到人，進門可以說想坐靠走道</li></ul>",q:"Cuff Flinders Lane Melbourne"},
+ {a:"09:15",b:"10:30",t:"☕ Cuff",g:["🕐 週一 07:00–16:00","💴 中價位"],dead:"09:15 訂位",x:"<ul><li>住處走 12 分鐘（931 m）／325 Flinders Lane</li><li><b>必點</b>：crispy skin barramundi（脆皮金目鱸）、corn fritters、French toast with bacon、caramelised brioche</li><li><b>吃法</b>：① 先點咖啡再看菜單，咖啡要等 ② 金目鱸底下的野生米有嚼勁，跟魚一起吃不要分開 ③ 角落座位較難叫到人，進門可以說想坐靠走道</li></ul>",q:"Cuff Flinders Lane Melbourne"},
  {a:"10:30",b:"13:30",t:"🚶 市區自由時間",g:["🚨 買伴手禮不要留到晚上"],x:"<ul><li>維多利亞女王市場距 370 Queen St 走 4 分鐘（324 m）</li><li>澳洲商店多半 17–18 點關門</li><li>💴 TRS 退稅：同一 ABN 滿 AU$300 才能退，<b>結帳當下就要拿 tax invoice</b></li></ul>",q:"Queen Victoria Market"},
  {a:"13:30",b:"14:00",t:"🚕 前往墨爾本機場 T3",g:["💴 maxi taxi 約 AU$65–81"],x:"<ul><li>13cabs：<b>13 2227</b></li><li>或 Southern Cross 搭 SkyBus（10–15 分一班，車程 30 分、尖峰 45 分）</li></ul>",q:"Melbourne Airport Terminal 3"},
  {a:"14:00",b:"14:30",t:"🛄 T3 報到、託運行李",g:["🚨 14:30 硬性截止"],x:"<ul><li>訂位代號 <b>WXYJYO</b>（Virgin Australia）</li><li>Virgin 建議託運行李於起飛前 60 分鐘完成，<b>硬性截止 30 分鐘</b></li><li>線上報到 9/19 15:00 就開放了</li></ul>",dead:"14:30 報到截止"},
  {a:"15:00",b:"16:25",t:"✈️ VA 0853 墨爾本 → 雪梨",g:["🕐 飛行 1:25","座位 21B–21E"],x:"<ul><li>波音 737-800，抵達雪梨 <b>T2 國內線</b></li></ul>"},
- {a:"16:25",b:"17:30",t:"🚆 前往 View Sydney",g:["🚨 機場站有通行費"],x:"<ul><li>T2 行李轉盤 1 旁的電梯下到 <b>Domestic Airport 車站</b></li><li>🚨 車站通行費成人約 AU$18.61（Opal／感應支付），<b>不計入 Opal 每日上限</b></li><li>到 Central 或 Town Hall 轉車到<b>北雪梨站</b>，出站走 120 公尺</li></ul>",q:"View Sydney North Sydney"},
+ {a:"16:25",b:"17:30",t:"🚆 前往 View Sydney",g:["🚨 機場站有通行費"],
+  walk:["雪梨機場 T2 → 北雪梨站 → View Sydney",
+   ["出關後找 <b>行李轉盤 1</b> 旁邊的電梯，往下到 <b>Domestic Airport 車站</b>",
+    "刷 Opal 卡或直接感應信用卡進站",
+    "🚨 <b>進站會被收約 AU$18.61 的車站通行費</b>，這筆不計入每日上限",
+    "搭 T8 線到 <b>Central</b> 或 <b>Town Hall</b>，轉 T1 線往 <b>North Sydney</b>",
+    "北雪梨站出站，找 <b>Blue Street</b> 出口",
+    "沿 Blue St 走約 120 公尺，飯店在右手邊"],
+   "北雪梨站到飯店只有 120 公尺，出站看到 Blue Street 就快到了"],
+  x:"<ul><li>T2 行李轉盤 1 旁的電梯下到 <b>Domestic Airport 車站</b></li><li>🚨 車站通行費成人約 AU$18.61（Opal／感應支付），<b>不計入 Opal 每日上限</b></li><li>到 Central 或 Town Hall 轉車到<b>北雪梨站</b>，出站走 120 公尺</li></ul>",q:"View Sydney North Sydney"},
  {a:"17:30",b:"19:00",t:"🏨 View Sydney 入住",g:["🕐 15:00 後可入住"],x:"<ul><li>17 Blue St, North Sydney NSW 2060／<b>+61 2 9955 0499</b></li><li>櫃檯 24 小時。北雪梨車站旁 120 公尺</li><li>房間可能聽得到火車聲，在意可以要求安靜房</li></ul>"}
 ]}
 ,
 {id:"d6",date:"9/22",dow:"二",title:"雪梨 · Porteño",sub:"住北雪梨，餐廳都在橋的南邊",slots:[
- {a:"09:00",b:"17:00",t:"🗺️ 雪梨自由時間",g:["🚨 從北雪梨每趟都要過橋"],x:"<ul><li>飯店就在北雪梨車站旁 120 公尺，出門即上車</li><li>火車到 Central 約 10 分鐘</li><li>Opal 週五、六、日與假日每日上限 AU$9.65，週一至週四 AU$19.30</li></ul>"},
+ {a:"09:00",b:"17:00",t:"🗺️ 雪梨自由時間",g:["🚨 從北雪梨每趟都要過橋","🍽️ 今天只排了晚餐"],x:"<ul><li>🚨 <b>今天行程只有 18:00 的 Porteño，早餐和午餐要自己找</b></li><li>飯店就在北雪梨車站旁 120 公尺，出門即上車</li><li>火車到 Central 約 10 分鐘</li><li>Opal 週五、六、日與假日每日上限 AU$9.65，週一至週四 AU$19.30</li><li>晚上是重肉的阿根廷烤肉，<b>午餐吃清淡一點</b></li></ul>"},
  {a:"17:15",b:"18:00",t:"🚆 出發往 Surry Hills",g:["🕐 抓 45 分鐘"],x:"<ul><li>北雪梨 → Central 火車約 10 分鐘</li><li>Central 走到 50 Holt St 約 12 分鐘</li></ul>",q:"Porteno Surry Hills"},
- {a:"18:00",b:"20:15",t:"🔥 Porteño",g:["🕐 18:00–20:15","💴 高價位"],x:"<ul><li>50 Holt Street, Surry Hills／<b>+61 2 8399 1440</b>。該店 17:45 開門，你們是第一輪</li><li><b>必點</b>：8 小時炭烤乳豬或羊、fried Brussels sprouts、empanadas、morcilla（血腸）、wood-fired bone marrow</li><li><b>吃法</b>：① <b>坐下第一件事就是點 asado</b>——一天只烤兩隻豬兩隻羊，賣完就沒 ② 進門先看門口的炭火坑，豬羊是十字架式架著烤 ③ asado 一板一板出，四人建議點兩份不同的 ④ 全部分食制，4 前菜＋2 asado＋3 配菜最順 ⑤ <b>要求一次上一道主菜</b>，一次全上會冷掉</li><li>🚨 骨髓上的孜然沒寫在菜單上，不吃就說 <b>no cumin</b></li><li>樓上 Gardel's Bar 可以飯後上去</li></ul>",q:"Porteno Surry Hills",dead:"18:00 訂位"},
+ {a:"18:00",b:"20:15",t:"🔥 Porteño",g:["🕐 18:00–20:15","💴 高價位"],x:"<ul><li>50 Holt Street, Surry Hills／<b>+61 2 8399 1440</b>。<b>週二晚餐 17:45 開門</b>，你們 18:00 是第一輪</li><li><b>必點</b>：8 小時炭烤乳豬或羊、<b>Provoleta</b>（烤 provolone 起司配奧勒岡與辣油，多來源列為第一次來必點）、<b>Bife de Chorizo</b>（沙朗）、fried Brussels sprouts（配<b>扁豆與薄荷</b>）、empanadas、morcilla（血腸）、wood-fired bone marrow</li><li><b>另一種點法</b>：官網有 <b>Signature Banquet</b> 與 <b>Grand Banquet</b> 兩種套餐，四人分食可能比單點省事</li><li>牛肉由 Boutique Butcher <b>熟成 5 週</b></li><li><b>吃法</b>：① <b>坐下第一件事就是點 asado</b>——豬羊在炭火上架 8 小時，賣完就沒 ② 進門先看門口的炭火坑，豬羊是十字架式架著烤 ③ asado 一板一板出，四人建議點兩份不同的 ④ 全部分食制，4 前菜＋2 asado＋3 配菜最順 ⑤ <b>要求一次上一道主菜</b>，一次全上會冷掉</li><li>🚨 骨髓上的孜然沒寫在菜單上，不吃就說 <b>no cumin</b></li><li>隔壁是同集團的 <b>Bastardo</b>，用同一套訂位系統。私人包廂入口在 <b>Gladstone Street</b>，不是 Holt St 正門</li></ul>",q:"Porteno Surry Hills",dead:"18:00 訂位",
+  walk:["Central 站 → 50 Holt Street, Surry Hills，走約 12 分鐘",
+   ["從 Central 站的 <b>Devonshire Street 出口</b>出來（不是 Eddy Ave 那側）",
+    "沿 Devonshire St 往東走，穿過 Elizabeth St",
+    "右轉 Bourke St，再左轉進 Holt St",
+    "找<b>門口有炭火坑、豬羊十字架式架著烤</b>的那家",
+    "17:45 開門，你們 18:00 是第一輪"],
+   "聞到炭火味就對了。Holt St 是小街，車不多"],
+  photo:"<b>門口的炭火坑</b>是這家最有名的畫面——整隻豬羊用十字架撐開，斜靠著炭火慢烤。<br>進門前先拍，坐下後就背對它了。"},
  {a:"20:15",b:"21:30",t:"🚆 回北雪梨",g:["🕐 火車末班約午夜"],x:"<ul><li>午夜後改 NightRide 公車</li></ul>",q:"View Sydney North Sydney"}
 ]},
 
 {id:"d7",date:"9/23",dow:"三",title:"Something for Jess · Totti's Bondi",sub:"今天橫跨半個雪梨",slots:[
  {a:"09:15",b:"10:00",t:"🚆 出發往 Chippendale",g:["⚠️ 地點待確認"],x:"<ul><li>北雪梨 → Central 或 Redfern</li><li>⚠️ 訂位確認信<b>只寫店名，沒有地址</b>。我比對到雪梨 Chippendale 的「Something for Jess - SFJ Cafe & Coffee」，27 Abercrombie St，但<b>沒有確認</b></li><li>出發前回訂位信問地址</li></ul>"},
  {a:"10:00",b:"11:30",t:"🥑 Something for Jess",g:["🕐 週三 07:00–14:00（待確認）","💴 中價位"],x:"<ul><li>27 Abercrombie St, Chippendale（<b>待確認</b>）／+61 468 602 770</li><li><b>必點</b>：breakfast wrap／Golden Wrap、corn fritter benedict、cold brew、Verde Vibes</li><li><b>吃法</b>：① 玉米餅是核心，三道招牌都有玉米餅，四人不要重複點 ② <b>有評論說食物送來是冷的、水波蛋像預做的</b>，上桌摸一下，冷了當場退 ③ 店裡有書，10:00 人不多可以慢慢吃</li></ul>",q:"Something for Jess Chippendale",dead:"10:00 訂位"},
- {a:"11:30",b:"17:00",t:"🗺️ 雪梨自由時間",g:[],x:"<ul><li>🚨 若順道去海灘：<b>只在有救生員的沙灘、紅黃旗之間下水</b></li><li>澳洲水域每年約 280 人溺水，遠超蛇（1–2 人）與蜘蛛（自 1979–80 年後無死亡紀錄）</li><li>被離岸流帶走<b>不要逆游</b>，舉手握拳呼救，讓身體浮著</li></ul>"},
+ {a:"11:30",b:"17:00",t:"🗺️ 雪梨自由時間",g:["🍽️ 早餐到晚餐間隔 8 小時"],x:"<ul><li>🚨 <b>10:00 吃完早餐，18:15 才是 Totti's，中間要自己補一餐</b></li><li>🚨 若順道去海灘：<b>只在有救生員的沙灘、紅黃旗之間下水</b></li><li>澳洲水域每年約 280 人溺水，遠超蛇（1–2 人）與蜘蛛（自 1979–80 年後無死亡紀錄）</li><li>被離岸流帶走<b>不要逆游</b>，舉手握拳呼救，讓身體浮著</li></ul>"},
  {a:"17:15",b:"18:15",t:"🚌 出發往 Bondi",g:["🕐 抓滿 60 分鐘","🚨 今天最長的一段"],x:"<ul><li>北雪梨 → 火車到 <b>Bondi Junction</b> → 轉 <b>333 或 380 公車</b></li><li>🚨 <b>在 Bondi Rd 下車，不是 Bondi Beach</b>，餐廳比海灘早一站</li><li>四人叫 Uber 從北雪梨直達約 25–30 分，塞車時反而比火車慢</li></ul>",q:"Tottis Bondi"},
- {a:"18:15",b:"20:30",t:"🍝 Totti's Bondi",g:["🕐 18:15","💴 中價位"],x:"<ul><li>283 Bondi Road, Bondi／<b>+61 2 9114 7371</b>／訂位 #TOTB-A87WAW4P7FPS。餐廳在 The Royal 酒吧樓上</li><li><b>必點</b>：wood-fired bread（<b>每人各一份</b>）、burrata、pappardelle with lamb ragù、rigatoni milk-braised pork & chilli、chocolate torte</li><li><b>吃法</b>：① 麵包現點現烤，上桌燙手，<b>趁熱撕開</b> ② <b>布拉塔放到接近室溫再吃</b>——冷藏是硬的，放五分鐘會變流心，這是關鍵 ③ 撕麵包 → 舀布拉塔內餡 → 疊生火腿或 'nduja → 一口吃掉 ④ 麵包也用來抹乾義大利麵的醬</li><li>🚨 <b>水要說 tap water</b>，不然會送 1 公升瓶裝水（約 AU$12.60）。這是這家最常見的踩雷點</li><li>🚨 螃蟹義大利麵評價兩極，想穩就點羊肉寬麵</li></ul>",q:"Tottis Bondi",dead:"18:15 訂位"},
+ {a:"18:15",b:"20:30",t:"🍝 Totti's Bondi",g:["🕐 18:15","💴 中價位"],x:"<ul><li>283 Bondi Road, Bondi／<b>+61 2 9114 7371</b>／訂位 #TOTB-A87WAW4P7FPS。餐廳在 The Royal 酒吧樓上</li><li>🚨 <b>雪梨有三家 Totti's，不要走錯</b>：你們訂的是 <b>Totti's Bondi</b>（283 Bondi Rd）。另外兩家是 <b>Bar Totti's</b>（CBD，Wynyard 站附近）和 <b>Totti's Rozelle</b>（內西區）。Google 搜「Totti's」很容易導到 CBD 那家</li><li><b>必點</b>：wood-fired bread（<b>每人各一份</b>）、burrata、pappardelle with lamb ragù、rigatoni milk-braised pork & chilli、chocolate torte</li><li><b>吃法</b>：① 麵包現點現烤，<b>48 小時發酵的麵團</b>在高溫窯中烤到蓬鬆。<b>剛上桌最蓬，放久會慢慢塌軟</b>，所以要趁熱先吃，不要等菜到齊 ② <b>布拉塔放到接近室溫再吃</b>——冷藏是硬的，放五分鐘會變流心，這是關鍵 ③ 撕麵包 → 舀布拉塔內餡 → 疊生火腿或 'nduja → 一口吃掉 ④ 麵包也用來抹乾義大利麵的醬</li><li>🚨 <b>水要說 tap water</b>，不然會送 1 公升瓶裝水（約 AU$12.60）。這是這家最常見的踩雷點</li><li>🚨 螃蟹義大利麵評價兩極，想穩就點羊肉寬麵</li></ul>",q:"Tottis Bondi",dead:"18:15 訂位",
+  walk:["333／380 公車 Bondi Rd 站 → 283 Bondi Road",
+   ["🚨 <b>在 Bondi Rd 下車，不是 Bondi Beach</b>，餐廳比海灘早一站",
+    "下車後看門牌號碼，往 283 號方向走",
+    "找<b>The Royal Hotel</b>——那是一棟有陽台的舊式酒吧建築",
+    "<b>餐廳在酒吧的樓上</b>，不在一樓",
+    "從一樓酒吧內的樓梯上去，或看門口的 Totti's 指標"],
+   "如果你站在沙灘上，代表坐過站了，往回走一站。🚨 走進去發現店名是 Bar Totti's 或 Totti's Rozelle 就是跑錯分店"]},
  {a:"20:30",b:"22:00",t:"🚌 回北雪梨",g:["🕐 約 60 分鐘"],x:"<ul><li>要過雪梨港灣大橋，比去程更久</li><li>累了就叫車，四人分攤划算</li></ul>",q:"View Sydney North Sydney"}
 ]},
 
@@ -251,20 +338,28 @@ var DAYS=[
 ]},
 
 {id:"d9",date:"9/25",dow:"五",title:"飛回墨爾本 · La Cucina",sub:"🚨 維多利亞州公定假日",slots:[
- {a:"05:00",b:"05:30",t:"⏰ 起床",g:["🚨 全程最早的一天"],x:"<ul><li>飯店吃不到早餐，到機場過安檢後再吃</li></ul>"},
+ {a:"05:00",b:"05:30",t:"⏰ 起床",g:["🚨 全程最早的一天","🚨 到午餐前有 7 小時"],x:"<ul><li>飯店吃不到早餐——櫃檯 24 小時但餐廳沒開</li><li>🚨 <b>05:00 起床，12:30 才吃 La Cucina，中間 7 個半小時</b></li><li><b>前一晚就在便利商店買好早餐</b>，或到 T2 過安檢後買。機上 1.5 小時的短程航線餐食有限</li><li>四個人都設兩個鬧鐘</li></ul>"},
  {a:"05:30",b:"06:15",t:"🚕 maxi taxi 到雪梨機場 T2",g:["🕐 清晨約 20–30 分","💴 夜間費率"],x:"<ul><li>北雪梨 → 雪梨機場 T2 約 13–14 公里</li><li>🚨 <b>不要賭第一班火車</b>——T8 機場線首班時間各來源不一致（5am／4:30am），且要在 Central 轉車</li><li>05:30 落在夜間費率（10pm–6am），maxi 附加費最高可到一般上限的 150%</li></ul>",dead:"05:30 離開飯店"},
  {a:"06:15",b:"06:45",t:"🛄 T2 報到、託運行李",g:["🚨 06:45 硬性截止"],x:"<ul><li>訂位代號 <b>WXYJYO</b></li><li>Virgin 建議起飛前 60 分鐘完成託運，硬性截止 30 分鐘</li></ul>",dead:"06:45 報到截止"},
  {a:"07:15",b:"08:50",t:"✈️ VA 0810 雪梨 → 墨爾本",g:["🕐 飛行 1:35","座位 20B–20E"],x:"<ul><li>抵達墨爾本 <b>T3</b></li></ul>"},
  {a:"08:50",b:"10:00",t:"🚕 進市區",g:["✅ SkyBus 公定假日時刻表不變"],x:"<ul><li>四人叫 maxi taxi，或 T3 外搭 SkyBus</li><li>SkyBus 官方 FAQ：墨爾本市區線在維多利亞州公定假日<b>維持原時刻表</b></li></ul>",q:"557 Little Lonsdale St Melbourne CBD VIC 3000"},
  {a:"10:00",b:"12:00",t:"🧳 行李寄放",g:["🚨 公寓可能 15:00 才能入住"],x:"<ul><li>557 Little Lonsdale St 是公寓，<b>沒有櫃檯</b>。9/24 在雪梨時就要問過屋主</li><li>寄放不了 → <b>Urloker 339 Queen St</b>（走 5 分／413 m，08:00–21:00）或 Urloker 190 Queen St（465 m，09:00–23:00）</li></ul>",q:"Urloker 339 Queen Street Melbourne"},
- {a:"12:30",b:"14:00",t:"🍕 La Cucina Melbourne",g:["🕐 12:30–14:00","🚨 公定假日加收約 15%"],x:"<ul><li>住處走 <b>3 分鐘（270 m）</b>／628 Little Bourke St（Cosgrave Lane 轉角，Holey Moley 對面）</li><li>☎ 訂位信寫 <b>03 8450 7682</b>，Google 登錄 03 8456 7682。<b>兩個號碼不一致，先打訂位信那支</b></li><li><b>必點</b>：carbonara、amatriciana rigatoni、calamari fritti、ortolana pizza、tiramisu</li><li><b>吃法</b>：① 薄脆餅皮，兩人可分一整個。四人點兩 pizza 加兩份麵剛好 ② <b>附的辣油很辣</b>，先沾一點試 ③ 份量偏大，不要每人各點一份主餐</li><li>🚨 多筆評論提到<b>訂了位、收到確認信，到現場仍要排隊</b>。準時到，不要早到太多</li><li>🚨 有評論說坐滿 1 小時 40 分被請走。你們的訂位正好 90 分鐘</li></ul>",q:"La Cucina Melbourne Little Bourke",dead:"12:30 訂位"},
+ {a:"12:30",b:"14:00",t:"🍕 La Cucina Melbourne",g:["🕐 12:30–14:00","🚨 公定假日加收約 15%"],x:"<ul><li>住處走 <b>3 分鐘（270 m）</b>／628 Little Bourke St（Cosgrave Lane 轉角，Holey Moley 對面）</li><li>☎ 訂位信寫 <b>03 8450 7682</b>，Google 登錄 03 8456 7682。<b>兩個號碼不一致，先打訂位信那支</b></li><li><b>必點</b>：carbonara、amatriciana rigatoni、calamari fritti、ortolana pizza、tiramisu</li><li><b>吃法</b>：① 薄脆餅皮，兩人可分一整個。四人點兩 pizza 加兩份麵剛好 ② <b>附的辣油很辣</b>，先沾一點試 ③ 份量偏大，不要每人各點一份主餐</li><li>🚨 <b>手機存好訂位確認信的離線截圖</b>——有一則 2026/4 的四人訂位評論寫，客人明明訂了位，店家卻說「你們沒有訂位、只能坐半小時」，並在五分鐘內送上帳單要求離席</li><li>🚨 多筆評論提到<b>訂了位、收到確認信，到現場仍要排隊</b>。準時到，不要早到太多</li><li>官網訂位政策：預授權 <b>$0</b>（不實際扣款）、取消或更改要<b>提前 1 小時</b>通知</li><li>🚨 有評論說坐滿 1 小時 40 分被請走。你們的訂位正好 90 分鐘</li></ul>",q:"La Cucina Melbourne Little Bourke",dead:"12:30 訂位"},
  {a:"14:00",b:"18:00",t:"🗺️ 市區自由",g:["🚨 全州放假，銀行不開"],x:"<ul><li>AFL Grand Final Friday，維多利亞州公定假日</li><li>部分商店縮短營業，餐廳普遍加收約 15%</li><li>Yarra Park 有 Footy Fest（9/23–9/26），MCG 周邊人潮</li></ul>"}
 ]},
 
 {id:"d10",date:"9/26",dow:"六",title:"Reine & La Rue",sub:"🚨 AFL 總決賽日",slots:[
  {a:"09:00",b:"12:30",t:"🗺️ 市區自由",g:["🚨 10 萬人往 MCG 移動"],x:"<ul><li>AFL 總決賽 14:30 於 MCG 開賽，約 17:00 結束</li><li><b>12:00–14:00 正是人潮往 MCG 移動的時段</b></li></ul>"},
  {a:"12:40",b:"13:00",t:"🚶 走去 Reine & La Rue",g:["🕐 走 9 分（694 m）","🚨 提早 20 分鐘出門"],x:"<ul><li>住處到 380 Collins St 走 9 分鐘</li><li>380 Collins St 到 MCG 直線約 1.9 公里，比想像中近，市區會很擠</li></ul>",q:"Reine and La Rue Melbourne"},
- {a:"13:00",b:"15:30",t:"🥂 Reine & La Rue",g:["🕐 13:00","🚨 週六加收 10%","👔 elegant smart casual"],x:"<ul><li>380 Collins Street（Queen St 轉角，ANZ 銀行大廳後方）／<b>+61 3 9021 5241</b>／訂位 #5JP2ZF37DD95</li><li>🚨 <b>全程唯一有明文服裝要求的一家。不要穿短褲拖鞋</b></li><li><b>必點</b>：duck liver & foie gras parfait（約 AU$28）、生蠔、beef tartare 與 scallop gratin（單顆各約 AU$12）、Great Ocean duck（半隻約 AU$140）或 striploin 300g（約 AU$80）、cassoulet</li><li><b>吃法</b>：① 進門先看空間——這是<b>墨爾本舊證券交易所</b>，哥德式拱頂與彩繪玻璃，這是一半的價值 ② <b>小點是單顆計價，四人各點一顆就能全部試到</b>，這是最划算的點法 ③ 鴨肝慕斯配麵包（baguette 另計約 AU$10），<b>要厚塗</b> ④ 隔壁有 8 座的小酒吧 La Rue，可以直接走進去不用訂位</li></ul>",q:"Reine and La Rue Melbourne",dead:"13:00 訂位"},
+ {a:"13:00",b:"15:30",t:"🥂 Reine & La Rue",g:["🕐 13:00","🚨 週六加收 10%","👔 elegant smart casual"],x:"<ul><li>380 Collins Street（Queen St 轉角，ANZ 銀行大廳後方）／<b>+61 3 9021 5241</b>／訂位 #5JP2ZF37DD95</li><li>🚨 <b>全程唯一有明文服裝要求的一家。不要穿短褲拖鞋</b></li><li><b>必點</b>：duck liver & foie gras parfait（約 AU$28）、生蠔、beef tartare 與 scallop gratin（單顆各約 AU$12）、Great Ocean duck（半隻約 AU$140）或 striploin 300g（約 AU$80）、cassoulet</li><li><b>主廚 Jacqui Challinor 親自推薦</b>：生蠔配<b>煙燻橄欖油與海藻 mignonette</b>、<b>Long Paddock 發酵奶油配 All Are Welcome 的長棍</b>（她說是全場的 showstopper）、<b>手潛女王扇貝配松露奶油</b>火烤、confit rabbit、saucisson、wood-roasted leeks</li><li>店內另有<b>生蠔吧</b>與<b>推車式起司車</b>，起司車會推到桌邊選</li><li><b>吃法</b>：① 進門先看空間——這是<b>墨爾本舊證券交易所</b>，哥德式拱頂與彩繪玻璃，這是一半的價值 ② <b>小點是單顆計價，四人各點一顆就能全部試到</b>，這是最划算的點法 ③ 鴨肝慕斯配麵包（baguette 另計約 AU$10），<b>要厚塗</b> ④ 隔壁有 <b>8 座</b>的小酒吧 La Rue，可以直接走進去不用訂位 ⑤ 這是 <b>138 年歷史的 Gothic Bank</b>，<b>2024 年拿下澳洲室內設計大獎首獎</b>，150 席</li><li>⚠️ 網路上有頁面把這家電話寫成 (02) 9280 3395——<b>那是 NOMAD 雪梨的號碼</b>。這家是 <b>+61 3 9021 5241</b></li></ul>",q:"Reine and La Rue Melbourne",dead:"13:00 訂位",
+  walk:["557 Little Lonsdale St → 380 Collins St，694 公尺，走 9 分鐘",
+   ["出門往南走到 Lonsdale St，再往東（左轉）",
+    "沿路經過 Queen St，繼續往南到 Collins St",
+    "在 <b>Collins St 與 Queen St 轉角</b>找 <b>ANZ 銀行</b>",
+    "🚨 <b>餐廳在 ANZ 銀行大廳的後方</b>，不是獨立店面，門口不顯眼",
+    "看到哥德式拱頂的挑高大廳就是進對地方了"],
+   "看到 ANZ 銀行的哥德式大廳就對了。走到 Flinders St 或看到亞拉河代表走過頭，往回退一個街廓。9/26 是總決賽日，提早 20 分鐘出門"],
+  photo:"這裡是<b>墨爾本舊證券交易所</b>，哥德式拱頂與彩繪玻璃是一半的價值。<br><b>進門先抬頭拍天花板</b>，坐下後角度就沒了。<br>服裝要求 elegant smart casual，拍起來也比較好看。"},
  {a:"15:30",b:"17:00",t:"🗺️ 市區（避開東側）",g:["🚨 17:00 前後散場"],x:"<ul><li><b>下午 5 點前後不要搭電車或火車經過 Richmond／Jolimont 方向</b></li></ul>"},
  {a:"19:00",b:"21:00",t:"🧳 打包、訂明早的車",g:["🚨 公寓無櫃檯，要自己訂車"],x:"<ul><li>訂明早 <b>07:00</b> 的 maxi taxi——13cabs <b>13 2227</b></li><li>💴 <b>把所有 tax invoice 整理好放隨身行李</b></li><li>退稅品要放隨身行李，不能託運</li></ul>",dead:"21:00 訂好車"}
 ]},
@@ -273,8 +368,8 @@ var DAYS=[
  {a:"06:30",b:"07:00",t:"🧳 最後檢查",g:["🚨 退稅品放隨身"],x:"<ul><li>tax invoice 原始紙本、退稅品在隨身行李</li><li>公寓鑰匙依屋主指定方式歸還</li></ul>"},
  {a:"07:00",b:"07:15",t:"🚕 前往墨爾本機場 T2",g:["💴 maxi taxi 約 AU$65–81"],x:"<ul><li>總決賽隔天的週日早上，時間抓寬一點</li></ul>",q:"Melbourne Airport Terminal 2"},
  {a:"07:15",b:"09:45",t:"🛄 報到、TRS 退稅",g:["🚨 09:45 前完成 TRS"],x:"<ul><li>澳航櫃檯起飛前 3 小時開櫃、<b>起飛前 60 分鐘關閉</b></li><li>超大件或液體退稅品要在 check-in <b>前</b>先給 ABF 驗</li><li>🚨 <b>TRS 最晚在起飛前 30 分鐘受理</b></li><li>排太長就放棄退稅，不要賭班機</li></ul>",dead:"09:45 TRS 截止"},
- {a:"10:15",b:"17:55",t:"✈️ QF 29 墨爾本 → 香港",g:["🕐 飛行 9:40"],x:"<ul><li>抵達香港第一航廈</li></ul>"},
- {a:"17:55",b:"20:10",t:"🔁 香港轉機（135 分鐘）",g:["🕐 比去程寬鬆"],x:"<ul><li>就算要重新報到，時間也夠</li></ul>"},
+ {a:"10:15",b:"17:55",t:"✈️ QF 29 墨爾本 → 香港",g:["🕐 飛行 9:40","🍽️ 機上供餐"],x:"<ul><li>抵達香港第一航廈</li><li>9 小時 40 分的航程，機上會供餐兩次</li><li>落地香港後<b>手錶調回台灣時間</b>（香港與台灣同時區）</li></ul>"},
+ {a:"17:55",b:"20:10",t:"🔁 香港轉機（135 分鐘）",g:["🕐 比去程寬鬆"],x:"<ul><li>比去程的 95 分鐘寬鬆，就算要重新報到也夠</li><li>先看螢幕確認 CI920 的登機門，再去吃東西</li><li>🚨 <b>香港買的東西也算入台灣的免稅額</b>：行李物品 NT$35,000、酒 1.5 公升、菸 200 支</li></ul>"},
  {a:"20:10",b:"22:10",t:"🛫 CI 920 香港 → 桃園",g:["🕐 飛行 2:00"],x:"<ul><li>🚨 <b>回台灣不要帶肉製品</b>——自非洲豬瘟疫區攜帶豬肉製品，初犯罰 NT$20 萬、再犯 100 萬</li><li>肉乾、肉鬆、香腸、含肉餡糕點、<b>飛機上的肉類餐點</b>都算</li><li>台灣入境免稅額：行李物品 NT$35,000、酒 1.5 公升、菸 200 支</li></ul>"}
 ]}
 ];
@@ -419,17 +514,22 @@ function renderDay(id){
     '<div class="note">下面每一格都已算出順延後的實際時間。受影響的死線：'+
     (ss.filter(function(s){return s.dead}).map(function(s){return esc(s.dead)+" → "+fmt(mins(s.a)+lag)}).join("；")||"無")+
     '</div></div>';
-  h+='<div class="card"><h3>📍 今天走散的集合點</h3><div class="note">'+esc(MEET[id]||"—")+
-    '<br>原地站 5 分鐘 → 打電話／傳訊息 → 到集合點等 30 分鐘 → 回住處</div></div>';
+  var mt=MEET[id];
+  if(mt&&!mt.skip) h+='<div class="card"><h3>📍 今天走散了</h3>'+
+    '<div class="note"><b>集合點</b><br>'+mt.p+'</div>'+
+    '<div class="note" style="margin-top:9px"><b>四步</b><br>'+
+    '① 原地站 5 分鐘不要移動<br>② 打電話，打不通改傳訊息<br>③ 到上面的集合點等 30 分鐘<br>'+
+    '④ 還是沒接上 → '+mt.f+'</div></div>';
   h+='<div class="rail">'+ss.map(function(s){return slotHTML(s,d,lag)}).join("")+'</div>';
+  h+=spotsHTML(id);
   h+='<div class="acts" style="margin-top:16px"><button class="btn sec" data-add="'+id+'">＋ 加一格</button>'+
      (lag?'<button class="btn sec" data-clearlag="'+id+'">重設抵達紀錄</button>':'')+'</div>';
   return h;
 }
 /* ===== 分帳 ===== */
 function avHTML(i,sm){ var a=ST.avatars[i];
-  return '<span class="av'+(sm?" sm":"")+'">'+(a?'<img src="'+a+'" alt="">':
-    (sm? (i+1) : (i+1)+'<span class="n">'+esc(mem(i))+'</span>'))+'</span>' }
+  var av='<span class="av'+(sm?" sm":"")+'">'+(a?'<img src="'+a+'" alt="'+esc(mem(i))+'">':(i+1))+'</span>';
+  return sm? av : av+'<span class="nm">'+esc(mem(i))+'</span>' }
 function settle(){
   var bal=[0,0,0,0];
   ST.exp.forEach(function(e){
@@ -550,7 +650,9 @@ var PHRASES=[
  ["Where's the nearest chemist?","最近的藥局在哪？"],
  ["I need help, please call 000.","我需要幫忙，請打 000。"]];
 function renderInfo(){
-  var h='<div class="dayhead"><h2>資訊</h2><div class="sub">時差、錢、交通、規矩</div></div>';
+  var h='<div class="dayhead"><h2>資訊</h2><div class="sub">天氣、匯率、時差、錢、交通、規矩</div></div>';
+  h+=wxCard()+fxCard();
+  h+=fareCard();
   h+='<div class="card"><h3>🕐 時差</h3><div class="note">全程 <b>AEST（UTC+10）</b>，比台灣<b>快 2 小時</b>。'+
    '澳洲夏令時間 2026/10/4 才開始，你們 9/27 就離境，<b>全程不用換錶</b>。墨爾本與雪梨同時區。</div></div>';
   h+='<div class="card"><h3>💴 錢</h3><div class="note">'+
@@ -561,15 +663,31 @@ function renderInfo(){
    '<b>假日附加費</b>：週六約 10%，週日 10–15%，<b>9/25 公定假日約 15%</b>。</div></div>';
   h+='<div class="card"><h3>🚆 交通</h3><div class="note">'+
    '<b>維多利亞州公共運輸 2026/6/1–2027/1/1 全面半價</b>，全票每日上限 AU$11.40 → <b>AU$5.70</b>。<b>SkyBus 不適用</b>。<br>'+
-   '墨爾本火車、電車可直接刷信用卡或手機（2026/6 起）。<b>公車能否刷卡未確認</b>，備一張實體 myki（AU$6）保底。<br>'+
+   '✅ <b>墨爾本已可直接刷信用卡</b>——維多利亞州交通廳官方說明：全票乘客現在可在<b>火車、電車、公車</b>用信用卡、手機或手錶感應。2026/6/6 先開通火車，7 月起全網。<b>觀光客算全票，不用買 myki</b>。優待票仍需 myki。<br>🚨 <b>上下車要用同一張卡</b>。刷卡款項可能<b>三天後</b>才入帳，先看到的是預授權金額。<br>'+
    '<b>CBD 有免費電車區</b>，北邊界是 La Trobe St。370 Queen St 在界外，往南走到 La Trobe St 上車。<br>'+
-   '雪梨 Opal／感應支付通用。週五、六、日與假日每日上限 AU$9.65，週一至四 AU$19.30。<b>機場站通行費不計入上限</b>。<br>'+
+   '雪梨 Opal／感應支付通用（<b>Visa、Mastercard、Amex 在機場閘門都可</b>）。<b>每週上限 AU$50</b>，你們 9/21–9/25 剛好在同一個 Opal 週內，<b>每人約可省 AU$27</b>。詳見上方票價試算。<br>'+
    '<b>四人叫車一律指定 maxi taxi</b>——四件託運行李普通轎車裝不下。13cabs：<b>13 2227</b>。</div></div>';
   h+='<div class="card"><h3>🛍️ 生活</h3><div class="note">'+
    '澳洲商店多半 <b>17:00–18:00 就關</b>，只有一天有 late night shopping。超市開到 21–22 點。<br>'+
    '<b>超市不賣酒</b>，要去 bottle shop（Dan Murphy\'s、BWS、Liquorland）。<br>'+
    '室內公共場所全面禁菸，公共場所飲酒多數地區受限。<br>'+
    '<b>自來水可以生飲</b>。餐廳要水說 <b>tap water</b>。</div></div>';
+  h+='<div class="card"><h3>🛃 入境澳洲的免稅額</h3><table>'+
+   '<tr><td>一般物品</td><td class="mono"><b>AU$900</b>／人</td></tr>'+
+   '<tr><td>酒</td><td class="mono"><b>2.25 公升</b></td></tr>'+
+   '<tr><td>菸</td><td class="mono"><b>25 支或 25 公克</b></td></tr>'+
+   '<tr><td>現金申報門檻</td><td class="mono"><b>AU$10,000</b> 以上須申報</td></tr></table>'+
+   '<div class="note">🚨 <b>超過就要對全部貨物課稅，不是只課超出的部分</b>（澳洲邊境部隊 ABF）。<br>'+
+   '持合格晶片護照可用 SmartGate 自動通關，台灣護照是否適用未經確認，<b>現場看指示牌</b>。</div></div>';
+  h+='<div class="card warn"><h3>🇹🇼 回台灣的免稅額</h3><table>'+
+   '<tr><td>行李物品</td><td class="mono"><b>NT$35,000</b></td></tr>'+
+   '<tr><td>自用酒類</td><td class="mono"><b>1.5 公升</b>（限 18 歲以上）</td></tr>'+
+   '<tr><td>菸</td><td class="mono">捲菸 <b>200 支</b>／雪茄 25 支／菸絲 1 磅</td></tr>'+
+   '<tr><td>外幣現鈔</td><td class="mono">逾等值 <b>美金 1 萬元</b>須申報</td></tr>'+
+   '<tr><td>新臺幣現鈔</td><td class="mono">逾 <b>NT$10 萬</b>須申報</td></tr></table>'+
+   '<div class="note">🚨 <b>肉製品一律不能帶</b>——自非洲豬瘟疫區攜帶豬肉製品，初犯罰 <b>NT$20 萬</b>、再犯 100 萬。'+
+   '肉乾、肉鬆、香腸、含肉餡糕點、<b>飛機上的肉類餐點</b>都算。<br>'+
+   '⚠️ 基隆關「入境通關須知」仍寫舊值（酒 1 公升、2 萬元），上表採用財政部較新的調整公告。</div></div>';
   h+='<div class="card"><h3>📞 電話怎麼撥</h3><table>'+
    '<tr><td>在澳洲打澳洲</td><td class="mono">直接撥 03 9978 1968</td></tr>'+
    '<tr><td>在澳洲打台灣</td><td class="mono">0011 + 886 + 去 0 的號碼</td></tr>'+
@@ -581,58 +699,65 @@ function renderInfo(){
 }
 /* ===== 緊急 ===== */
 function renderSOS(){
+  function tel(n,label,urgent){ return '<a class="tel'+(urgent?' urgent':'')+'" href="tel:'+
+    n.replace(/[^0-9+]/g,"")+'">☎ '+esc(label||n)+'</a>' }
   var h='<div class="dayhead"><h2>緊急</h2><div class="sub">出事先看這裡</div></div>';
-  h+='<div class="card warn"><h3>☎ 立刻能打的</h3><table>'+
-   '<tr><td><b>警察／救護車／消防</b></td><td><a href="tel:000">000</a></td></tr>'+
-   '<tr><td>手機無訊號時</td><td><a href="tel:112">112</a></td></tr>'+
-   '<tr><td>非緊急報警</td><td><a href="tel:131444">131 444</a></td></tr>'+
-   '<tr><td>非緊急醫療諮詢 healthdirect</td><td><a href="tel:1800022222">1800 022 222</a></td></tr>'+
-   '<tr><td>外交部旅外急難救助</td><td><a href="tel:+80008850885">800-0885-0885</a></td></tr>'+
-   '<tr><td>駐墨爾本辦事處</td><td><a href="tel:+61396508611">+61 3 9650 8611</a></td></tr></table>'+
+  h+='<div class="card warn"><h3>立刻能打的</h3><table>'+
+   '<tr><td><b>警察／救護車／消防</b></td><td>'+tel("000","000",1)+'</td></tr>'+
+   '<tr><td>手機無訊號時</td><td>'+tel("112")+'</td></tr>'+
+   '<tr><td>非緊急報警</td><td>'+tel("131444","131 444")+'</td></tr>'+
+   '<tr><td>非緊急醫療諮詢<br><span class="note">healthdirect</span></td><td>'+tel("1800022222","1800 022 222")+'</td></tr>'+
+   '<tr><td>外交部旅外急難救助</td><td>'+tel("+80008850885","800-0885-0885")+'</td></tr>'+
+   '<tr><td>駐墨爾本辦事處</td><td>'+tel("+61396508611","+61 3 9650 8611")+'</td></tr></table>'+
    '<div class="note">駐墨爾本的急難專線我查不到確認值，外交部網頁把多個館處的號碼混在一起。用上面的全球免付費專線。</div></div>';
-  h+='<div class="card"><h3>🏨 住的地方</h3><table>'+
-   '<tr><td>9/18–9/21</td><td><b>370 Queen St</b>, Melbourne VIC 3000<br><span class="note">A\'Beckett St 轉角．公寓，無櫃檯</span></td></tr>'+
-   '<tr><td>9/21–9/25</td><td><b>View Sydney</b><br>17 Blue St, North Sydney NSW 2060<br><a href="tel:+61299550499">+61 2 9955 0499</a>．櫃檯 24 小時</td></tr>'+
-   '<tr><td>9/25–9/27</td><td><b>557 Little Lonsdale St</b>, Melbourne VIC 3000<br><span class="note">公寓，無櫃檯</span></td></tr></table></div>';
-  h+='<div class="card"><h3>🍽️ 餐廳電話</h3><table>'+
-   '<tr><td>Victor Churchill</td><td><a href="tel:+61399781968">+61 3 9978 1968</a></td></tr>'+
-   '<tr><td>Cuff</td><td><a href="tel:+61396207122">(03) 9620 7122</a></td></tr>'+
-   '<tr><td>Porteño</td><td><a href="tel:+61283991440">+61 2 8399 1440</a></td></tr>'+
-   '<tr><td>Something for Jess</td><td><a href="tel:+61468602770">+61 468 602 770</a></td></tr>'+
-   '<tr><td>Totti\'s Bondi</td><td><a href="tel:+61291147371">+61 2 9114 7371</a></td></tr>'+
-   '<tr><td>NOMAD Sydney</td><td><a href="tel:+61292803395">+61 2 9280 3395</a></td></tr>'+
-   '<tr><td>La Cucina</td><td><a href="tel:+61384507682">03 8450 7682</a><br><span class="note">Google 登錄 03 8456 7682，兩者不一致</span></td></tr>'+
-   '<tr><td>Reine &amp; La Rue</td><td><a href="tel:+61390215241">+61 3 9021 5241</a></td></tr></table></div>';
-  h+='<div class="card"><h3>🚌 一日遊與交通</h3><table>'+
-   '<tr><td>9/19 大洋路團</td><td><a href="tel:+61380802288">03 8080 2288</a><br><span class="note">訂單 26KK213944869</span></td></tr>'+
-   '<tr><td>13cabs 叫車</td><td><a href="tel:132227">13 2227</a></td></tr>'+
-   '<tr><td>Urloker 寄物</td><td><a href="tel:+61489198299">+61 489 198 299</a></td></tr>'+
-   '<tr><td>機場 T2 寄物</td><td><a href="tel:+61436434378">+61 436 434 378</a></td></tr></table></div>';
+  h+='<div class="card"><h3>住的地方</h3><table>'+
+   '<tr><td>9/18–<br>9/21</td><td><b>370 Queen St</b><br>Melbourne VIC 3000<br><span class="note">A\'Beckett St 轉角．公寓，無櫃檯</span></td></tr>'+
+   '<tr><td>9/21–<br>9/25</td><td><b>View Sydney</b><br>17 Blue St, North Sydney NSW 2060<br>'+tel("+61299550499","+61 2 9955 0499")+'<br><span class="note">櫃檯 24 小時</span></td></tr>'+
+   '<tr><td>9/25–<br>9/27</td><td><b>557 Little Lonsdale St</b><br>Melbourne VIC 3000<br><span class="note">公寓，無櫃檯</span></td></tr></table></div>';
+  var RS=[["Victor Churchill","+61399781968","+61 3 9978 1968",""],
+   ["Cuff","+61396207122","(03) 9620 7122",""],
+   ["Porteño","+61283991440","+61 2 8399 1440",""],
+   ["Something for Jess","+61468602770","+61 468 602 770","地點待確認"],
+   ["Totti's Bondi","+61291147371","+61 2 9114 7371",""],
+   ["NOMAD Sydney","+61292803395","+61 2 9280 3395",""],
+   ["La Cucina","+61384507682","03 8450 7682","Google 登錄 03 8456 7682，兩者不一致"],
+   ["Reine & La Rue","+61390215241","+61 3 9021 5241",""]];
+  h+='<div class="card"><h3>餐廳</h3><table>'+RS.map(function(r){
+    return '<tr><td>'+esc(r[0])+(r[3]?'<br><span class="note">'+esc(r[3])+'</span>':'')+'</td><td>'+tel(r[1],r[2])+'</td></tr>'
+  }).join("")+'</table></div>';
+  h+='<div class="card"><h3>一日遊與交通</h3><table>'+
+   '<tr><td>9/19 大洋路團<br><span class="note">訂單 26KK213944869</span></td><td>'+tel("+61380802288","03 8080 2288")+'</td></tr>'+
+   '<tr><td>13cabs 叫車</td><td>'+tel("132227","13 2227")+'</td></tr>'+
+   '<tr><td>Urloker 寄物</td><td>'+tel("+61489198299","+61 489 198 299")+'</td></tr>'+
+   '<tr><td>機場 T2 寄物</td><td>'+tel("+61436434378","+61 436 434 378")+'</td></tr></table></div>';
   return h;
 }
 /* ===== 備案 ===== */
 function renderPlan(){
-  var S=[["走散","原地站 5 分鐘不要移動 → 打電話，打不通傳訊息 → 到當天集合點等 30 分鐘 → 回住處。每個人身上要有住處地址、當天集合點截圖、其他三人電話。"],
+  var HOT=[["走散","原地站 5 分鐘 → 打電話或傳訊息 → 到當天集合點等 30 分鐘 → 第四步<b>每天不一樣</b>，看該天行程頁最上面那張卡。機場日是去登機門，不是回住處。每個人身上要有住處地址、當天集合點截圖、其他三人電話。"],
    ["手機沒電","每人自備行動電源不要共用。澳洲插座 I 型 230V，要帶轉接頭。沒電前先截圖：住處地址、當天訂位、集合點。"],
    ["班機誤點","國際線四段同一張票（EAYH8Q），航空公司必須負責改簽。國內線 MEL–SYD 班次密集，到 Virgin 櫃檯改。"],
    ["餐廳客滿","出示訂位確認信與編號。La Cucina 有訂了位仍需等的紀錄，準時到不要早到太多。"],
-   ["要排隊等位","站超過 20 分鐘就去櫃檯問一次還要多久，這在澳洲是正常的。Porteño 樓上有 Gardel's Bar。"],
-   ["下雨","墨爾本 9 月平均 16 天有雨，每天帶傘。大洋路與企鵝島都是露天景點。"],
-   ["生病","撥 1800 022 222 諮詢。觀光客沒有 Medicare，全額自費，靠旅平險。藥局招牌寫 chemist。"],
+   ["要排隊等位","站超過 20 分鐘就去櫃檯問一次還要多久，這在澳洲是正常的。Porteño 隔壁有同集團的 Bastardo 可以先坐。"],
+   ["塞車","9/25、9/26 是墨爾本連假加總決賽，交通最差的兩天。提早出門。"]];
+  var MID=[["下雨","墨爾本 9 月平均 16 天有雨，每天帶傘。大洋路與企鵝島都是露天景點。"],
    ["迷路","打開離線地圖。澳洲路口地上寫 LOOK RIGHT，過馬路先看右邊。"],
    ["錢不夠","先刷卡，澳洲現金交易僅約 15%。ATM 雙邊收費很不划算。"],
-   ["語言不通","用手機打字給對方看。9/19、9/20 是中文團。資訊頁有 14 句可以按喇叭放出來。"],
-   ["行李遺失","落地當場去航空公司 Baggage Services 拿 PIR 報案單。離開機場才發現很難處理。"],
    ["刷卡失敗","換第二張卡。每人至少帶兩張不同發卡行的卡，並備少量現金。"],
-   ["訂位取消","打該店電話。Victor Churchill 建議每日 10:00–12:00 打。"],
-   ["塞車","9/25、9/26 是墨爾本連假加總決賽，交通最差的兩天。提早出門。"],
-   ["罷工停駛","墨爾本查 ptv.vic.gov.au，雪梨查 transportnsw.info。趕飛機就直接叫 maxi taxi。"],
-   ["證件遺失","先報警拿報案證明，再聯絡駐外館處。駐墨爾本 +61 3 9650 8611，外交部免付費 800-0885-0885。"],
+   ["語言不通","用手機打字給對方看。9/19、9/20 是中文團。資訊頁有 14 句可以按喇叭放出來。"],
    ["時差","只快 2 小時，影響小。但 9/18 落地當天有 12:15 死線，9/19 又是 08:00 出發。"],
+   ["訂位取消","打該店電話。Victor Churchill 建議每日 10:00–12:00 打。"],
    ["過敏","點餐前主動說明。你們四位無飲食限制。Reine & La Rue 官網註明無法保證完全隔絕過敏原。"]];
-  var h='<div class="dayhead"><h2>備案</h2><div class="sub">18 個情境</div></div>';
-  h+=S.map(function(s){ return '<div class="card"><h3>'+esc(s[0])+'</h3><div class="note">'+esc(s[1])+'</div></div>' }).join("");
-  return h;
+  var RARE=[["生病","撥 1800 022 222 諮詢。觀光客沒有 Medicare，全額自費，靠旅平險。藥局招牌寫 chemist。"],
+   ["行李遺失","落地當場去航空公司 Baggage Services 拿 PIR 報案單。離開機場才發現很難處理。"],
+   ["證件遺失","先報警拿報案證明，再聯絡駐外館處。駐墨爾本 +61 3 9650 8611，外交部免付費 800-0885-0885。"],
+   ["罷工停駛","墨爾本查 ptv.vic.gov.au，雪梨查 transportnsw.info。趕飛機就直接叫 maxi taxi。"]];
+  function blk(L,hot){ return L.map(function(s){
+    return '<div class="plan'+(hot?" hot":"")+'"><b>'+esc(s[0])+'</b><div class="note">'+esc(s[1])+'</div></div>' }).join("") }
+  return '<div class="dayhead"><h2>備案</h2><div class="sub">18 個情境，依可能發生的機率排</div></div>'+
+   '<div class="grp">最可能遇到 <span>· 先看這六個</span></div>'+blk(HOT,1)+
+   '<div class="grp">偶爾會遇到</div>'+blk(MID)+
+   '<div class="grp">希望用不到 <span>· 出事才翻</span></div>'+blk(RARE);
 }
 /* ===== 備份／同步碼 ===== */
 function b64e(o){ return btoa(unescape(encodeURIComponent(JSON.stringify(o)))) }
@@ -704,8 +829,9 @@ function renderShare(){
    '<textarea readonly rows="11" style="margin-top:6px;font-family:monospace;font-size:12px">{\n  "rules": {\n    "australia": {\n      "rooms": {\n        "$room": {\n          ".read": "$room.length >= 8",\n          ".write": "$room.length >= 8"\n        }\n      }\n    }\n  }\n}</textarea></div>';
   h+='</div>';
   h+='<div class="card"><h3>離線同步碼</h3><div class="note">沒網路也能用。複製給其他人，他們貼到下面的框按合併。</div>'+
-   '<textarea id="sc" readonly rows="4" style="margin-top:8px;font-size:12px">'+esc(mkSync())+'</textarea>'+
-   '<div class="acts"><button class="btn go" id="sc_cp">複製同步碼</button></div></div>';
+   '<div class="acts"><button class="btn go" id="sc_cp">複製同步碼</button></div>'+
+   '<details style="margin-top:6px"><summary>看代碼內容</summary><div class="body">'+
+   '<textarea id="sc" readonly rows="4" style="font-size:11px">'+esc(mkSync())+'</textarea></div></details></div>';
   h+='<div class="card"><h3>貼上代碼</h3><div class="note">備份碼（'+BK_PREFIX+'）會覆蓋全部；同步碼（'+LG_PREFIX+'）只合併。</div>'+
    '<textarea id="pc" rows="4" placeholder="把代碼貼在這裡" style="margin-top:8px;font-size:12px"></textarea>'+
    '<div class="acts"><button class="btn go" id="pc_go">套用</button></div></div>';
@@ -720,19 +846,20 @@ var DIETS=["素食","蛋奶素","全素","不吃牛","不吃豬","不吃海鮮",
 function renderPrep(){
   var h='<div class="dayhead"><h2>準備</h2><div class="sub">成員、飲食限制、出發前待辦</div></div>';
   h+='<div class="card"><h3>成員</h3>'+MEMBERS.map(function(_,i){
-    return '<div class="row" style="align-items:center;margin-bottom:10px">'+avHTML(i)+
-     '<div style="flex:1"><label>成員 '+(i+1)+' 的名字</label><input class="m_n" data-i="'+i+'" value="'+esc(ST.members[i])+'" placeholder="留空顯示成員'+(i+1)+'"></div>'+
-     '<div style="flex:0 0 auto"><label>照片</label><input type="file" accept="image/*" class="m_a" data-i="'+i+'" style="width:150px"></div></div>' }).join("")+
-   '<div class="note">沒上傳照片時顯示編號和名字，編號在上、名字在下。</div></div>';
-  h+='<div class="card"><h3>飲食限制</h3><div class="note">勾選後，餐廳那一格會自動跳警告。</div><div class="row" style="margin-top:8px">'+
-   DIETS.map(function(d){ return '<div style="flex:0 0 auto"><label style="display:flex;gap:6px;align-items:center;color:var(--ink)">'+
-     '<input type="checkbox" class="d_ck" value="'+esc(d)+'" '+(ST.dietOn.indexOf(d)>=0?"checked":"")+' style="width:auto"> '+esc(d)+'</label></div>' }).join("")+'</div>'+
-   '<div class="row"><div><label>自訂（香菜、內臟這種）</label><input id="d_n" placeholder="輸入後按加入"></div></div>'+
-   '<button class="btn sec" id="d_add">加入自訂</button>'+
-   (ST.diet.length?'<div class="row" style="margin-top:10px">'+ST.diet.map(function(d){
-     return '<div style="flex:0 0 auto"><label style="display:flex;gap:6px;align-items:center;color:var(--ink)">'+
-     '<input type="checkbox" class="d_ck" value="'+esc(d)+'" '+(ST.dietOn.indexOf(d)>=0?"checked":"")+' style="width:auto"> '+esc(d)+
-     '</label></div>' }).join("")+'</div>':"")+'</div>';
+    return '<div class="row" style="align-items:center;margin-bottom:12px">'+
+     '<div class="avwrap">'+avHTML(i)+'</div>'+
+     '<div style="flex:1 1 90px"><label>名字</label><input class="m_n" data-i="'+i+'" value="'+esc(ST.members[i])+'" placeholder="成員'+(i+1)+'"></div>'+
+     '<label class="file">'+(ST.avatars[i]?"換":"＋照片")+
+       '<input type="file" accept="image/*" class="m_a" data-i="'+i+'"></label></div>' }).join("")+
+   '<div class="note">沒上傳照片時圓圈顯示編號，名字在旁邊。</div></div>';
+  function chips(L){ return '<div class="chips">'+L.map(function(d){
+    var on=ST.dietOn.indexOf(d)>=0;
+    return '<label class="chip'+(on?" on":"")+'"><input type="checkbox" class="d_ck" value="'+esc(d)+'" '+(on?"checked":"")+'>'+esc(d)+'</label>'
+  }).join("")+'</div>' }
+  h+='<div class="card"><h3>飲食限制</h3><div class="note">勾選後，餐廳那一格會自動跳警告。</div>'+
+   chips(DIETS)+(ST.diet.length?chips(ST.diet):"")+
+   '<div class="row" style="margin-top:12px"><div><label>自訂（香菜、內臟這種）</label><input id="d_n" placeholder="輸入後按加入"></div></div>'+
+   '<button class="btn sec" id="d_add">加入自訂</button></div>';
   h+='<div class="card warn"><h3>🚨 出發前一定要做完</h3><div class="note">'+
    '① <b>四人的 ETA 601 簽證</b>——只能用手機 App「Australian ETA」，AU$20／人。沒有就上不了飛機。<br>'+
    '② <b>問 9/19 大洋路的上車點</b>——打 03 8080 2288。訂單寫「過時視為放棄，不退費」。<br>'+
@@ -744,7 +871,7 @@ function renderPrep(){
 /* ===== 使用說明 ===== */
 function renderHelp(){
   var d=auNow();
-  return '<div class="dayhead"><h2>澳洲 11 天</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v001</div></div>'+
+  return '<div class="dayhead"><h2>澳洲 11 天</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v005</div></div>'+
   '<div class="card ok"><h3>現在澳洲時間 '+fmt(auMins())+'</h3><div class="note">'+
    (d.getMonth()===8&&d.getDate()>=17&&d.getDate()<=27? '旅程進行中。':'旅程尚未開始。')+
    ' 澳洲東部時間比台灣快 2 小時，全程不換夏令時間。</div></div>'+
@@ -766,7 +893,7 @@ function renderHelp(){
    '<tr><td>平分</td><td>選誰付的、誰分攤</td></tr>'+
    '<tr><td>各付各的</td><td>一起結帳但各買各的，填每人金額自動拆成每人一筆</td></tr>'+
    '<tr><td>已還打勾</td><td>轉帳建議每列可點，打勾變灰刪除線，顯示還剩幾筆</td></tr></table></div>'+
-  '<div class="card"><h3>離線</h3><div class="note">加到主畫面後可離線使用。地圖、食記、官網這些外部連結需要網路。<br>'+
+  verCard()+'<div class="card"><h3>離線</h3><div class="note">加到主畫面後可離線使用。地圖、食記、官網這些外部連結需要網路。<br>'+
    '大洋路沿線訊號會變差，<b>出發前把離線地圖存好</b>。</div></div>';
 }
 /* ===== ICS 匯出（RFC 5545） ===== */
@@ -846,6 +973,246 @@ function dlICS(){
   toast("行事曆檔已下載，用行事曆 App 開啟即可匯入");
 }
 
+/* ===== 天氣（Open-Meteo，免金鑰） ===== */
+var CITY={mel:{n:"墨爾本",lat:-37.8136,lon:144.9631},syd:{n:"雪梨",lat:-33.8688,lon:151.2093}};
+var WX={mel:null,syd:null,at:0,err:""};
+var WMO={0:["☀️","晴"],1:["🌤️","大致晴"],2:["⛅","局部多雲"],3:["☁️","陰"],
+ 45:["🌫️","有霧"],48:["🌫️","霧淞"],51:["🌦️","毛毛雨"],53:["🌦️","毛毛雨"],55:["🌧️","毛毛雨(強)"],
+ 61:["🌧️","小雨"],63:["🌧️","中雨"],65:["🌧️","大雨"],66:["🌧️","凍雨"],67:["🌧️","凍雨"],
+ 71:["🌨️","小雪"],73:["🌨️","中雪"],75:["🌨️","大雪"],80:["🌦️","陣雨"],81:["🌧️","陣雨"],
+ 82:["⛈️","強陣雨"],95:["⛈️","雷雨"],96:["⛈️","雷雨冰雹"],99:["⛈️","雷雨冰雹"]};
+function wxDesc(c){ return WMO[c]||["🌡️","—"] }
+function loadWX(cb){
+  var done=0;
+  Object.keys(CITY).forEach(function(k){
+    var c=CITY[k];
+    var u="https://api.open-meteo.com/v1/forecast?latitude="+c.lat+"&longitude="+c.lon+
+      "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,uv_index_max"+
+      "&timezone=Australia%2FMelbourne&forecast_days=7";
+    fetch(u).then(function(r){return r.json()}).then(function(j){
+      if(j&&j.daily) WX[k]=j.daily; done++; if(done===2){WX.at=Date.now();cb&&cb()} })
+     .catch(function(){ WX.err="離線，顯示上次取得的資料"; done++; if(done===2)cb&&cb() });
+  });
+}
+function wxCard(){
+  if(!WX.mel&&!WX.syd) return '<div class="card"><h3>🌤️ 天氣</h3><div class="note">'+
+    (WX.err||"讀取中…")+'　<button class="btn sec" id="wx_go" style="margin-top:8px">重新讀取</button></div></div>';
+  function rows(k){
+    var d=WX[k]; if(!d) return "";
+    return '<div class="sec-t">'+CITY[k].n+'</div><table>'+d.time.slice(0,5).map(function(t,i){
+      var w=wxDesc(d.weather_code[i]), p=d.precipitation_probability_max[i], uv=d.uv_index_max[i];
+      var md=t.slice(5).replace("-","/");
+      return '<tr><td class="mono">'+md+'</td><td>'+w[0]+' '+w[1]+'</td>'+
+        '<td class="mono">'+Math.round(d.temperature_2m_min[i])+'–'+Math.round(d.temperature_2m_max[i])+'°C</td>'+
+        '<td class="mono">'+(p!=null?'💧'+p+'%':'')+(uv!=null&&uv>=3?'　☀️UV'+Math.round(uv):'')+'</td></tr>';
+    }).join("")+'</table>';
+  }
+  return '<div class="card"><h3>🌤️ 未來五天</h3>'+rows("mel")+rows("syd")+
+   '<div class="note" style="margin-top:8px">'+(WX.err||"資料來源 Open-Meteo")+
+   '　<b>UV 3 以上就要防曬</b>。墨爾本一天可以變四次，出門帶薄外套與傘。</div>'+
+   '<div class="acts"><button class="btn sec" id="wx_go">重新讀取</button></div></div>';
+}
+/* ===== 匯率（exchangerate-api 開放端點） ===== */
+var FX={rate:null,at:0,err:""};
+function loadFX(cb){
+  fetch("https://open.er-api.com/v6/latest/AUD").then(function(r){return r.json()})
+   .then(function(j){ if(j&&j.rates&&j.rates.TWD){ FX.rate=j.rates.TWD; FX.at=Date.now();
+     try{ localStorage.setItem(LSKEY+"_fx",JSON.stringify(FX)) }catch(e){} } cb&&cb() })
+   .catch(function(){ try{ var c=JSON.parse(localStorage.getItem(LSKEY+"_fx")||"null");
+     if(c){ FX=c; FX.err="離線，用 "+new Date(c.at).toLocaleDateString()+" 的匯率" } }catch(e){}
+     if(!FX.rate) FX.err="離線且沒有暫存匯率"; cb&&cb() });
+}
+function fxCard(){
+  var r=FX.rate;
+  return '<div class="card"><h3>💱 匯率換算</h3>'+
+   (r? '<div class="note">1 AUD ≈ <b>'+r.toFixed(2)+' TWD</b>'+(FX.err?'　'+FX.err:'')+'</div>'+
+     '<div class="row" style="margin-top:10px"><div><label>AU$</label>'+
+     '<input id="fx_a" type="number" inputmode="decimal" placeholder="0"></div>'+
+     '<div><label>約合 NT$</label><div id="fx_t" class="mono" style="font-size:1.3em;font-weight:700;padding-top:6px">—</div></div></div>'+
+     '<div class="note">常見金額：'+[5,20,37,55,80,140].map(function(v){
+       return 'AU$'+v+'≈NT$'+Math.round(v*r) }).join('　')+'</div>'
+    : '<div class="note">'+(FX.err||"讀取中…")+'</div>')+
+   '<div class="acts"><button class="btn sec" id="fx_go">重新讀取</button></div></div>';
+}
+
+/* ===== 景點建議：填滿自由時段 ===== */
+/* n 名稱 / w 從住處怎麼去 / t 需要多久 / p 費用 / k 體力 / x 說明 / q 導航 */
+var SPOTS={
+ d2:{from:"370 Queen St",list:[
+  {n:"州立圖書館 State Library Victoria",w:"走 9 分（750 m）",t:"40–60 分",p:"免費",k:"輕鬆",
+   q:"State Library Victoria",x:"<b>La Trobe 圓形閱覽室</b>的六角形穹頂是墨爾本最好拍的室內空間，樓上還有<b>尼德・凱利的鐵甲</b>。落地第一天體力有限，這裡有位子可以坐。"},
+  {n:"維多利亞女王市場",w:"走 4 分（324 m）",t:"40–60 分",p:"免費入場",k:"輕鬆",
+   q:"Queen Victoria Market",x:"1878 年營業至今。<b>American Doughnut Kitchen 的熱果醬甜甜圈</b>是招牌。🚨 <b>週一、週三公休</b>，9/18 是週五有開。"},
+  {n:"Hosier Lane 塗鴉巷",w:"電車 ＋ 走，約 15 分",t:"20–30 分",p:"免費",k:"輕鬆",
+   q:"Hosier Lane Melbourne",x:"整條巷子的牆面塗鴉<b>每次去都不一樣</b>。就在 Flinders St 車站對面，可以跟聯邦廣場一起看。"}]},
+ d5:{from:"370 Queen St",list:[
+  {n:"維多利亞國家美術館 NGV International",w:"電車約 12 分",t:"1.5–2 小時",p:"常設展免費",k:"中等",
+   q:"NGV International Melbourne",x:"澳洲最古老也最多人參觀的美術館，<b>常設展完全免費</b>。門口的<b>水幕玻璃牆</b>是打卡點。🚨 在免費電車區外。"},
+  {n:"Degraves Street 咖啡巷",w:"走 12 分",t:"30–40 分",p:"一杯咖啡約 AU$5",k:"輕鬆",
+   q:"Degraves Street Melbourne",x:"墨爾本咖啡文化的縮影，整條巷子都是戶外座位。<b>離 Cuff 走路 3 分鐘</b>，吃完早餐可以順路。"},
+  {n:"聯邦廣場 ＋ Flinders St 車站",w:"走 14 分",t:"30 分",p:"免費",k:"輕鬆",
+   q:"Federation Square Melbourne",x:"黃色的 Flinders Street 車站是墨爾本最上鏡的建築。<b>今天要拖行李去機場，不要走太遠</b>。"}]},
+ d6:{from:"View Sydney（北雪梨）",list:[
+  {n:"雪梨歌劇院",w:"火車到 Circular Quay 約 12 分",t:"外觀 30 分／導覽 1 小時",p:"外觀免費／導覽約 AU$42",k:"導覽偏累",
+   q:"Sydney Opera House",x:"🚨 <b>導覽要爬約 300 階、走 2.5 公里、沒有電梯、全程不能坐</b>——兩位長輩請斟酌。<br><b>不買票也能進去</b>：大廳、酒吧、餐廳都自由進出，沿著水邊步道看外觀完全免費。<b>黃昏時帆殼變色</b>是最好看的時刻。"},
+  {n:"環形碼頭 → 曼利渡輪",w:"火車到 Circular Quay 換渡輪",t:"來回約 2.5 小時",p:"單程約 AU$8.39（Opal）",k:"輕鬆",
+   q:"Circular Quay Ferry Wharf",x:"<b>雪梨最划算的觀光</b>——用一趟公車錢的價格，從海上看歌劇院與港灣大橋。曼利那頭有 The Corso 步行街與海灘。"},
+  {n:"皇家植物園 ＋ 麥考利夫人石椅",w:"Circular Quay 走 15 分",t:"1–1.5 小時",p:"免費",k:"中等",
+   q:"Mrs Macquaries Chair Sydney",x:"<b>能把歌劇院和港灣大橋framing 進同一張照片</b>的經典角度就在這裡。整片植物園免費，走累了草地隨處可坐。"},
+  {n:"岩石區 The Rocks",w:"Circular Quay 走 8 分",t:"1–2 小時",p:"免費",k:"輕鬆",
+   q:"The Rocks Sydney",x:"雪梨最早的殖民聚落，石板街與老酒吧。<b>週末有市集</b>，9/22 是週二沒有。"}]},
+ d7:{from:"View Sydney（北雪梨）",list:[
+  {n:"塔龍加動物園 Taronga Zoo",w:"Circular Quay 4 號碼頭搭 F2 渡輪 12 分",t:"3–4 小時",p:"成人約 AU$55（線上更便宜）",k:"偏累",
+   q:"Taronga Zoo Sydney",x:"🚨 <b>9:30–17:00，16:30 停止入場</b>。園區在山坡上，<b>建議從山頂往下走</b>，先搭纜車上去。長頸鹿區能一次拍到長頸鹿＋港灣＋歌劇院＋大橋。<br>🚨 <b>今天 18:15 在 Bondi 有訂位</b>，動物園要 3–4 小時，時間很緊，要去就早上去。"},
+  {n:"邦代海灘 Bondi Beach",w:"從 SFJ 搭車約 30 分",t:"1–2 小時",p:"免費",k:"輕鬆",
+   q:"Bondi Beach Sydney",x:"<b>今天晚餐就在 Bondi Rd</b>，下午順路過去最省事。🚨 <b>只在紅黃旗之間下水</b>。9 月水溫仍低，多數人只散步不下水。<br><b>Bondi Icebergs 海崖泳池</b>是最有名的畫面，從海灘南端走過去約 10 分鐘。"},
+  {n:"邦代→庫吉海岸步道",w:"Bondi 海灘南端起登",t:"單程 1.5–2 小時（6 km）",p:"免費",k:"累",
+   q:"Bondi to Coogee Coastal Walk",x:"沿海崖的步道，經過 Tamarama、Bronte、Clovelly 幾個海灣。🚨 <b>全程沒有遮蔭，要帶水與防曬</b>。走完再趕 18:15 的訂位會很趕，<b>建議只走到 Bronte 就折返</b>（約 40 分）。"}]},
+ d9:{from:"557 Little Lonsdale St",list:[
+  {n:"NGV International",w:"電車約 12 分",t:"1.5–2 小時",p:"常設展免費",k:"中等",
+   q:"NGV International Melbourne",x:"🚨 <b>今天是公定假日</b>，開放時間可能異動，出發前查官網。室內行程，下雨天的好選擇。"},
+  {n:"戰爭紀念館 Shrine of Remembrance",w:"電車約 15 分",t:"1 小時",p:"免費",k:"中等",
+   q:"Shrine of Remembrance Melbourne",x:"陽台可以免費看整個墨爾本天際線。<b>每日 11:00 有「光之射線」</b>——陽光穿過屋頂開口正好照在紀念石上。🚨 在免費電車區外。"},
+  {n:"墨爾本皇家植物園",w:"電車約 15 分",t:"1–2 小時",p:"免費",k:"輕鬆",
+   q:"Royal Botanic Gardens Melbourne",x:"38 公頃，每日 07:30 至日落，全年免費。外圍的 <b>Tan Track 是 3.8 公里環狀步道</b>。9 月是春天，正在開花。"}]},
+ d10:{from:"557 Little Lonsdale St",list:[
+  {n:"維多利亞女王市場",w:"走 8 分（645 m）",t:"1 小時",p:"免費入場",k:"輕鬆",
+   q:"Queen Victoria Market",x:"🚨 <b>9/26 是週六，市場有開</b>，而且週六是最熱鬧的一天。<b>13:00 有 Reine 的訂位，11:30 前要離開</b>。"},
+  {n:"州立圖書館 ＋ 塗鴉巷",w:"走 10 分",t:"1–1.5 小時",p:"免費",k:"輕鬆",
+   q:"State Library Victoria",x:"兩個都在 CBD 內，走路可達，<b>不會因為總決賽的人潮受影響</b>。往東邊 MCG 方向的交通今天要避開。"},
+  {n:"Block Arcade ＋ Royal Arcade 拱廊",w:"走 10 分",t:"40 分",p:"免費",k:"輕鬆",
+   q:"Block Arcade Melbourne",x:"1892 年的維多利亞式購物拱廊，馬賽克地板與玻璃屋頂。<b>就在 Collins St 上，離 Reine 走路 3 分鐘</b>，飯前可以順路逛。"}]}
+};
+function spotsHTML(id){
+  var S=SPOTS[id]; if(!S) return "";
+  return '<div class="card"><h3>🗺️ 這段空檔可以去哪</h3>'+
+   '<div class="note">從 '+esc(S.from)+' 出發。以下都是自選，沒有訂位壓力。</div>'+
+   S.list.map(function(s){
+     return '<div class="plan" style="margin-top:10px"><b>'+esc(s.n)+'</b>'+
+      '<div class="tags"><span class="tag">🚶 '+esc(s.w)+'</span><span class="tag">🕐 '+esc(s.t)+'</span>'+
+      '<span class="tag">💴 '+esc(s.p)+'</span><span class="tag'+(/累/.test(s.k)?' t-warn':'')+'">💪 '+esc(s.k)+'</span></div>'+
+      '<div class="note" style="margin-top:6px">'+s.x+'</div>'+
+      '<div class="acts"><button class="btn go" data-nav="'+esc(s.q)+'">📍 帶我去</button></div></div>';
+   }).join("")+'</div>';
+}
+
+/* ===== 交通票價試算 ===== */
+var FARE={
+ syd:{cap:{"一（9/21）":19.30,"二（9/22）":19.30,"三（9/23）":19.30,"四（9/24）":19.30,"五（9/25）":9.65},
+  week:50,transfer:2,
+  routes:[
+   {f:"雪梨機場 T2",t:"市區各站",m:"火車",p:"21.64",n:"🚨 離峰．含 Gate Pass 18.61．尖峰 22.94"},
+   {f:"北雪梨",t:"Central／Town Hall",m:"火車",p:"約 3.2–4",n:"約 10 分鐘"},
+   {f:"北雪梨",t:"Circular Quay",m:"火車",p:"約 3.2–4",n:"約 12 分鐘"},
+   {f:"Circular Quay",t:"曼利 Manly",m:"渡輪",p:"約 8.4",n:"單程 30 分．最值得的一趟"},
+   {f:"Circular Quay",t:"塔龍加動物園",m:"F2 渡輪",p:"約 6.8–8.4",n:"12 分鐘"},
+   {f:"北雪梨",t:"Bondi Junction",m:"火車",p:"約 4–5",n:"再轉 333／380 公車"},
+   {f:"Bondi Junction",t:"Bondi Rd",m:"公車",p:"約 2–3.2",n:"🚨 在 Bondi Rd 下車不是 Bondi Beach"}]},
+ mel:{routes:[
+   {f:"墨爾本機場 T2／T3",t:"CBD",m:"SkyBus",p:"21.70",n:"🚨 SkyBus 不適用半價．非 myki 系統"},
+   {f:"墨爾本機場",t:"CBD",m:"maxi taxi",p:"65–81",n:"含過路費．四人比四張 SkyBus 便宜"},
+   {f:"CBD 內",t:"CBD 內",m:"電車",p:"0",n:"✅ 免費電車區．北界 La Trobe St"},
+   {f:"370 Queen St",t:"Armadale",m:"火車",p:"約 2.6（半價後）",n:"🚨 確認該班車有停 Armadale"},
+   {f:"CBD",t:"NGV／戰爭紀念館",m:"電車",p:"約 2.6（半價後）",n:"在免費電車區外"}]}
+};
+function fareCard(){
+  function tbl(rs){ return '<table><tr><th>路段</th><th>方式</th><th class="mono">AU$</th></tr>'+
+    rs.map(function(r){ return '<tr><td><b>'+esc(r.f)+'</b> → '+esc(r.t)+
+      (r.n?'<br><span class="note">'+esc(r.n)+'</span>':'')+'</td><td>'+esc(r.m)+'</td>'+
+      '<td class="mono">'+esc(r.p)+'</td></tr>' }).join("")+'</table>' }
+  var h='<div class="card"><h3>🚆 票價試算</h3>';
+  h+='<div class="sec-t">雪梨（Opal／感應支付）</div>'+tbl(FARE.syd.routes);
+  h+='<div class="card ok" style="margin:10px 0 0"><h3>💰 雪梨的省錢規則</h3><div class="note">'+
+   '<b>每日上限</b>：週一至週四 <b>AU$19.30</b>／<b>週五至週日與假日 AU$9.65</b>。到上限之後當天免費。<br>'+
+   '🚨 <b>週五現在算週末價</b>——上限 9.65，且全天算離峰。<br>'+
+   '<b>每週上限 AU$50</b>（週一 04:00 起算）。你們 9/21 一 到 9/25 五 剛好在同一個 Opal 週內——'+
+   '<b>四天都刷到日上限是 77.20，但週上限只收 50，每人省約 27</b>。<br>'+
+   '<b>轉乘折扣</b>：60 分鐘內換不同交通工具，第二段折 <b>AU$2</b>，自動計算。<br>'+
+   '<b>離峰 7 折</b>：官方明列適用<b>地鐵／火車、公車、輕軌</b>，時段為<b>週五、週末、國定假日，以及平日非尖峰</b>。<br>'+
+   '<b>多段轉乘只算最長那段的票價</b>，不是相加。</div></div>';
+  h+='<div class="card warn" style="margin:10px 0 0"><h3>🚨 兩個會讓你多花錢的陷阱</h3><div class="note">'+
+   '<b>① 全程只用同一張卡</b>——手機和實體卡交替刷會<b>把每日上限拆成兩份</b>，四人各自也要固定用自己的那張。<b>American Express 感應支付不被接受。</b><br>'+
+   '<b>② 機場站通行費不計入任何上限</b>。各來源金額不一致（見下），且有獨立的週上限。<br>'+
+   '<b>省法</b>：搭 <b>420 號公車</b>到 <b>Mascot 站</b>再上火車，可避開這筆。但你們四人帶行李，計程車仍較實際。</div></div>';
+  h+='<div class="sec-t">墨爾本</div>'+tbl(FARE.mel.routes);
+  h+='<div class="card ok" style="margin:10px 0 0"><h3>💰 墨爾本的省錢規則</h3><div class="note">'+
+   '<b>2026/6/1–2027/1/1 全維多利亞州公共運輸半價</b>，全票每日上限 AU$11.40 → <b>AU$5.70</b>。你們整段都適用。<br>'+
+   '🚨 <b>SkyBus 明文排除</b>，不半價。<br>'+
+   '<b>CBD 免費電車區</b>：北界 La Trobe St，含女王市場與 Docklands。<b>370 Queen St 在界外</b>，往南走到 La Trobe St 上車。</div></div>';
+  h+='<div class="card ok" style="margin:10px 0 0"><h3>✅ 已向官方查證的數字</h3><table>'+
+   '<tr><td><b>機場站 Gate Pass</b><br><span class="note">Opal／感應支付</span></td><td class="mono"><b>AU$18.61</b></td></tr>'+
+   '<tr><td>機場站 Gate Pass<br><span class="note">售票機單程票</span></td><td class="mono">AU$19.00</td></tr>'+
+   '<tr><td><b>機場 → 市區　離峰</b></td><td class="mono"><b>AU$21.64</b><br><span class="note">18.61＋3.03</span></td></tr>'+
+   '<tr><td>機場 → 市區　尖峰</td><td class="mono">AU$22.94<br><span class="note">18.61＋4.33</span></td></tr>'+
+   '<tr><td>T2／T3 ↔ T1 兩站之間</td><td class="mono">AU$5.00＋車資</td></tr></table>'+
+   '<div class="note">來源：機場站營運商 AirportLink 官方價目（2026 年 6 月）。'+
+   '網路上流傳的 14.60／17.30／17.66／17.92 都不是現行金額。</div></div>';
+  h+='<div class="card warn" style="margin:10px 0 0"><h3>🚨 三個容易踩的細節</h3><div class="note">'+
+   '<b>① 機場站不適用 60 分鐘轉乘</b>——官方明文。在機場站刷出再刷入不會併成一段行程。<br>'+
+   '<b>② 曼利渡輪的轉乘時限是 130 分鐘</b>，不是其他路線的 60 分鐘。<br>'+
+   '<b>③ 所有交通工具都按距離計費</b>，依刷入與刷出的兩點距離算。'+
+   '網路上寫「公車統一 AU$2」「渡輪統一 AU$8.39」<b>與官方說法不符</b>，實際車資請用 Trip Planner 查。</div></div>';
+  return h+'</div>';
+}
+
+/* ===== 版本與更新 ===== */
+var APP_VER="005";
+var UPD={latest:null,checking:false,err:""};
+function checkUpdate(cb){
+  if(UPD.checking){cb&&cb();return}
+  UPD.checking=true; UPD.err="";
+  fetch("./index.html?v="+Date.now(),{cache:"no-store"})
+   .then(function(r){ return r.text() })
+   .then(function(t){
+     var m=t.match(/<title>[^<]*?v(\d{3})<\/title>/);
+     UPD.latest=m?m[1]:null; UPD.checking=false; cb&&cb();
+   })
+   .catch(function(){ UPD.err="目前離線，無法檢查"; UPD.checking=false; cb&&cb() });
+}
+function hasUpdate(){ return UPD.latest && UPD.latest!==APP_VER }
+function doUpdate(){
+  /* 🚨 絕對不能先刪快取再抓 —— 離線時按下去會把 App 清成空白且救不回來。
+     必須先確認網路上抓得到完整的新版，成功之後才動快取。 */
+  if(navigator.onLine===false){ toast("目前離線，連上網路後再更新"); return }
+  toast("更新中，請稍候…");
+  fetch("./index.html?v="+Date.now(),{cache:"no-store"})
+   .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.text() })
+   .then(function(t){
+     if(t.length<20000||t.indexOf("</html>")<0) throw new Error("下載不完整");
+     var jobs=[];
+     if(window.caches&&caches.keys) jobs.push(caches.keys().then(function(ks){
+       /* 只刪自己命名空間的快取，不碰同 origin 的其他專案 */
+       return Promise.all(ks.filter(function(k){return k.indexOf("australia-")===0})
+         .map(function(k){ return caches.delete(k) })) }));
+     if(navigator.serviceWorker&&navigator.serviceWorker.getRegistrations)
+       jobs.push(navigator.serviceWorker.getRegistrations().then(function(rs){
+         return Promise.all(rs.map(function(r){ return r.update().catch(function(){}) })) }));
+     return Promise.all(jobs).catch(function(){});
+   })
+   .then(function(){ setTimeout(function(){ location.reload() },400) })
+   .catch(function(e){
+     toast("更新失敗："+(e&&e.message||"網路不穩")+"。原本的版本仍可正常使用");
+   });
+}
+function updBanner(){
+  if(hasUpdate()) return '<div class="card warn"><h3>🔄 有新版本 v'+esc(UPD.latest)+'</h3>'+
+    '<div class="note">你目前是 <b>v'+APP_VER+'</b>。更新<b>不會刪掉任何資料</b>——'+
+    '分帳、購物清單、房號、成員名字與照片都會保留。</div>'+
+    '<div class="acts"><button class="btn go" id="upd_go">立即更新</button></div></div>';
+  return "";
+}
+function verCard(){
+  return '<div class="card"><h3>📦 版本</h3><div class="note">'+
+   '目前使用 <b>v'+APP_VER+'</b>'+
+   (UPD.checking? '　檢查中…' : UPD.err? '　'+esc(UPD.err) :
+     UPD.latest? (hasUpdate()? '　<b style="color:var(--red)">線上已有 v'+esc(UPD.latest)+'</b>' : '　✅ 已是最新版')
+     : '')+
+   '<br><br><b>App 會自己檢查更新，你不用主動按。</b>開啟時、從背景切回來時、網路恢復時，以及每 30 分鐘各檢查一次；有新版會直接在畫面最上方跳出橫幅。<br>更新不用刪除重裝，'+
+   '所有資料存在這支手機上，更新、重整、關閉 App 都不會消失。'+
+   '<br>只有<b>手動刪除 App</b> 或清除瀏覽器資料才會清空——那之前記得先到「分享」頁複製備份碼。</div>'+
+   '<div class="acts"><button class="btn sec" id="upd_ck">手動檢查</button>'+
+   (hasUpdate()?'<button class="btn go" id="upd_go">立即更新</button>':'')+'</div></div>';
+}
 /* ===== 朗讀 ===== */
 function say(txt,lang){
   if(!("speechSynthesis" in window)){ toast("這支手機不支援朗讀"); return }
@@ -877,7 +1244,7 @@ function render(){
   else if(k==="plan")h=renderPlan();
   else if(k==="share")h=renderShare();
   else if(k==="prep")h=renderPrep();
-  document.getElementById("main").innerHTML=h;
+  document.getElementById("main").innerHTML=updBanner()+h;
   var t=document.querySelector("nav button.on"); if(t)t.scrollIntoView({block:"nearest",inline:"center"});
 }
 function applyFS(){
@@ -897,9 +1264,14 @@ function tick(){ var n=auNow();
 document.addEventListener("click",function(ev){
   var el=ev.target.closest("[data-fs],[data-tab],[data-nav],[data-say],[data-sayen],[data-arr],[data-mo],"+
     "[data-edit],[data-del],[data-remind],[data-add],[data-clearlag],[data-delx],[data-paid],"+
-    "[data-dels],[data-delp],#e_add,#s_add,#p_add,#d_add,#rm_new,#rm_up,#rm_dn,#rm_ck,#sc_cp,#pc_go,#bk_cp,#bk_dl,#bk_sh,#ics_dl");
+    "[data-dels],[data-delp],#e_add,#s_add,#p_add,#d_add,#rm_new,#rm_up,#rm_dn,#rm_ck,#sc_cp,#pc_go,#bk_cp,#bk_dl,#bk_sh,#ics_dl,#wx_go,#fx_go,#upd_ck,#upd_go");
   if(!el)return;
   var d=el.dataset,id=el.id;
+  if(id==="upd_ck"){ UPD.checking=true; render(); checkUpdate(function(){ render();
+    toast(hasUpdate()? "有新版本 v"+UPD.latest : (UPD.err||"已是最新版")) }); return }
+  if(id==="upd_go"){ doUpdate(); return }
+  if(id==="wx_go"){ WX.err="讀取中…"; render(); loadWX(function(){ render() }); return }
+  if(id==="fx_go"){ FX.err="讀取中…"; render(); loadFX(function(){ render() }); return }
   if(d.fs){ ST.fs=d.fs; save(); applyFS(); renderFS(); toast("文字大小已調整"); return }
   if(d.tab){ go(d.tab); return }
   if(d.nav){ window.open("https://www.google.com/maps/dir/?api=1&destination="+encodeURIComponent(d.nav),"_blank"); return }
@@ -957,6 +1329,12 @@ document.addEventListener("click",function(ev){
 function cp(t,n){ if(navigator.clipboard&&navigator.clipboard.writeText)
     navigator.clipboard.writeText(t).then(function(){toast(n+"已複製")},function(){prompt("手動複製",t)});
   else prompt("手動複製",t) }
+document.addEventListener("input",function(ev){
+  if(ev.target.id==="fx_a"){
+    var v=parseFloat(ev.target.value), t=document.getElementById("fx_t");
+    if(t) t.textContent=(FX.rate&&!isNaN(v))? "NT$"+Math.round(v*FX.rate).toLocaleString() : "—";
+  }
+});
 document.addEventListener("change",function(ev){
   var el=ev.target,d=el.dataset;
   if(el.id==="e_type"){ var ea=el.value==="each";
@@ -979,6 +1357,37 @@ document.addEventListener("change",function(ev){
 /* ===== 啟動 ===== */
 applyFS(); renderNav(); render(); tick(); setInterval(tick,20000); setInterval(render,60000);
 fbCheck(function(){ if(ST.tab==="share")render() });
+try{ var _fx=JSON.parse(localStorage.getItem(LSKEY+"_fx")||"null"); if(_fx)FX=_fx }catch(e){}
+loadWX(function(){ if(ST.tab==="info")render() });
+loadFX(function(){ if(ST.tab==="info")render() });
+/* ===== 自動檢查更新：不需要使用者主動去按 =====
+   加到主畫面的 PWA 可以在背景存活數天，只在冷啟動檢查一次是不夠的 */
+var _lastCheck=0;
+function autoCheck(force){
+  if(navigator.onLine===false) return;
+  var now=Date.now();
+  if(!force && now-_lastCheck < 15*60*1000) return;   /* 15 分鐘內不重複打 */
+  _lastCheck=now;
+  checkUpdate(function(){ if(hasUpdate()||ST.tab==="help") render() });
+}
+autoCheck(true);                                        /* ① 開啟時 */
+document.addEventListener("visibilitychange",function(){ /* ② 從背景切回來 */
+  if(!document.hidden) autoCheck();
+});
+window.addEventListener("focus",function(){ autoCheck() });   /* ③ 視窗取得焦點 */
+window.addEventListener("online",function(){ autoCheck(true) });/* ④ 網路恢復 */
+setInterval(function(){ autoCheck() }, 30*60*1000);            /* ⑤ 每 30 分鐘 */
+
+/* Service Worker 發現新版時也立刻反映 */
+if("serviceWorker" in navigator){
+  var _reloaded=false;
+  navigator.serviceWorker.addEventListener("controllerchange",function(){
+    if(_reloaded)return; _reloaded=true; location.reload();
+  });
+  navigator.serviceWorker.ready.then(function(reg){
+    reg.addEventListener("updatefound",function(){ autoCheck(true) });
+  }).catch(function(){});
+}
 if("serviceWorker" in navigator){ window.addEventListener("load",function(){
   navigator.serviceWorker.register("sw.js").catch(function(){}) }) }
 </script>

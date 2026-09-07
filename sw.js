@@ -1,5 +1,5 @@
-/* 澳洲 11 天 · Service Worker v1 —— 快取只在自己的命名空間內操作 */
-var CACHE='australia-v1';
+/* 澳洲 11 天 · Service Worker v5 —— 快取只在自己的命名空間內操作 */
+var CACHE='australia-v5';
 var PREFIX='australia-';
 var CORE=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./icon-512-maskable.png'];
 
@@ -43,7 +43,30 @@ self.addEventListener('fetch',function(e){
   /* 只處理同源請求，地圖等外部連結交給瀏覽器 */
   if(url.origin!==location.origin) return;
 
-  /* App 本體：自己快取優先，背景更新 */
+  /* HTML 本體：網路優先 —— 有網路時一定拿到最新版，沒網路才回快取
+     （若用快取優先，使用者會永遠看到上一版） */
+  var wantsHTML = req.mode==='navigate' ||
+    (req.headers.get('accept')||'').indexOf('text/html')>=0;
+  if(wantsHTML){
+    e.respondWith(
+      fetch(req).then(function(r){
+        if(r&&r.status===200){
+          var cp=r.clone();
+          caches.open(CACHE).then(function(c){ c.put(req,cp); });
+        }
+        return r;
+      }).catch(function(){
+        return caches.open(CACHE).then(function(c){
+          return c.match(req).then(function(hit){
+            return hit || c.match('./index.html').then(function(h2){ return h2 || c.match('./'); });
+          });
+        });
+      })
+    );
+    return;
+  }
+
+  /* 其餘靜態檔（圖示、manifest）：快取優先，背景更新 */
   e.respondWith(
     caches.open(CACHE).then(function(c){ return c.match(req); }).then(function(hit){
       var net=fetch(req).then(function(r){
