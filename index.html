@@ -52,8 +52,6 @@
 .dark .depbar .dep-dl{color:#A9B8B3;border-top-color:#243029}
 .dark nav button{background:#1E2724;color:#A9B8B3}
 .dark nav button.on{background:#E8EDEB;color:#141A18}
-.dark nav button.dl::after{box-shadow:0 0 0 2px #1E2724}
-.dark nav button.on.dl::after{box-shadow:0 0 0 2px #E8EDEB}
 .dark .vbtn{background:#1E2724;color:#A9B8B3}
 .dark .vbtn.ok{color:#7FDCC0}
 .dark .sbtn{background:#1E2724;color:#A9B8B3}
@@ -99,10 +97,7 @@ nav button.on{background:var(--paper);color:var(--ink);font-weight:700}
 nav button{position:relative}
 nav button.today{background:var(--gold);color:#2A1B05;font-weight:700}
 nav button.today.on{background:var(--paper);color:var(--ink);box-shadow:inset 0 0 0 2px var(--gold)}
-nav button.dl::after{content:"";position:absolute;top:6px;right:6px;width:7px;height:7px;
-  border-radius:50%;background:var(--red);box-shadow:0 0 0 2px #2B3A35}
-nav button.on.dl::after{box-shadow:0 0 0 2px var(--paper)}
-nav button.dl{padding-right:16px}
+
 
 /* ── 內容 ── */
 main{padding:var(--sp) 14px 90px;max-width:720px;margin:0 auto}
@@ -260,7 +255,7 @@ td .tel{margin:2px 0}
 <body>
 <header>
   <div class="hrow"><h1>澳洲</h1>
-    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v023 ⋯</button>
+    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v025 ⋯</button>
     <button class="sbtn" id="sbtn" title="搜尋行程" aria-label="搜尋">🔍</button>
     <div class="clock" id="clk"></div></div>
 
@@ -382,10 +377,10 @@ var DAYS=[
 {id:"d4",date:"9/20",dow:"日",title:"普芬比利蒸汽火車 · 菲利普島企鵝",sub:"上下車都在住處門口",slots:[
  {a:"08:00",b:"11:00",t:"🚐 370 Queen St 門口上車",q:"370 Queen St Melbourne CBD VIC 3000",g:["🚨 確切時間昨晚才知道","🚨 提前 5 分鐘在樓下等"],x:"<ul><li>方案：選項 2 · CBD 飯店接載</li><li><b>共乘接送</b>，訂單註明實際時間可能提早或延遲</li><li>查到確切時間後用 ✎ 編輯改掉</li><li>🛟 <b>車沒來或睡過頭怎麼辦</b>：立刻開 <b>Klook App</b> 站內訊息聯絡供應商，或打 <b>Klook 台灣客服 02-7742-6889</b>。前一晚的通知信裡會有<b>司機直撥電話，存下來</b>。共乘車可能遲到，<b>先等 15 分鐘再說</b>。真的錯過 → 訂單頁另標的 <b>52 Spencer St</b> 是唯一寫死的地點，距住處 1.1 km、走 14 分。<b>全部趕不上就是損失這一天，Klook 一日遊過時不退費</b>。</li></ul>",dead:"通知時間前 5 分鐘"},
  {a:"11:00",b:"13:00",t:"🚂 普芬比利蒸汽小火車",g:["✅ 含單程票"],x:"<ul><li>1900 年起行駛於丹頓農山脈，志願者營運的遺產蒸汽火車</li><li>票是<b>單程</b>，不是來回</li><li>山區林間，比市區冷，<b>外套先穿上</b></li></ul>",q:"Puffing Billy Railway"},
- {a:"13:00",b:"14:30",t:"🐨 Maru 動物園",g:["💴 自費 成人 AU$33","⚠️ 不保證能參加"],x:"<ul><li>訂單註明「視火車時刻表而定，不保證一定能搭乘」</li><li>可以抱無尾熊、親手餵袋鼠</li></ul>",q:"Maru Koala and Animal Park"},
+ {a:"13:00",b:"14:30",t:"🐨 Maru 動物園",g:["💴 自費 成人 AU$33","💴 導遊費 AU$5／人","⚠️ 不保證能參加"],x:"<ul><li>訂單註明「視火車時刻表而定，不保證一定能搭乘」</li><li>可以抱無尾熊、親手餵袋鼠</li></ul>",q:"Maru Koala and Animal Park"},
  {a:"14:30",b:"15:30",t:"🍽️ 午餐（自費，行程未包含）",g:["🚨 全天唯一的正餐機會","💴 自費"],x:"<ul><li>🚨 <b>訂單的費用不含任何一餐</b>。08:00 出發、23:59 才回住處，中間 16 小時</li><li>導遊會安排用餐停留，但<b>時間與地點都不固定</b>，也可能只有便利商店</li><li><b>出門前先買好行動糧</b>：麵包、能量棒、水。企鵝島晚上很冷，餓著更冷</li><li>晚餐時間卡在企鵝歸巢，多半來不及好好吃</li></ul>"},
  {a:"17:30",b:"20:30",t:"🐧 菲利普島企鵝歸巢",g:["✅ 含普通觀景臺門票","🚨 全面禁止拍照"],x:"<ul><li>世界上最小的企鵝，日落後成群上岸回巢</li><li>🚨 <b>自 2025 年起手機、相機一律不得拍攝企鵝</b>，為保護企鵝視力。園方提供 QR code 看影像</li><li>🚨 <b>觀景臺是露天水泥階梯</b>，吹的是巴斯海峽的風。<b>厚外套、毛帽、圍巾都要</b></li><li>座位又冷又硬，建議帶條薄毯或坐墊</li></ul>",q:"Penguin Parade Phillip Island"},
- {a:"21:30",b:"23:59",t:"🚐 送回 370 Queen St 門口",q:"370 Queen St Melbourne CBD VIC 3000",g:["🕐 訂單載明的回程窗口"],x:"<ul><li>💴 <b>導遊服務費金額訂單沒寫</b>，先按 AU$5／人備現金</li><li>回到住處可能已超過 22:00</li><li>🚨 <b>明天 09:15 有 Cuff、15:00 有飛機。行李今天出門前就打包好</b></li></ul>"}
+ {a:"21:30",b:"23:59",t:"🚐 送回 370 Queen St 門口",q:"370 Queen St Melbourne CBD VIC 3000",g:["🕐 訂單載明的回程窗口"],x:"<ul><li>💴 <b>導遊服務費 AU$5／人（已確認）</b>，四人 <b>AU$20 現金</b>，下車前給導遊</li><li>回到住處可能已超過 22:00</li><li>🚨 <b>明天 09:15 有 Cuff、15:00 有飛機。行李今天出門前就打包好</b></li></ul>"}
 ]},
 
 {id:"d5",date:"9/21",dow:"一",title:"Cuff 早餐 → 飛雪梨",sub:"VA0853 · 換城市",slots:[
@@ -663,13 +658,12 @@ function isToday(k){ var d=DAYS.filter(function(x){return x.id===k})[0];
 function hasDead(id){ return /^d\d+$/.test(id) && slotsOf(id).some(function(s){return s.dead}) }
 function renderNav(){
   document.getElementById("nav").innerHTML=TABS.map(function(t){
-    var c=[]; if(ST.tab===t.k)c.push("on"); if(isToday(t.k))c.push("today"); if(hasDead(t.k))c.push("dl");
+    var c=[]; if(ST.tab===t.k)c.push("on"); if(isToday(t.k))c.push("today");
     var main=t.n, sub="";
     var dd=DAYS.filter(function(x){return x.id===t.k})[0];
     if(dd){ main="Day "+t.k.slice(1); sub=dd.date; }
     else if(t.sub){ sub=t.sub; }
-    return '<button class="'+c.join(" ")+'" data-tab="'+t.k+'" '+
-      (hasDead(t.k)?'title="這天有死線"':'')+'>'+esc(main)+
+    return '<button class="'+c.join(" ")+'" data-tab="'+t.k+'">'+esc(main)+
       (sub?'<span class="tsub">'+esc(sub)+'</span>':'')+'</button>';
   }).join("");
 }
@@ -744,6 +738,7 @@ function renderDay(id){
     '</div></div>';
   h+='<div class="rail">'+ss.map(function(s){return slotHTML(s,d,lag)}).join("")+'</div>';
   h+=spotsHTML(id);
+  h+=martsHTML(id);
   h+='<div class="acts" style="margin-top:16px"><button class="btn sec" data-add="'+id+'">＋ 加一格</button>'+
      (lag?'<button class="btn sec" data-clearlag="'+id+'">重設抵達紀錄</button>':'')+'</div>';
   return h;
@@ -1113,7 +1108,7 @@ function renderPrep(){
      return '<label class="chip'+(ST.me===i?" on":"")+'"><input type="radio" name="me" class="me_r" value="'+i+'" '+(ST.me===i?"checked":"")+'>'+esc(mem(i))+'</label>'
    }).join("")+'</div></div>';
   h+='<div class="card warn"><h3>🚨 出發前一定要做完</h3><div class="note">'+
-   '① <b>四人的 ETA 601 簽證</b>——只能用手機 App「Australian ETA」，AU$20／人。沒有就上不了飛機。<br>'+
+   '① <b>ETA 601 簽證</b>——✅ A（楊）、✅ B（陳 Chientzu Chen）已核准。<b>還缺 C（羅）、D（王）</b>。只能用手機 App「Australian ETA」，AU$20／人。<b>沒有就上不了飛機。</b><br>'+
    '② <b>問 9/19 大洋路的上車點</b>——打 03 8080 2288。訂單寫「過時視為放棄，不退費」。<br>'+
    '③ <b>問兩位屋主能否寄放行李</b>——9/18 那位要在 9/17 出發前問，那天你們在飛機上。<br>'+
    '④ <b>確認行李是否直掛</b>——qantas.com 管理預訂輸入 EAYH8Q。<br>'+
@@ -1123,7 +1118,7 @@ function renderPrep(){
 /* ===== 使用說明 ===== */
 function renderHelp(){
   var d=auNow();
-  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v023</div></div>'+
+  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v025</div></div>'+
   countdownHTML()+'<div class="card ok"><h3>現在澳洲時間 '+fmt(auMins())+'</h3><div class="note">'+
    (d.getMonth()===8&&d.getDate()>=17&&d.getDate()<=27? '旅程進行中。':'旅程尚未開始。')+
    ' 澳洲東部時間比台灣快 2 小時，全程不換夏令時間。</div></div>'+
@@ -1323,6 +1318,15 @@ var SPOTS={
    q:"Bondi Beach Sydney",x:"<b>今天晚餐就在 Bondi Rd</b>，下午順路過去最省事。🚨 <b>只在紅黃旗之間下水</b>。9 月水溫仍低，多數人只散步不下水。<br><b>Bondi Icebergs 海崖泳池</b>是最有名的畫面，從海灘南端走過去約 10 分鐘。"},
   {n:"邦代→庫吉海岸步道",w:"Bondi 海灘南端起登",t:"單程 1.5–2 小時（6 km）",p:"免費",k:"累",
    q:"Bondi to Coogee Coastal Walk",x:"沿海崖的步道，經過 Tamarama、Bronte、Clovelly 幾個海灣。🚨 <b>全程沒有遮蔭，要帶水與防曬</b>。走完再趕 18:15 的訂位會很趕，<b>建議只走到 Bronte 就折返</b>（約 40 分）。"}]},
+ d8:{from:"View Sydney（北雪梨）",list:[
+  {n:"雪梨魚市場 Sydney Fish Market",w:"火車到 Central 轉輕軌，約 35 分",t:"1–1.5 小時",p:"看你吃多少",k:"輕鬆",
+   q:"Sydney Fish Market",x:"南半球最大的魚市場。生蠔、龍蝦、生魚片現點現吃。<b>今天午餐已經在 NOMAD 吃過</b>，這裡當下午茶或買回飯店吃。🚨 <b>下午收攤早，四點後攤商陸續關</b>。"},
+  {n:"派迪斯市集 Paddy's Markets",w:"火車到 Central，走 5 分",t:"1 小時",p:"免費入場",k:"輕鬆",
+   q:"Paddys Markets Haymarket Sydney",x:"<b>買伴手禮最集中的地方</b>——澳寶、羊毛製品、無尾熊玩偶、堅果。🚨 <b>週三到週日營業，9/24 是週四有開</b>。價格可以殺，但🚨 <b>攤販多半不給 tax invoice，退不了稅</b>。"},
+  {n:"QVB 維多利亞女王大廈",w:"火車到 Town Hall 站直達",t:"1–1.5 小時",p:"免費",k:"輕鬆",
+   q:"Queen Victoria Building Sydney",x:"1898 年的羅曼式建築，彩繪玻璃穹頂與懸掛的皇家大鐘。<b>裡面是精品商場，退稅品在這裡買最保險</b>——正規店家都給 tax invoice。就在 Town Hall 站上方，下雨天的好選擇。"},
+  {n:"達令港 Darling Harbour",w:"Town Hall 站走 10 分",t:"1–2 小時",p:"免費",k:"輕鬆",
+   q:"Darling Harbour Sydney",x:"海濱步道、水族館、杜莎夫人蠟像館都在這一區。<b>傍晚的天際線是雪梨最好拍的角度之一</b>。今天不用趕晚餐，可以待到日落。"}]},
  d9:{from:"557 Little Lonsdale St",list:[
   {n:"NGV International",w:"電車約 12 分",t:"1.5–2 小時",p:"常設展免費",k:"中等",
    q:"NGV International Melbourne",x:"🚨 <b>今天是公定假日</b>，開放時間可能異動，出發前查官網。室內行程，下雨天的好選擇。"},
@@ -1428,8 +1432,8 @@ function fareCard(){
 }
 
 /* ===== 版本與更新（依規格：抓 sw.js 讀 CACHE，繞過 SW 生命週期）===== */
-var APP_VER="023";
-var APPVER="australia-v23";            /* 與 sw.js 的 CACHE 一致 */
+var APP_VER="025";
+var APPVER="australia-v25";            /* 與 sw.js 的 CACHE 一致 */
 var VST={state:"...",note:"",latest:null};   /* ok / new / warn / ... */
 
 /* 直接抓 sw.js（約 3 KB），讀它的 CACHE 版本。
@@ -1676,6 +1680,62 @@ function geoCard(where){
   return h+'</div>';
 }
 
+/* ===== 最近的超市（晚餐可能自己煮） ===== */
+var MARTS={
+ mel1:{stay:"370 Queen St（9/18–9/21）",list:[
+  {n:"Woolworths Queens Place",a:"157 A'Beckett St",d:"8 公尺・走 1 分",
+   h:"週一–週五 07:00–24:00／週六 07:00–23:00／週日 08:00–23:00",
+   q:"Woolworths Queens Place Melbourne",
+   x:"🚨 <b>就在住處樓下</b>，同一棟。分兩層，下電扶梯是完整的超市規模。<b>店內附設 bottle shop</b>，酒也在這裡買。生鮮齊全，熟食櫃有現成熱食。"},
+  {n:"Coles Melbourne Central",a:"211 La Trobe St",d:"381 公尺・走 5 分",
+   h:"週一–週五 06:00–23:00／週末 07:00–23:00",q:"Coles Central Melbourne Central",
+   x:"在 Melbourne Central 購物中心地下層，<b>順路去搭車可以一起買</b>。走道比一般 Coles 窄，尖峰時段人多。"},
+  {n:"ALDI",a:"501 Swanston St",d:"395 公尺・走 5 分",h:"每日 08:30–21:00",
+   q:"ALDI Swanston Street Melbourne",
+   x:"<b>最便宜的一家</b>。品項比 Coles／Woolworths 少，但基本food材與飲料價格明顯低。🚨 <b>要自備購物袋，結帳要自己裝</b>。"}]},
+ syd:{stay:"View Sydney（9/21–9/25）",list:[
+  {n:"Greenwood Grocer",a:"Greenwood Plaza 地下層・36 Blue St",d:"104 公尺・走 1 分",
+   h:"週一–週五 06:00–19:00／週六 07:00–17:00／🚨 <b>週日公休</b>",
+   q:"Greenwood Grocer North Sydney",
+   x:"<b>最近的一家，出飯店穿過廣場就到</b>。走精緻路線——蔬果品質好、有國際食材（義、希、日、印、土），但價格偏高。🚨 <b>週日不開</b>。"},
+  {n:"Coles Local North Sydney",a:"99 Walker St",d:"196 公尺・走 2 分",
+   h:"週一–週六 06:00–22:00／週日 08:00–22:00",q:"Coles Local North Sydney",
+   x:"<b>日常採買選這家</b>。開得早關得晚，週日也開。烘焙區品項比一般 Coles 多。"},
+  {n:"Woolworths North Sydney",a:"100 Miller St",d:"233 公尺・走 3 分",
+   h:"週一–週五 06:00–22:00／週六 06:00–20:00／週日 08:00–20:00",
+   q:"Woolworths Metro North Sydney",
+   x:"Metro 小型店，品項比 Coles 少。多則評論抱怨<b>三明治常常缺貨</b>，要買現成的建議去 Coles。"},
+  {n:"24 小時便利店",a:"29 Blue St",d:"187 公尺・走 2 分",h:"<b>24 小時</b>",
+   q:"North Sydney Express Convenience Store",
+   x:"就在飯店隔壁，<b>半夜想買東西只有這家</b>。價格高、品項少，應急用。"}]},
+ mel2:{stay:"557 Little Lonsdale St（9/25–9/27）",list:[
+  {n:"Coles Spencer St",a:"DFO Spencer・201 Spencer St",d:"392 公尺・走 5 分",
+   h:"<b>每日 06:00–24:00</b>",q:"Coles Spencer Street Docklands",
+   x:"<b>營業時間最長，每天開到半夜</b>。就在 Southern Cross 車站旁，9/25 從機場回來、9/27 去機場都順路。生鮮與肉品選擇多。"},
+  {n:"Woolworths Queens Place",a:"157 A'Beckett St",d:"476 公尺・走 6 分",
+   h:"週一–週五 07:00–24:00／週六 07:00–23:00／週日 08:00–23:00",
+   q:"Woolworths Queens Place Melbourne",
+   x:"就是 9/18–9/21 住處樓下那家，<b>你們已經很熟了</b>。附設 bottle shop。"},
+  {n:"Coles Melbourne Central",a:"211 La Trobe St",d:"750 公尺・走 9 分",
+   h:"週一–週五 06:00–23:00／週末 07:00–23:00",q:"Coles Central Melbourne Central",x:"最遠的一家，除非順路否則不建議。"}]}
+};
+function martsHTML(id){
+  var key = ["d2","d3","d4"].indexOf(id)>=0 ? "mel1"
+          : ["d5","d6","d7","d8"].indexOf(id)>=0 ? "syd"
+          : ["d9","d10","d11"].indexOf(id)>=0 ? "mel2" : null;
+  if(!key) return "";
+  var M=MARTS[key];
+  return '<div class="card"><h3>🛒 最近的超市</h3>'+
+   '<div class="note">住 '+esc(M.stay)+'。晚餐自己煮或買現成的都在這裡採買。<br>'+
+   '🚨 <b>澳洲超市不賣酒</b>，要另外找 bottle shop（Woolworths Queens Place 店內就有一間）。<br>'+
+   '🚨 <b>不給免費塑膠袋</b>，自備購物袋或現場買。</div>'+
+   M.list.map(function(s){
+     return '<div class="plan" style="margin-top:10px"><b>'+esc(s.n)+'</b>'+
+      '<div class="tags"><span class="tag">🚶 '+esc(s.d)+'</span><span class="tag">📍 '+esc(s.a)+'</span></div>'+
+      '<div class="note" style="margin-top:6px">🕐 '+s.h+'<br>'+s.x+'</div>'+
+      '<div class="acts"><button class="btn go" data-nav="'+esc(s.q)+'">📍 帶我去</button></div></div>';
+   }).join("")+'</div>';
+}
 /* ===== 出發倒數（標頭正下方，全頁可見） ===== */
 function tripDays(){
   var now=auNow();
