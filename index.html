@@ -255,7 +255,7 @@ td .tel{margin:2px 0}
 <body>
 <header>
   <div class="hrow"><h1>澳洲</h1>
-    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v025 ⋯</button>
+    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v027 ⋯</button>
     <button class="sbtn" id="sbtn" title="搜尋行程" aria-label="搜尋">🔍</button>
     <div class="clock" id="clk"></div></div>
 
@@ -1118,7 +1118,7 @@ function renderPrep(){
 /* ===== 使用說明 ===== */
 function renderHelp(){
   var d=auNow();
-  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v025</div></div>'+
+  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v027</div></div>'+
   countdownHTML()+'<div class="card ok"><h3>現在澳洲時間 '+fmt(auMins())+'</h3><div class="note">'+
    (d.getMonth()===8&&d.getDate()>=17&&d.getDate()<=27? '旅程進行中。':'旅程尚未開始。')+
    ' 澳洲東部時間比台灣快 2 小時，全程不換夏令時間。</div></div>'+
@@ -1303,10 +1303,10 @@ var SPOTS={
   {n:"聯邦廣場 ＋ Flinders St 車站",w:"走 14 分",t:"30 分",p:"免費",k:"輕鬆",
    q:"Federation Square Melbourne",x:"黃色的 Flinders Street 車站是墨爾本最上鏡的建築。<b>今天要拖行李去機場，不要走太遠</b>。"}]},
  d6:{from:"View Sydney（北雪梨）",list:[
-  {n:"雪梨歌劇院",w:"火車到 Circular Quay 約 12 分",t:"外觀 30 分／導覽 1 小時",p:"外觀免費／導覽約 AU$42",k:"導覽偏累",
-   q:"Sydney Opera House",x:"🚨 <b>導覽要爬約 300 階、走 2.5 公里、沒有電梯、全程不能坐</b>——兩位長輩請斟酌。<br><b>不買票也能進去</b>：大廳、酒吧、餐廳都自由進出，沿著水邊步道看外觀完全免費。<b>黃昏時帆殼變色</b>是最好看的時刻。"},
-  {n:"環形碼頭 → 曼利渡輪",w:"火車到 Circular Quay 換渡輪",t:"來回約 2.5 小時",p:"單程約 AU$8.39（Opal）",k:"輕鬆",
-   q:"Circular Quay Ferry Wharf",x:"<b>雪梨最划算的觀光</b>——用一趟公車錢的價格，從海上看歌劇院與港灣大橋。曼利那頭有 The Corso 步行街與海灘。"},
+  {n:"雪梨歌劇院",w:"火車到 Circular Quay 約 12 分",t:"外觀 30 分／導覽 1 小時",p:"外觀免費／導覽 AU$35–49",k:"導覽偏累",
+   q:"Sydney Opera House",x:"🚨 <b>導覽要爬約 300 階、走 2.5 公里、沒有電梯、全程不能坐</b>——兩位長輩請斟酌。<br>💴 <b>導覽票價各家寫的都不一樣</b>：GetYourGuide 官方票 <b>AU$35 起</b>、多個 2026 年網站寫 <b>AU$42–43</b>、另有 <b>AU$48</b>（成人）與 <b>AU$49</b>。<b>沒有共識，抓 AU$50 預算</b>，實際以官網 sydneyoperahouse.com 為準。四人差額可能到 AU$60。<br><b>不買票也能進去</b>：大廳、酒吧、餐廳都自由進出，沿著水邊步道看外觀完全免費。<b>黃昏時帆殼變色</b>是最好看的時刻。"},
+  {n:"環形碼頭 → 曼利渡輪",w:"火車到 Circular Quay 換渡輪",t:"來回約 2.5 小時",p:"單程 AU$6.4–10.2（說法不一）",k:"輕鬆",
+   q:"Circular Quay Ferry Wharf",x:"<b>雪梨最划算的觀光</b>——從海上看歌劇院與港灣大橋，同一段航程的私營遊船要好幾倍價錢。<br>💴 <b>單程票價各來源差很多</b>：2026/7 的來源寫平日 <b>AU$6.40</b>、近期來源寫 <b>AU$8.39</b>、2026/3 的寫 <b>AU$10.20</b>。<b>沒有共識，抓 AU$10 預算</b>。<br>💰 <b>真正可靠的是每日上限，所有來源一致</b>：9/22 是<b>週二，上限 AU$19.30</b>，來回一定在上限內。<b>若改到週五或週末，上限只有 AU$9.65——當天所有交通全部封頂</b>，多搭幾趟等於免費。<br>曼利那頭有 The Corso 步行街與海灘。"},
   {n:"皇家植物園 ＋ 麥考利夫人石椅",w:"Circular Quay 走 15 分",t:"1–1.5 小時",p:"免費",k:"中等",
    q:"Mrs Macquaries Chair Sydney",x:"<b>能把歌劇院和港灣大橋framing 進同一張照片</b>的經典角度就在這裡。整片植物園免費，走累了草地隨處可坐。"},
   {n:"岩石區 The Rocks",w:"Circular Quay 走 8 分",t:"1–2 小時",p:"免費",k:"輕鬆",
@@ -1363,7 +1363,7 @@ var FARE={
    {f:"雪梨機場 T2",t:"市區各站",m:"火車",p:"21.64",n:"🚨 離峰．含 Gate Pass 18.61．尖峰 22.94"},
    {f:"北雪梨",t:"Central／Town Hall",m:"火車",p:"約 3.2–4",n:"約 10 分鐘"},
    {f:"北雪梨",t:"Circular Quay",m:"火車",p:"約 3.2–4",n:"約 12 分鐘"},
-   {f:"Circular Quay",t:"曼利 Manly",m:"渡輪",p:"約 8.4",n:"單程 30 分．最值得的一趟"},
+   {f:"Circular Quay",t:"曼利 Manly",m:"渡輪",p:"6.4–10.2",n:"🚨 各來源差近一倍．重點看每日上限"},
    {f:"Circular Quay",t:"塔龍加動物園",m:"F2 渡輪",p:"約 6.8–8.4",n:"12 分鐘"},
    {f:"北雪梨",t:"Bondi Junction",m:"火車",p:"約 4–5",n:"再轉 333／380 公車"},
    {f:"Bondi Junction",t:"Bondi Rd",m:"公車",p:"約 2–3.2",n:"🚨 在 Bondi Rd 下車不是 Bondi Beach"}]},
@@ -1432,8 +1432,8 @@ function fareCard(){
 }
 
 /* ===== 版本與更新（依規格：抓 sw.js 讀 CACHE，繞過 SW 生命週期）===== */
-var APP_VER="025";
-var APPVER="australia-v25";            /* 與 sw.js 的 CACHE 一致 */
+var APP_VER="027";
+var APPVER="australia-v27";            /* 與 sw.js 的 CACHE 一致 */
 var VST={state:"...",note:"",latest:null};   /* ok / new / warn / ... */
 
 /* 直接抓 sw.js（約 3 KB），讀它的 CACHE 版本。
