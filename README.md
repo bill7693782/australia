@@ -1,28 +1,30 @@
-# 澳洲 11 天 · v013
+# 澳洲 11 天 · v014
 
 線上：https://bill7693782.github.io/australia/
 
-## 上傳（6 個檔全部）
-Add file → Upload files → 把這 6 個檔一起拖進去（不要拖資料夾）→ Commit
+## 上傳（7 個檔）
+Add file → Upload files → 全部拖進去（不要拖資料夾）→ Commit
 
 index.html / sw.js / manifest.webmanifest
-icon-192.png / icon-512.png / icon-512-maskable.png
+icon-192.png / icon-512.png / icon-512-maskable.png / favicon.ico  ← 新增
 
-## 這一版改了什麼
-- 分頁標題拿掉版本號，改成單純「澳洲 11 天」
-- 圖示重做：眼睛加高光、鼻子縮小成橢圓、耳朵實心加內耳、臉加下巴
-- 沒有導航目標的行程格不再顯示「帶我去」
+## v013 → v014 修了什麼
+分頁一直顯示灰色地球，因為 index.html 從來沒有 <link rel="icon">。
+manifest 的圖示只管「加到主畫面」，不管瀏覽器分頁——那要靠 rel="icon"。
+本版補上 rel="icon"、shortcut icon、apple-touch-icon，並附 favicon.ico 保底。
 
-## 圖示換了看不到？
-瀏覽器和系統會把圖示快取住。移除主畫面圖示再重新加一次即可。
-資料存在 localStorage，不會消失。
+## 換了圖示還是舊的？
+瀏覽器和系統會把圖示快取住。
+・分頁圖示：強制重新整理，或關掉分頁重開
+・主畫面圖示：移除再重新加一次
+資料存在 localStorage，都不會消失。
 
-## 四處版本號必須同步（依補充規格）
+## 四處版本號必須同步
 header 版本鈕 ／ 說明頁「版本：vXXX」 ／ APPVER ／ sw.js 的 CACHE
-分頁標題不放版本號。
+🚨 分頁標題不放版本號。
 
 ## 與關西版的隔離
-Cache `australia-v13` ／ localStorage `australia_v1`
+Cache `australia-v14` ／ localStorage `australia_v1`
 備份碼 `AUBK` ／ 同步碼 `AULG` ／ Firebase australia-2026-40745
 
 ## 尚未確認
