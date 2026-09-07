@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#16211E">
-<title>澳洲 11 天 v005</title>
+<title>澳洲 11 天 v007</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -144,7 +144,7 @@ label{font-size:.82em;color:var(--dim);display:block;margin:0 0 4px}
   max-width:88vw;text-align:center;box-shadow:0 6px 24px rgba(0,0,0,.25)}
 
 .fsbar{display:flex;gap:6px;align-items:center;margin-left:auto}
-.fsbar button{min-width:40px;min-height:36px;border-radius:8px;background:#2B3A35;color:#C9D6D1;font-weight:700}
+.fsbar button{min-width:44px;min-height:44px;border-radius:8px;background:#2B3A35;color:#C9D6D1;font-weight:700}
 .fsbar button.on{background:var(--paper);color:var(--ink)}
 
 /* 電話：不斷行、做成可按的樣子 */
@@ -156,7 +156,7 @@ label{font-size:.82em;color:var(--dim);display:block;margin:0 0 4px}
 td .tel{margin:2px 0}
 /* 勾選晶片 */
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
-.chip{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:0 13px;
+.chip{display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:0 14px;
   border-radius:20px;background:var(--white);color:var(--ink);font-size:.88em;
   box-shadow:inset 0 0 0 1px var(--line);cursor:pointer}
 .chip input{width:18px;height:18px;margin:0;flex:0 0 auto}
@@ -871,7 +871,7 @@ function renderPrep(){
 /* ===== 使用說明 ===== */
 function renderHelp(){
   var d=auNow();
-  return '<div class="dayhead"><h2>澳洲 11 天</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v005</div></div>'+
+  return '<div class="dayhead"><h2>澳洲 11 天</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v007</div></div>'+
   '<div class="card ok"><h3>現在澳洲時間 '+fmt(auMins())+'</h3><div class="note">'+
    (d.getMonth()===8&&d.getDate()>=17&&d.getDate()<=27? '旅程進行中。':'旅程尚未開始。')+
    ' 澳洲東部時間比台灣快 2 小時，全程不換夏令時間。</div></div>'+
@@ -1156,7 +1156,7 @@ function fareCard(){
 }
 
 /* ===== 版本與更新 ===== */
-var APP_VER="005";
+var APP_VER="007";
 var UPD={latest:null,checking:false,err:""};
 function checkUpdate(cb){
   if(UPD.checking){cb&&cb();return}
