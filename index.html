@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#16211E">
-<title>澳洲 11 天 v008</title>
+<title>澳洲 11 天 v010</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -41,7 +41,7 @@ header{position:sticky;top:0;z-index:40;background:var(--ink);color:var(--paper)
   padding:calc(env(safe-area-inset-top) + 10px) 14px 0}
 .hrow{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding-bottom:8px}
 .hrow h1{font-size:1.02em}
-.clock{margin-left:auto;font-variant-numeric:tabular-nums;font-size:.86em;color:#B9C7C2}
+.clock{font-variant-numeric:tabular-nums;font-size:.86em;color:#B9C7C2}
 .clock b{color:#fff}
 nav{display:flex;gap:6px;overflow-x:auto;padding:0 0 8px;scrollbar-width:none}
 nav::-webkit-scrollbar{display:none}
@@ -152,6 +152,14 @@ label{font-size:.82em;color:var(--dim);display:block;margin:0 0 4px}
 .fsbar{display:flex;gap:6px;align-items:center;margin-left:auto}
 .fsbar button{min-width:44px;min-height:44px;border-radius:8px;background:#2B3A35;color:#C9D6D1;font-weight:700}
 .fsbar button.on{background:var(--paper);color:var(--ink)}
+.vbtn{margin-left:auto;min-height:44px;padding:0 13px;border-radius:22px;font-size:.78em;
+  font-weight:700;background:#2B3A35;color:#C9D6D1;white-space:nowrap;font-variant-numeric:tabular-nums}
+.vbtn.ok{color:#8FD9BE}
+.vbtn.warn{color:#D9C08F}
+.vbtn.new{background:var(--gold);color:#2A1B05;animation:vpulse 1.6s ease-in-out infinite}
+@keyframes vpulse{0%,100%{opacity:1}50%{opacity:.55}}
+.clock{margin-left:10px}
+@media (prefers-reduced-motion:reduce){.vbtn.new{animation:none}}
 
 /* 電話：不斷行、做成可按的樣子 */
 .tel{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;
@@ -187,7 +195,9 @@ td .tel{margin:2px 0}
 </head>
 <body>
 <header>
-  <div class="hrow"><h1>澳洲 11 天</h1><div class="clock" id="clk"></div></div>
+  <div class="hrow"><h1>澳洲 11 天</h1>
+    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v010 ⋯</button>
+    <div class="clock" id="clk"></div></div>
   <div class="hrow" style="padding-bottom:10px"><span style="font-size:.8em;color:#8FA39D">文字大小</span><div class="fsbar" id="fsbar"></div></div>
   <nav id="nav"></nav>
 </header>
@@ -242,28 +252,37 @@ var DAYS=[
  {a:"07:20",b:"08:30",t:"🛬 抵達墨爾本 T2",g:["🚨 生物安全檢查"],x:"<ul><li>入境 → 生物安全 → 提行李</li><li>行李會過 X 光、緝私犬會聞</li><li>不確定的東西就打勾申報，最多當場沒收，不會罰款</li></ul>"},
  {a:"08:30",b:"09:15",t:"🚕 maxi taxi 進市區",g:["💴 約 AU$65–81 含過路費","🕐 25–35 分"],x:"<ul><li>四人四件行李，<b>普通轎車裝不下，要 maxi taxi</b></li><li>13cabs：撥 <b>13 2227</b></li><li>四人搭計程車比四張 SkyBus（AU$21.70×4）便宜</li></ul>",q:"370 Queen St Melbourne CBD VIC 3000"},
  {a:"09:15",b:"10:30",t:"🏠 放行李、盥洗、換衣服",g:["🚨 公寓可能 14:00 後才能入住"],x:"<ul><li>370 Queen St 是 Agoda 公寓，<b>沒有櫃檯</b></li><li>屋主不讓寄放 → <b>Urloker 339 Queen St</b>，走 1 分鐘（55 m），08:00–21:00，+61 489 198 299</li><li>備用：O2shop 118 A'Beckett St（走 2 分，宣稱 24h，但評價 3.1★，有人說去了沒開）</li></ul>",q:"Urloker 339 Queen Street Melbourne"},
- {a:"10:30",b:"11:30",t:"🚶 走到 Melbourne Central 站",g:["🕐 走 4 分（355 m）"],x:"<ul><li>從 370 Queen St 往南走到 La Trobe St 方向</li><li><b>370 Queen St 在免費電車區的北邊界外</b>，要搭電車請走到 La Trobe St 的站牌</li></ul>",q:"Melbourne Central Station"},
+ {a:"10:30",b:"11:30",t:"🚶 走到 Melbourne Central 站",g:["🕐 走 4 分（355 m）"],x:"<ul><li>從 370 Queen St 走到 <b>La Trobe St</b>（一個街廓，看到路牌就是）</li><li><b>370 Queen St 在免費電車區的北邊界外</b>，要搭電車請走到 La Trobe St 的站牌</li></ul>",q:"Melbourne Central Station"},
  {a:"11:30",b:"12:10",t:"🚆 火車到 Armadale",g:["🚨 很多快車過站不停"],x:"<ul><li>搭<b>往 Frankston 方向</b>的火車</li><li><b>上車前用 PTV App 或看月台顯示牌確認該班車有停 Armadale</b>，搭錯要坐到下一站折返</li><li>維多利亞州公共運輸 2026/6/1–2027/1/1 全面半價</li></ul>",dead:"11:30 最晚上車"},
  {a:"12:15",b:"14:30",t:"🥩 Victor Churchill Melbourne",g:["🕐 12:15–14:30","🚨 14:30 硬性結束","💴 高價位"],x:"<ul><li><b>Armadale 站出站走 2 分鐘（144 m）</b></li><li>訂位編號 #7EZM6S3FKFA2，4 人，Storefront Dining</li><li><b>必點</b>：steak tartare、beef croquettes、côte de boeuf 或 chateaubriand、king prawn</li><li><b>吃法</b>：① <b>開場的溫麵包配打發奶油可以續</b>，多篇食記提到有人加點第二份 ② 先看櫃檯後的玻璃熟成室，喜馬拉雅岩鹽磚牆、28 天熟成 ③ 大塊肉講熟度要說 rare，多筆評論說比預期熟 ④ 整塊先展示再切，手機先準備好 ⑤ 馬蹄形吧檯約 13 席，主廚就在面前，可以直接問 ⑥ <b>進門處就是肉舖本身</b>，可以買熟成牛排、莎樂美腸帶走——但🚨 <b>肉製品絕對不能帶回台灣</b>，初犯罰 NT$20 萬</li><li>2026 年 World's Best Steaks 榜上有名，訂位常要提前數月</li><li>🚨 <b>不要拖行李來，放不下</b></li></ul>",q:"Victor Churchill Armadale",dead:"12:15 到店",
   walk:["Armadale 站 → 953 High St，144 公尺，走 2 分鐘",
    ["出站後往 High Street 方向（車站就在 High St 上）",
-    "面向 High St，往 <b>東北</b>走（Kooyong Rd 的反方向）",
+    "背對 Kooyong Rd 的方向走（車站出口的告示牌會標 High Street 的門牌號碼遞增方向）",
     "沿路都是精品店與咖啡館，走約 2 分鐘",
     "找<b>深色門面、招牌寫 VICTOR CHURCHILL、兩把交叉切肉刀的標誌</b>",
     "櫥窗看得到掛著的整塊熟成肉，看到就是了"],
    "看到掛肉的櫥窗就對了。走過頭會到 Kooyong Rd 大路口，那就退回來"],
   photo:"櫃檯後方的<b>玻璃熟成室</b>與<b>喜馬拉雅岩鹽磚牆</b>是這家的招牌畫面。<br>整塊肉<b>會先端出來展示再拿去切</b>，那是唯一能拍到全貌的時機，手機先解鎖等著。<br>吧檯只有約 13 席，拍照時注意不要擋到別人。"},
- {a:"14:30",b:"18:00",t:"🚶 回市區、休息",g:[],x:"<ul><li>時差只有 2 小時，但飛了 14 小時</li><li>明天 08:00 出發大洋路，今天早點睡</li></ul>",q:"370 Queen St Melbourne CBD VIC 3000"},
+ {a:"14:30",b:"17:30",t:"🚶 回市區、休息",g:["🚨 17:30 要開始注意訊息"],x:"<ul><li>時差只有 2 小時，但飛了 14 小時</li><li>明天 08:00 出發大洋路，今天早點睡</li></ul>",q:"370 Queen St Melbourne CBD VIC 3000"},
+ {a:"17:30",b:"18:00",t:"📱 收 9/19 大洋路的出團通知",g:["🚨 澳洲時間 18:00 前","🚨 收到要回覆確認"],x:"<ul><li>供應商 <b>ROYAL DISCOVERY HOLIDAY</b> 會在<b>今天 18:00 前</b>透過 <b>WeChat 或 KKday 站內訊息</b>通知：<b>司機電話、車牌、上車地址的具體時間</b></li><li>🚨 <b>對方明講「請仔細閱讀並且回覆確認」——沒回覆可能被當成沒人要上車</b></li><li>🚨 <b>要留一支出行當天聯絡得到你本人的電話</b>。台灣號碼在澳洲不一定收得到，建議給 eSIM 的澳洲號碼或確認 WeChat 能收</li><li>收到後用 <b>⋯ → ✎ 改</b>把明天上車那格的時間改成通知的時間</li><li>18:00 過了還沒收到 → 立刻在 KKday 站內訊息催，或打 <b>03 8080 2288</b></li></ul>",dead:"18:00 前收到通知並回覆"},
  {a:"18:00",b:"20:00",t:"🍽️ 晚餐（自由）",g:["🚨 澳洲商店多半 17–18 點關"],x:"<ul><li>超市 Coles、Woolworths 開到 21–22 點</li><li>超市不賣酒，要去 bottle shop（Dan Murphy's、BWS、Liquorland）</li></ul>"}
 ]}
 ,
 {id:"d3",date:"9/19",dow:"六",title:"大洋路一日遊",sub:"中文團 · 11.5 小時",slots:[
  {a:"07:00",b:"07:50",t:"🍞 早餐要在出發前吃完",g:["🚨 車上全程禁止飲食"],x:"<ul><li>訂單第 3 條：法規要求，<b>車內禁止任何食物與飲料</b></li><li>下一次正式用餐是 <b>13:40</b> 在動物園，中間五個半小時</li><li>會暈車的人現在吃藥，車上不能吃東西</li></ul>"},
- {a:"07:55",b:"08:00",t:"🚌 抵達上車點",g:["🚨 提前 5 分鐘","🚨 過時視為放棄，不退費"],x:"<ul><li>訂單 26KK213944869（RZ260812ZT4455），成人 ×4</li><li>⚠️ <b>上車點待查</b>——訂單上沒有寫地址</li><li>打 <b>03 8080 2288</b> 問：上車點地址、上車時間、公寓能不能上門接</li><li>查到後用 ✎ 編輯改成正確地點與時間</li></ul>",dead:"07:55 到上車點"},
+ {a:"07:55",b:"08:00",t:"🚌 抵達上車點 120 A'Beckett St",g:["🚨 提前 5 分鐘","🚨 過時視為放棄，不退費","🚶 走 1 分半"],q:"120 A'Beckett St Melbourne CBD VIC 3000",
+  walk:["370 Queen St → 120 A'Beckett St，106 公尺，走 1 分半",
+   ["出住處大門，面向 A'Beckett St",
+    "背對 Queen St 那一側，沿 A'Beckett St 走",
+    "經過 <b>118 號的 O2shop</b>（24 小時便利商店招牌）",
+    "隔壁就是 120 號，遊覽車會停在路邊",
+    "🚨 <b>07:55 到，規定提前 5 分鐘</b>"],
+   "看到 O2shop 就對了；走到 Elizabeth St 大路口代表過頭，退回來"],
+  x:"<ul><li>✅ <b>上車點：120 A'Beckett St, Melbourne</b>（供應商 ROYAL DISCOVERY HOLIDAY 於 KKday 回覆）</li><li>🚶 <b>從 370 Queen St 走 106 公尺、約 1 分半</b>——住處就在 A'Beckett St 與 Queen St 轉角，<b>沿 A'Beckett St 走一個門牌</b></li><li>📍 <b>地標：118 A'Beckett St 的 O2shop 就在隔壁</b>（相隔 17 公尺）</li><li>🚨 <b>確切上車時間要等 9/18 晚上的通知</b>，收到後用 <b>⋯ → ✎ 改</b>改掉這一格</li><li>訂單 26KK213944869（RZ260812ZT4455），成人 ×4。平台是 <b>KKday</b>，聯繫走 <b>WeChat</b> 或 KKday 站內訊息</li></ul>",dead:"07:55 到上車點"},
  {a:"08:00",b:"10:00",t:"🚌 出發前往大洋路",g:["🕐 冬令時 08:00 出發"],x:"<ul><li><b>你們是冬令時那一欄</b>——澳洲夏令時間 10/4 才開始</li><li>訂單上的 1000／1115／1255 那組時間就是你們的時間，不用順延</li></ul>"},
  {a:"10:00",b:"10:15",t:"☕ Colac 小鎮休息",g:["🕐 約 15 分鐘","🚻 上廁所"],x:"<ul><li>維多利亞州西部的農業小鎮，位在 Colac 湖畔</li><li>🚨 <b>下一次停靠是 11:15 的十二門徒，中間 1 小時在車上，而且車上禁止飲食</b>——現在上廁所</li><li>只停 15 分鐘，不要走遠</li><li>小鎮有超市與麵包店，想補行動糧可以趁現在（但要等下車後才能吃）</li></ul>"},
  {a:"11:15",b:"12:45",t:"🪨 十二門徒石",g:["🕐 約 90 分鐘","💴 直升機自費 AU$195／成人"],x:"<ul><li>直升機當天跟導遊訂</li><li>🚨 <b>沒有遮蔽的海崖，風很大</b>。帽子要能綁住或收進包包，會被直接吹走</li><li>海岸紫外線反射強，防曬要擦</li></ul>",q:"Twelve Apostles Great Ocean Road",
-  photo:"🚨 <b>現存只有 7 根</b>，名字叫十二門徒但不是十二根。<br>主觀景台往<b>西</b>看能一次帶到最多根石柱。<br>從停車場要走一段步道穿過公路下方的地道才到觀景台，<b>時間要抓進 90 分鐘裡</b>。<br>海崖沒有遮蔽、風極大，<b>帽子要能綁住或收起來</b>，手機握緊。"},
+  photo:"🚨 <b>現存只有 7 根</b>，名字叫十二門徒但不是十二根。<br>站在主觀景台上<b>沿海岸線望向石柱最密的那一側</b>，能一次帶到最多根。<br>從停車場要走一段步道穿過公路下方的地道才到觀景台，<b>時間要抓進 90 分鐘裡</b>。<br>海崖沒有遮蔽、風極大，<b>帽子要能綁住或收起來</b>，手機握緊。"},
  {a:"12:55",b:"13:25",t:"🌊 洛克阿德峽谷",g:["🕐 約 30 分鐘","🚨 有階梯要走"],x:"<ul><li>名字來自 1878 年在此觸礁的鐵殼船 Loch Ard，船上只有兩人生還，兩人就是漂到這個峽谷上岸的</li><li>石灰岩被海水掏空形成的內凹海灣，兩側是垂直峭壁</li><li>🚨 <b>要走一段木階梯下到沙灘再走回來</b>，30 分鐘扣掉上下階梯的時間並不寬裕</li><li>階梯可能濕滑，<b>穿好走的鞋</b></li><li>不下沙灘的話，上方的觀景平台也看得到全景</li></ul>",q:"Loch Ard Gorge",
   photo:"<b>從上方觀景台拍全景</b>——能同時帶到兩側峭壁與中間的沙灘，這是明信片角度。<br>下到沙灘後往回拍，峭壁的高度才有壓迫感。<br>海風大，<b>手機用手腕帶或握緊</b>。"},
  {a:"13:40",b:"14:40",t:"🦘 大洋路動物園 · 午餐",g:["🕐 約 60 分鐘","💴 門票 AU$37／成人","💴 午餐自費"],x:"<ul><li>Great Ocean Road Wildlife Park，自費入園</li><li><b>今天唯一的正餐</b></li><li>餵袋鼠時手掌攤平，不要用手指夾食物</li></ul>"},
@@ -309,7 +328,7 @@ var DAYS=[
  {a:"18:00",b:"20:15",t:"🔥 Porteño",g:["🕐 18:00–20:15","💴 高價位"],x:"<ul><li>50 Holt Street, Surry Hills／<b>+61 2 8399 1440</b>。<b>週二晚餐 17:45 開門</b>，你們 18:00 是第一輪</li><li><b>必點</b>：8 小時炭烤乳豬或羊、<b>Provoleta</b>（烤 provolone 起司配奧勒岡與辣油，多來源列為第一次來必點）、<b>Bife de Chorizo</b>（沙朗）、fried Brussels sprouts（配<b>扁豆與薄荷</b>）、empanadas、morcilla（血腸）、wood-fired bone marrow</li><li><b>另一種點法</b>：官網有 <b>Signature Banquet</b> 與 <b>Grand Banquet</b> 兩種套餐，四人分食可能比單點省事</li><li>牛肉由 Boutique Butcher <b>熟成 5 週</b></li><li><b>吃法</b>：① <b>坐下第一件事就是點 asado</b>——豬羊在炭火上架 8 小時，賣完就沒 ② 進門先看門口的炭火坑，豬羊是十字架式架著烤 ③ asado 一板一板出，四人建議點兩份不同的 ④ 全部分食制，4 前菜＋2 asado＋3 配菜最順 ⑤ <b>要求一次上一道主菜</b>，一次全上會冷掉</li><li>🚨 骨髓上的孜然沒寫在菜單上，不吃就說 <b>no cumin</b></li><li>隔壁是同集團的 <b>Bastardo</b>，用同一套訂位系統。私人包廂入口在 <b>Gladstone Street</b>，不是 Holt St 正門</li></ul>",q:"Porteno Surry Hills",dead:"18:00 訂位",
   walk:["Central 站 → 50 Holt Street, Surry Hills，走約 12 分鐘",
    ["從 Central 站的 <b>Devonshire Street 出口</b>出來（不是 Eddy Ave 那側）",
-    "沿 Devonshire St 往東走，穿過 Elizabeth St",
+    "沿 Devonshire St 直走，穿過 Elizabeth St 路口",
     "右轉 Bourke St，再左轉進 Holt St",
     "找<b>門口有炭火坑、豬羊十字架式架著烤</b>的那家",
     "17:45 開門，你們 18:00 是第一輪"],
@@ -359,8 +378,8 @@ var DAYS=[
  {a:"12:40",b:"13:00",t:"🚶 走去 Reine & La Rue",g:["🕐 走 9 分（694 m）","🚨 提早 20 分鐘出門"],x:"<ul><li>住處到 380 Collins St 走 9 分鐘</li><li>380 Collins St 到 MCG 直線約 1.9 公里，比想像中近，市區會很擠</li></ul>",q:"Reine and La Rue Melbourne"},
  {a:"13:00",b:"15:30",t:"🥂 Reine & La Rue",g:["🕐 13:00","🚨 週六加收 10%","👔 elegant smart casual"],x:"<ul><li>380 Collins Street（Queen St 轉角，ANZ 銀行大廳後方）／<b>+61 3 9021 5241</b>／訂位 #5JP2ZF37DD95</li><li>🚨 <b>全程唯一有明文服裝要求的一家。不要穿短褲拖鞋</b></li><li><b>必點</b>：duck liver & foie gras parfait（約 AU$28）、生蠔、beef tartare 與 scallop gratin（單顆各約 AU$12）、Great Ocean duck（半隻約 AU$140）或 striploin 300g（約 AU$80）、cassoulet</li><li><b>主廚 Jacqui Challinor 親自推薦</b>：生蠔配<b>煙燻橄欖油與海藻 mignonette</b>、<b>Long Paddock 發酵奶油配 All Are Welcome 的長棍</b>（她說是全場的 showstopper）、<b>手潛女王扇貝配松露奶油</b>火烤、confit rabbit、saucisson、wood-roasted leeks</li><li>店內另有<b>生蠔吧</b>與<b>推車式起司車</b>，起司車會推到桌邊選</li><li><b>吃法</b>：① 進門先看空間——這是<b>墨爾本舊證券交易所</b>，哥德式拱頂與彩繪玻璃，這是一半的價值 ② <b>小點是單顆計價，四人各點一顆就能全部試到</b>，這是最划算的點法 ③ 鴨肝慕斯配麵包（baguette 另計約 AU$10），<b>要厚塗</b> ④ 隔壁有 <b>8 座</b>的小酒吧 La Rue，可以直接走進去不用訂位 ⑤ 這是 <b>138 年歷史的 Gothic Bank</b>，<b>2024 年拿下澳洲室內設計大獎首獎</b>，150 席</li><li>⚠️ 網路上有頁面把這家電話寫成 (02) 9280 3395——<b>那是 NOMAD 雪梨的號碼</b>。這家是 <b>+61 3 9021 5241</b></li></ul>",q:"Reine and La Rue Melbourne",dead:"13:00 訂位",
   walk:["557 Little Lonsdale St → 380 Collins St，694 公尺，走 9 分鐘",
-   ["出門往南走到 Lonsdale St，再往東（左轉）",
-    "沿路經過 Queen St，繼續往南到 Collins St",
+   ["出門走到 Lonsdale St，朝門牌號碼變小的方向",
+    "經過 Queen St 路口後繼續直走，數 3 個路口到 Collins St",
     "在 <b>Collins St 與 Queen St 轉角</b>找 <b>ANZ 銀行</b>",
     "🚨 <b>餐廳在 ANZ 銀行大廳的後方</b>，不是獨立店面，門口不顯眼",
     "看到哥德式拱頂的挑高大廳就是進對地方了"],
@@ -391,16 +410,64 @@ var ST={members:["","","",""],avatars:["","","",""],
   adhoc:{},edit:{},hide:{},done:{},arr:{},
   exp:[],paid:{},diet:[],dietOn:[],
   shop:[],budget:0,pack:[],packHide:{},
-  room:"",tab:"help",fs:"m",lastEdit:0};
+  room:"",tab:"help",fs:"m",lastEdit:0,
+  me:null,pos:{},geoOn:false,geoRate:1};
 var CAN=false;
 try{
   var raw=localStorage.getItem(LSKEY); if(raw) ST=Object.assign(ST,JSON.parse(raw));
   localStorage.setItem(LSKEY+"_probe","1"); localStorage.removeItem(LSKEY+"_probe"); CAN=true;
 }catch(e){CAN=false}
-["adhoc","edit","hide","done","arr","paid","packHide"].forEach(function(k){ if(!ST[k]||typeof ST[k]!=="object")ST[k]={} });
-["exp","diet","dietOn","shop","pack","members","avatars"].forEach(function(k){ if(!Array.isArray(ST[k]))ST[k]=[] });
-while(ST.members.length<4)ST.members.push("");
-while(ST.avatars.length<4)ST.avatars.push("");
+/* ===== 壞資料防護（規格第三章）=====
+   同步或舊備份可能帶進非預期型別。三十種壞狀態裡有十一種會讓分頁整頁掛掉。 */
+function ensureST(){
+  /* 物件欄位：不是物件、或誤成陣列，就重設 */
+  ["adhoc","edit","hide","done","arr","paid","packHide","pos"].forEach(function(k){
+    if(!ST[k]||typeof ST[k]!=="object"||Array.isArray(ST[k])) ST[k]={};
+  });
+  /* 陣列欄位：不是陣列就重設，並濾掉 null／undefined */
+  ["exp","diet","dietOn","shop","pack","members","avatars"].forEach(function(k){
+    if(!Array.isArray(ST[k])) ST[k]=[];
+    ST[k]=ST[k].filter(function(x){ return x!==null&&x!==undefined });
+  });
+  /* 成員名單長度不對就補齊 */
+  if(ST.members.length!==MEMBERS.length)
+    ST.members=MEMBERS.map(function(_,i){ return (ST.members&&ST.members[i])||"" });
+  if(ST.avatars.length!==MEMBERS.length)
+    ST.avatars=MEMBERS.map(function(_,i){ return (ST.avatars&&ST.avatars[i])||"" });
+  /* 索引類欄位超出範圍就重設 */
+  if(ST.me!==null&&(typeof ST.me!=="number"||ST.me<0||ST.me>=MEMBERS.length)) ST.me=null;
+  if(typeof ST.geoRate!=="number"||ST.geoRate<0||ST.geoRate>2) ST.geoRate=1;
+  if(typeof ST.budget!=="number"||!isFinite(ST.budget)) ST.budget=0;
+  if(typeof ST.fs!=="string"||["s","m","l","xl"].indexOf(ST.fs)<0) ST.fs="m";
+  if(typeof ST.room!=="string") ST.room="";
+  /* 每一筆分帳都要有合法金額與付款人 */
+  ST.exp=ST.exp.filter(function(e){
+    if(!e||typeof e!=="object") return false;
+    if(e.type==="each"){
+      if(!Array.isArray(e.each)) return false;
+      e.each=e.each.map(function(v){ return (typeof v==="number"&&isFinite(v))?v:0 });
+      return true;
+    }
+    return typeof e.amt==="number"&&isFinite(e.amt);
+  });
+  ST.exp.forEach(function(e){
+    if(typeof e.by!=="number"||e.by<0||e.by>=MEMBERS.length) e.by=0;
+    if(e.type!=="each"&&!Array.isArray(e.with)) e.with=MEMBERS.map(function(_,i){return i});
+    if(Array.isArray(e.with)) e.with=e.with.filter(function(i){
+      return typeof i==="number"&&i>=0&&i<MEMBERS.length });
+    if(typeof e.t!=="string") e.t="未命名";
+  });
+  /* 購物每筆要有品名 */
+  ST.shop=ST.shop.filter(function(x){ return x&&typeof x==="object"&&typeof x.n==="string"&&x.n });
+  ST.shop.forEach(function(x){ if(typeof x.price!=="number"||!isFinite(x.price)) x.price=0 });
+  /* 位置：每一筆都要有合法經緯度 */
+  Object.keys(ST.pos).forEach(function(k){
+    var v=ST.pos[k];
+    if(!v||typeof v.lat!=="number"||typeof v.lng!=="number"||!isFinite(v.lat)||!isFinite(v.lng))
+      delete ST.pos[k];
+  });
+}
+ensureST();
 
 function save(){ if(!CAN)return; ST.lastEdit=Date.now();
   try{ localStorage.setItem(LSKEY,JSON.stringify(ST)) }catch(e){ toast("儲存空間滿了，請刪掉一些照片") } }
@@ -524,8 +591,13 @@ function renderDay(id){
   if(mt&&!mt.skip) h+='<div class="card"><h3>📍 今天走散了</h3>'+
     '<div class="note"><b>集合點</b><br>'+mt.p+'</div>'+
     '<div class="note" style="margin-top:9px"><b>四步</b><br>'+
-    '① 原地站 5 分鐘不要移動<br>② 打電話，打不通改傳訊息<br>③ 到上面的集合點等 30 分鐘<br>'+
-    '④ 還是沒接上 → '+mt.f+'</div></div>';
+    '① <b>先原地等 5 分鐘</b>，不要移動<br>'+
+    '② <b>傳訊息，不要打電話</b>——機場、車站、景點太吵，聽不到也講不清楚<br>'+
+    '③ 還是找不到就<b>直接去集合點，不用再聯絡</b><br>'+
+    '④ 還是沒接上 → '+mt.f+
+    '<br><br>🔋 <b>手機沒電的人負責去集合點等，有電的人去找。</b>'+
+    (ST.geoOn?'<br>📍 位置共享已開啟，可以到「緊急」頁看大家在哪。':'')+
+    '</div></div>';
   h+='<div class="rail">'+ss.map(function(s){return slotHTML(s,d,lag)}).join("")+'</div>';
   h+=spotsHTML(id);
   h+='<div class="acts" style="margin-top:16px"><button class="btn sec" data-add="'+id+'">＋ 加一格</button>'+
@@ -634,6 +706,18 @@ function renderPack(){
       '<div style="flex:0 0 auto"><input type="checkbox" class="p_ck" data-k="'+esc(x)+'" '+(ST.done["pk|"+x]?"checked":"")+' style="width:22px;height:22px"></div>'+
       '<div style="flex:1'+(ST.done["pk|"+x]?";opacity:.45;text-decoration:line-through":"")+'">'+esc(x)+'</div>'+
       '<button data-delp="'+esc(x)+'">✕</button></div>' }).join("")+'</div>';
+  h+='<div class="card ok"><h3>📸 出發前要截圖存進相簿</h3>'+
+   '<div class="note">🚨 <b>不要只存在這個 App 裡。</b>過海關那一刻速度就是一切——相簿點兩下，'+
+   '比開 App 找頁面快三到五秒，而後面排著人。App 出問題時截圖也還在。<br>'+
+   '存好後<b>加到相簿的「最愛」</b>，要用時一秒找到。</div>'+
+   '<div class="card" style="margin-top:10px;box-shadow:none;padding:0">'+
+   [["ETA 簽證核准畫面", "四個人各一張。過海關被問時最快"], ["護照資料頁", "遺失時報案與補辦要用"], ["國際線訂位 EAYH8Q", "四段同一張票"], ["國內線訂位 WXYJYO", "VA0853／VA0810"], ["八家餐廳的訂位確認信", "La Cucina 有客人訂了位店家卻說查無紀錄的紀錄"], ["9/19 大洋路 KKday 訂單", "26KK213944869 ＋ 出團前一晚的司機通知"], ["9/20 普芬比利 Klook 訂單", ""], ["三段住宿地址", "370 Queen St／View Sydney／557 Little Lonsdale"], ["旅平險保單號碼與服務電話", "觀光客沒有 Medicare，全額自費"], ["離線地圖", "墨爾本 CBD、Armadale、雪梨、Bondi、大洋路沿線"]].map(function(s,i){
+     var k="shot|"+s[0];
+     return '<div class="row" style="align-items:center;margin-bottom:8px">'+
+      '<div style="flex:0 0 auto"><input type="checkbox" class="p_ck" data-k="'+esc(s[0])+'" '+(ST.done["pk|"+s[0]]?"checked":"")+' style="width:22px;height:22px"></div>'+
+      '<div style="flex:1'+(ST.done["pk|"+s[0]]?";opacity:.45;text-decoration:line-through":"")+'"><b>'+esc(s[0])+'</b>'+
+      (s[1]?'<br><span class="note">'+esc(s[1])+'</span>':'')+'</div></div>';
+   }).join("")+'</div></div>';
   h+='<div class="card warn"><h3>🚨 絕對不要放的東西</h3><div class="note">'+
    '<b>去程（進澳洲）</b>：新鮮水果、肉乾、肉鬆、香腸、種子、木製品、土壤。未申報罰則 AU$660 起，高風險品項 AU$1,980–3,960。<b>申報了不會罰，最多沒收。</b><br><br>'+
    '<b>回程（進台灣）</b>：任何含肉製品。自非洲豬瘟疫區攜帶豬肉製品，<b>初犯罰 NT$20 萬、再犯 100 萬</b>。袋鼠肉乾、含肉粉食品、飛機上的肉類餐點都算。</div></div>';
@@ -670,7 +754,7 @@ function renderInfo(){
   h+='<div class="card"><h3>🚆 交通</h3><div class="note">'+
    '<b>維多利亞州公共運輸 2026/6/1–2027/1/1 全面半價</b>，全票每日上限 AU$11.40 → <b>AU$5.70</b>。<b>SkyBus 不適用</b>。<br>'+
    '✅ <b>墨爾本已可直接刷信用卡</b>——維多利亞州交通廳官方說明：全票乘客現在可在<b>火車、電車、公車</b>用信用卡、手機或手錶感應。2026/6/6 先開通火車，7 月起全網。<b>觀光客算全票，不用買 myki</b>。優待票仍需 myki。<br>🚨 <b>上下車要用同一張卡</b>。刷卡款項可能<b>三天後</b>才入帳，先看到的是預授權金額。<br>'+
-   '<b>CBD 有免費電車區</b>，北邊界是 La Trobe St。370 Queen St 在界外，往南走到 La Trobe St 上車。<br>'+
+   '<b>CBD 有免費電車區</b>，北邊界是 La Trobe St。370 Queen St 在界外，<b>走到 La Trobe St 的站牌</b>再上車（站牌上會標示是否在免費區內）。<br>'+
    '雪梨 Opal／感應支付通用（<b>Visa、Mastercard、Amex 在機場閘門都可</b>）。<b>每週上限 AU$50</b>，你們 9/21–9/25 剛好在同一個 Opal 週內，<b>每人約可省 AU$27</b>。詳見上方票價試算。<br>'+
    '<b>四人叫車一律指定 maxi taxi</b>——四件託運行李普通轎車裝不下。13cabs：<b>13 2227</b>。</div></div>';
   h+='<div class="card"><h3>🛍️ 生活</h3><div class="note">'+
@@ -708,6 +792,7 @@ function renderSOS(){
   function tel(n,label,urgent){ return '<a class="tel'+(urgent?' urgent':'')+'" href="tel:'+
     n.replace(/[^0-9+]/g,"")+'">☎ '+esc(label||n)+'</a>' }
   var h='<div class="dayhead"><h2>緊急</h2><div class="sub">出事先看這裡</div></div>';
+  h+=geoCard("sos");
   h+='<div class="card warn"><h3>立刻能打的</h3><table>'+
    '<tr><td><b>警察／救護車／消防</b></td><td>'+tel("000","000",1)+'</td></tr>'+
    '<tr><td>手機無訊號時</td><td>'+tel("112")+'</td></tr>'+
@@ -740,9 +825,9 @@ function renderSOS(){
 }
 /* ===== 備案 ===== */
 function renderPlan(){
-  var HOT=[["走散","原地站 5 分鐘 → 打電話或傳訊息 → 到當天集合點等 30 分鐘 → 第四步<b>每天不一樣</b>，看該天行程頁最上面那張卡。機場日是去登機門，不是回住處。每個人身上要有住處地址、當天集合點截圖、其他三人電話。"],
+  var HOT=[["走散","① 原地等 5 分鐘 ② <b>傳訊息不要打電話</b>（太吵） ③ 直接去集合點不用再聯絡 ④ 第四步<b>每天不一樣</b>，看該天行程頁最上面那張卡——機場日是去登機門不是回住處。<b>沒電的人去集合點等，有電的人去找。</b>每個人身上要有住處地址、當天集合點截圖、其他三人電話。"],
    ["手機沒電","每人自備行動電源不要共用。澳洲插座 I 型 230V，要帶轉接頭。沒電前先截圖：住處地址、當天訂位、集合點。"],
-   ["班機誤點","國際線四段同一張票（EAYH8Q），航空公司必須負責改簽。國內線 MEL–SYD 班次密集，到 Virgin 櫃檯改。"],
+   ["班機誤點","國際線四段同一張票（EAYH8Q），航空公司必須負責改簽。國內線 MEL–SYD 班次密集，到 Virgin 櫃檯改。"],["一日遊聯絡不上","9/19 大洋路是 <b>KKday</b>（訂單 26KK213944869），走 WeChat 或 KKday 站內訊息，電話 03 8080 2288。9/20 普芬比利是 <b>Klook</b>，走 Klook App。兩個平台不同，不要找錯。"],
    ["餐廳客滿","出示訂位確認信與編號。La Cucina 有訂了位仍需等的紀錄，準時到不要早到太多。"],
    ["要排隊等位","站超過 20 分鐘就去櫃檯問一次還要多久，這在澳洲是正常的。Porteño 隔壁有同集團的 Bastardo 可以先坐。"],
    ["塞車","9/25、9/26 是墨爾本連假加總決賽，交通最差的兩天。提早出門。"]];
@@ -770,7 +855,7 @@ function b64e(o){ return btoa(unescape(encodeURIComponent(JSON.stringify(o)))) }
 function b64d(s){ return JSON.parse(decodeURIComponent(escape(atob(s)))) }
 function mkBackup(){ return BK_PREFIX+b64e(ST) }
 function mkSync(){ return LG_PREFIX+b64e({exp:ST.exp,paid:ST.paid,shop:ST.shop,budget:ST.budget,
-  members:ST.members,arr:ST.arr,edit:ST.edit,adhoc:ST.adhoc,hide:ST.hide,done:ST.done,pack:ST.pack,packHide:ST.packHide}) }
+  members:ST.members,arr:ST.arr,edit:ST.edit,adhoc:ST.adhoc,hide:ST.hide,done:ST.done,pack:ST.pack,packHide:ST.packHide,pos:ST.pos}) }
 function readCode(c){
   c=(c||"").trim();
   if(!c) return {ok:false,msg:"請先貼上代碼"};
@@ -799,6 +884,8 @@ function merge(rm){
     if(rm[k]&&typeof rm[k]==="object"){ if(mine) ST[k]=Object.assign({},rm[k],ST[k]); else ST[k]=Object.assign({},ST[k],rm[k]) } });
   if(Array.isArray(rm.members)&&!mine) ST.members=rm.members;
   if(typeof rm.budget==="number"&&!mine) ST.budget=rm.budget;
+  if(rm.pos&&typeof rm.pos==="object") posMerge(rm.pos);
+  ensureST();
 }
 /* ===== Firebase 即時同步 ===== */
 var FBST="檢查中…";
@@ -867,6 +954,11 @@ function renderPrep(){
    chips(DIETS)+(ST.diet.length?chips(ST.diet):"")+
    '<div class="row" style="margin-top:12px"><div><label>自訂（香菜、內臟這種）</label><input id="d_n" placeholder="輸入後按加入"></div></div>'+
    '<button class="btn sec" id="d_add">加入自訂</button></div>';
+  h+=geoCard("prep");
+  h+='<div class="card"><h3>我是誰</h3><div class="note">選一個，位置共享和分帳才知道哪一筆是你。</div>'+
+   '<div class="chips">'+MEMBERS.map(function(_,i){
+     return '<label class="chip'+(ST.me===i?" on":"")+'"><input type="radio" name="me" class="me_r" value="'+i+'" '+(ST.me===i?"checked":"")+'>'+esc(mem(i))+'</label>'
+   }).join("")+'</div></div>';
   h+='<div class="card warn"><h3>🚨 出發前一定要做完</h3><div class="note">'+
    '① <b>四人的 ETA 601 簽證</b>——只能用手機 App「Australian ETA」，AU$20／人。沒有就上不了飛機。<br>'+
    '② <b>問 9/19 大洋路的上車點</b>——打 03 8080 2288。訂單寫「過時視為放棄，不退費」。<br>'+
@@ -878,7 +970,7 @@ function renderPrep(){
 /* ===== 使用說明 ===== */
 function renderHelp(){
   var d=auNow();
-  return '<div class="dayhead"><h2>澳洲 11 天</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v008</div></div>'+
+  return '<div class="dayhead"><h2>澳洲 11 天</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v010</div></div>'+
   '<div class="card ok"><h3>現在澳洲時間 '+fmt(auMins())+'</h3><div class="note">'+
    (d.getMonth()===8&&d.getDate()>=17&&d.getDate()<=27? '旅程進行中。':'旅程尚未開始。')+
    ' 澳洲東部時間比台灣快 2 小時，全程不換夏令時間。</div></div>'+
@@ -1142,10 +1234,27 @@ function fareCard(){
    '<b>② 機場站通行費不計入任何上限</b>。各來源金額不一致（見下），且有獨立的週上限。<br>'+
    '<b>省法</b>：搭 <b>420 號公車</b>到 <b>Mascot 站</b>再上火車，可避開這筆。但你們四人帶行李，計程車仍較實際。</div></div>';
   h+='<div class="sec-t">墨爾本</div>'+tbl(FARE.mel.routes);
+  h+='<div class="card ok" style="margin:10px 0 0"><h3>🧮 票券划不划算：逐項算給你看</h3>'+
+   '<div class="sec-t">雪梨（9/21 一 – 9/25 五，同一個 Opal 週）</div><table>'+
+   '<tr><td>四天各刷到每日上限<br><span class="note">19.30 × 4</span></td><td class="mono">AU$77.20</td></tr>'+
+   '<tr><td><b>每週上限</b></td><td class="mono"><b>AU$50.00</b></td></tr>'+
+   '<tr><td><b>每人省</b></td><td class="mono"><b>AU$27.20</b></td></tr>'+
+   '<tr><td><b>四人合計省</b></td><td class="mono"><b>AU$108.80</b></td></tr></table>'+
+   '<div class="note">✅ <b>不用另外買任何票券</b>，直接刷卡就自動套用週上限。條件是<b>四個人各自都固定用同一張卡</b>。</div>'+
+   '<div class="sec-t">墨爾本機場進市區（四人）</div><table>'+
+   '<tr><td>SkyBus 四張<br><span class="note">21.70 × 4，不適用半價</span></td><td class="mono">AU$86.80</td></tr>'+
+   '<tr><td><b>maxi taxi 一趟</b><br><span class="note">含過路費</span></td><td class="mono"><b>AU$65–81</b></td></tr>'+
+   '<tr><td><b>差額</b></td><td class="mono"><b>省 AU$6–22</b></td></tr></table>'+
+   '<div class="note">✅ <b>叫車划算，而且門到門不用拖行李轉車。</b></div>'+
+   '<div class="sec-t">墨爾本市區交通（共 5 天）</div><table>'+
+   '<tr><td>每日上限（已半價）</td><td class="mono">AU$5.70</td></tr>'+
+   '<tr><td>五天最多</td><td class="mono">AU$28.50／人</td></tr>'+
+   '<tr><td><b>實際大概</b><br><span class="note">CBD 內免費電車區，只有去 Armadale、NGV 要付</span></td><td class="mono"><b>約 AU$10–15／人</b></td></tr></table>'+
+   '<div class="note">🚨 <b>沒有任何一日券或觀光票值得買。</b>維州全面半價期間每日上限只有 AU$5.70，比任何套票都低。</div></div>';
   h+='<div class="card ok" style="margin:10px 0 0"><h3>💰 墨爾本的省錢規則</h3><div class="note">'+
    '<b>2026/6/1–2027/1/1 全維多利亞州公共運輸半價</b>，全票每日上限 AU$11.40 → <b>AU$5.70</b>。你們整段都適用。<br>'+
    '🚨 <b>SkyBus 明文排除</b>，不半價。<br>'+
-   '<b>CBD 免費電車區</b>：北界 La Trobe St，含女王市場與 Docklands。<b>370 Queen St 在界外</b>，往南走到 La Trobe St 上車。</div></div>';
+   '<b>CBD 免費電車區</b>：北界 La Trobe St，含女王市場與 Docklands。<b>370 Queen St 在界外</b>，走到 La Trobe St 的站牌再上車。</div></div>';
   h+='<div class="card ok" style="margin:10px 0 0"><h3>✅ 已向官方查證的數字</h3><table>'+
    '<tr><td><b>機場站 Gate Pass</b><br><span class="note">Opal／感應支付</span></td><td class="mono"><b>AU$18.61</b></td></tr>'+
    '<tr><td>機場站 Gate Pass<br><span class="note">售票機單程票</span></td><td class="mono">AU$19.00</td></tr>'+
@@ -1162,64 +1271,244 @@ function fareCard(){
   return h+'</div>';
 }
 
-/* ===== 版本與更新 ===== */
-var APP_VER="008";
-var UPD={latest:null,checking:false,err:""};
-function checkUpdate(cb){
-  if(UPD.checking){cb&&cb();return}
-  UPD.checking=true; UPD.err="";
-  fetch("./index.html?v="+Date.now(),{cache:"no-store"})
-   .then(function(r){ return r.text() })
-   .then(function(t){
-     var m=t.match(/<title>[^<]*?v(\d{3})<\/title>/);
-     UPD.latest=m?m[1]:null; UPD.checking=false; cb&&cb();
-   })
-   .catch(function(){ UPD.err="目前離線，無法檢查"; UPD.checking=false; cb&&cb() });
+/* ===== 版本與更新（依規格：抓 sw.js 讀 CACHE，繞過 SW 生命週期）===== */
+var APP_VER="010";
+var APPVER="australia-v10";            /* 與 sw.js 的 CACHE 一致 */
+var VST={state:"...",note:"",latest:null};   /* ok / new / warn / ... */
+
+/* 直接抓 sw.js（約 3 KB），讀它的 CACHE 版本。
+   不抓 index.html —— 那是 126 KB，每次檢查差 42 倍流量。 */
+function serverVer(cb){
+  var done=false;
+  function fin(v){ if(!done){ done=true; cb(v) } }
+  setTimeout(function(){ fin(null) },6000);          /* 逾時保護 */
+  try{
+    fetch("sw.js?_="+Date.now(),{cache:"no-store"})  /* 時間戳＋no-store 雙重繞快取 */
+     .then(function(r){ return r.ok? r.text() : null })
+     .then(function(t){ var m=t&&/CACHE='([^']+)'/.exec(t); fin(m?m[1]:null) })
+     .catch(function(){ fin(null) });
+  }catch(e){ fin(null) }
 }
-function hasUpdate(){ return UPD.latest && UPD.latest!==APP_VER }
+/* 沒網路時的退路：問 Service Worker 自己的 CACHE */
+function swVer(cb){
+  var done=false;
+  function fin(v){ if(!done){ done=true; cb(v) } }
+  setTimeout(function(){ fin(null) },3000);
+  try{
+    if(!navigator.serviceWorker||!navigator.serviceWorker.controller) return fin(null);
+    var ch=new MessageChannel();
+    ch.port1.onmessage=function(ev){ fin(ev.data||null) };
+    navigator.serviceWorker.controller.postMessage({type:"VER"},[ch.port2]);
+  }catch(e){ fin(null) }
+}
+function setVst(st,note,latest){
+  VST={state:st,note:note||"",latest:latest||null};
+  paintVer();
+  if(st==="new"){
+    try{ if(navigator.vibrate) navigator.vibrate(180) }catch(e){}
+    if(!VST._toasted){ VST._toasted=true; toast("有新版本，點右上角的版本鈕更新") }
+  }
+}
+function refreshVst(){
+  if(location.protocol==="file:") return setVst("warn","離線關");
+  serverVer(function(sv){
+    if(sv) return setVst(sv===APPVER?"ok":"new", sv===APPVER?"✅":"", sv);
+    /* 問不到伺服器：退回比對 Service Worker，至少不誤報 */
+    if(!("serviceWorker" in navigator)) return setVst("warn","離線關");
+    swVer(function(v){
+      if(v) return setVst(v===APPVER?"ok":"new", v===APPVER?"✅":"", v);
+      /* 首次載入沒有 controller，頁面直接來自網路，就是最新版 */
+      if(!navigator.serviceWorker.controller) return setVst("ok","✅",APPVER);
+      setVst("warn","離線");
+    });
+  });
+}
+function hasUpdate(){ return VST.state==="new" }
+function verLabel(){
+  if(VST.state==="new") return "✨ 有新版";
+  if(VST.state==="ok")  return "v"+APP_VER+" ✅";
+  if(VST.state==="warn")return "v"+APP_VER+" "+(VST.note||"離線");
+  return "v"+APP_VER+" ⋯";
+}
+function paintVer(){
+  var b=document.getElementById("vbtn"); if(!b)return;
+  b.className="vbtn "+VST.state;
+  b.textContent=verLabel();
+  b.title = VST.state==="new" ? "有新版，點一下更新" : "版本 ・ 點一下檢查更新";
+}
+/* 硬重載：時間戳繞快取，replace 不留歷史 */
+function hardReload(){
+  var u=location.pathname+"?u="+Date.now()+location.hash;
+  try{ location.replace(u) }catch(e){ location.reload() }
+}
 function doUpdate(){
-  /* 🚨 絕對不能先刪快取再抓 —— 離線時按下去會把 App 清成空白且救不回來。
-     必須先確認網路上抓得到完整的新版，成功之後才動快取。 */
+  /* 🚨 離線時不能先刪快取再重載，會把 App 清成空白且救不回來 */
   if(navigator.onLine===false){ toast("目前離線，連上網路後再更新"); return }
   toast("更新中，請稍候…");
-  fetch("./index.html?v="+Date.now(),{cache:"no-store"})
-   .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.text() })
-   .then(function(t){
-     if(t.length<20000||t.indexOf("</html>")<0) throw new Error("下載不完整");
-     var jobs=[];
-     if(window.caches&&caches.keys) jobs.push(caches.keys().then(function(ks){
-       /* 只刪自己命名空間的快取，不碰同 origin 的其他專案 */
-       return Promise.all(ks.filter(function(k){return k.indexOf("australia-")===0})
-         .map(function(k){ return caches.delete(k) })) }));
-     if(navigator.serviceWorker&&navigator.serviceWorker.getRegistrations)
-       jobs.push(navigator.serviceWorker.getRegistrations().then(function(rs){
-         return Promise.all(rs.map(function(r){ return r.update().catch(function(){}) })) }));
-     return Promise.all(jobs).catch(function(){});
-   })
-   .then(function(){ setTimeout(function(){ location.reload() },400) })
-   .catch(function(e){
-     toast("更新失敗："+(e&&e.message||"網路不穩")+"。原本的版本仍可正常使用");
-   });
+  if(!("serviceWorker" in navigator)) return hardReload();
+  navigator.serviceWorker.getRegistration().then(function(r){
+    if(!r) return hardReload();
+    var w=r.waiting||r.installing;
+    if(w&&w.postMessage){
+      try{ w.postMessage({type:"SKIP_WAITING"}) }catch(e){}
+      return setTimeout(hardReload,500);
+    }
+    /* 還沒有新的 SW：先叫它去抓，抓到再重載 */
+    r.update().then(function(){
+      var w2=r.waiting||r.installing;
+      if(w2&&w2.postMessage){ try{ w2.postMessage({type:"SKIP_WAITING"}) }catch(e){} }
+      setTimeout(hardReload,600);
+    }).catch(hardReload);
+  }).catch(hardReload);
 }
 function updBanner(){
-  if(hasUpdate()) return '<div class="card warn"><h3>🔄 有新版本 v'+esc(UPD.latest)+'</h3>'+
+  if(!hasUpdate()) return "";
+  return '<div class="card warn"><h3>🔄 有新版本'+(VST.latest?'（'+esc(VST.latest)+'）':'')+'</h3>'+
     '<div class="note">你目前是 <b>v'+APP_VER+'</b>。更新<b>不會刪掉任何資料</b>——'+
-    '分帳、購物清單、房號、成員名字與照片都會保留。</div>'+
+    'localStorage 與 Cache Storage 是分開的儲存空間，分帳、購物清單、房號、成員名字與照片都會保留。<br>'+
+    '🚨 <b>不要刪掉主畫面圖示重裝</b>，那才會遺失資料。</div>'+
     '<div class="acts"><button class="btn go" id="upd_go">立即更新</button></div></div>';
-  return "";
 }
 function verCard(){
   return '<div class="card"><h3>📦 版本</h3><div class="note">'+
-   '目前使用 <b>v'+APP_VER+'</b>'+
-   (UPD.checking? '　檢查中…' : UPD.err? '　'+esc(UPD.err) :
-     UPD.latest? (hasUpdate()? '　<b style="color:var(--red)">線上已有 v'+esc(UPD.latest)+'</b>' : '　✅ 已是最新版')
-     : '')+
-   '<br><br><b>App 會自己檢查更新，你不用主動按。</b>開啟時、從背景切回來時、網路恢復時，以及每 30 分鐘各檢查一次；有新版會直接在畫面最上方跳出橫幅。<br>更新不用刪除重裝，'+
-   '所有資料存在這支手機上，更新、重整、關閉 App 都不會消失。'+
-   '<br>只有<b>手動刪除 App</b> 或清除瀏覽器資料才會清空——那之前記得先到「分享」頁複製備份碼。</div>'+
+   '目前 <b>v'+APP_VER+'</b>（'+esc(APPVER)+'）　狀態：<b>'+esc(verLabel())+'</b>'+
+   '<br><br><b>App 會自己檢查更新，你不用主動按。</b>開啟時、從背景切回來時、網路恢復時，以及每小時各檢查一次；'+
+   '有新版時右上角的版本鈕會變成 <b>✨ 有新版</b> 並閃爍，點一下就更新。'+
+   '<br><br>🚨 <b>更新不會清掉資料</b>。localStorage 和 Cache Storage 是分開的儲存空間，'+
+   '<code>caches.delete</code> 動不到 localStorage。<b>所以不要刪掉主畫面圖示重裝</b>——那才會遺失資料。'+
+   '<br>要保險的話，先到「分享」頁複製一份備份碼。</div>'+
    '<div class="acts"><button class="btn sec" id="upd_ck">手動檢查</button>'+
    (hasUpdate()?'<button class="btn go" id="upd_go">立即更新</button>':'')+'</div></div>';
 }
+
+
+/* ===== 位置共享（規格第二章） =====
+   誠實面對限制：網頁 App 拿不到背景定位，Service Worker 沒有 geolocation 介面。
+   所以只做「開著 App 時」的互相共享，並明白告訴使用者要背景請用 Google 地圖。 */
+var GEORATE=[[5000,"即時","5 秒"],[20000,"省電","20 秒"],[60000,"超省電","1 分鐘"]];
+var MYPOS=null, GEOERR="", GEOWATCH=null, GEOTIMER=null;
+function geoMs(){ return GEORATE[(ST.geoRate|0)%GEORATE.length][0] }
+function geoName(){ return GEORATE[(ST.geoRate|0)%GEORATE.length][1] }
+function geoEvery(){ return GEORATE[(ST.geoRate|0)%GEORATE.length][2] }
+
+function geoStart(){
+  if(!navigator.geolocation){ GEOERR="unsupported"; render(); return }
+  ST.geoOn=true; save(); geoTick();
+  if(GEOTIMER) clearInterval(GEOTIMER);
+  GEOTIMER=setInterval(geoTick, geoMs());
+  render();
+}
+function geoStop(){
+  ST.geoOn=false; save();
+  if(GEOTIMER){ clearInterval(GEOTIMER); GEOTIMER=null }
+  MYPOS=null;
+  if(ST.me!=null) delete ST.pos[ST.me];
+  posDelete();            /* 立刻刪掉雲端那一筆，其他人就看不到了 */
+  save(); render();
+}
+function geoTick(){
+  if(!ST.geoOn||!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(function(p){
+    GEOERR="";
+    MYPOS={lat:p.coords.latitude,lng:p.coords.longitude,at:Date.now()};
+    if(ST.me!=null) ST.pos[ST.me]=MYPOS;
+    save(); posPush(); posPull();
+    if(ST.tab==="sos"||ST.tab==="prep") render();
+  },function(e){
+    /* 空的錯誤回呼是最糟的 —— 使用者開了卻沒位置，完全不知道發生什麼事 */
+    GEOERR=(e&&e.code===1)?"denied":((e&&e.code===3)?"timeout":"fail");
+    if(ST.tab==="sos"||ST.tab==="prep") render();
+  },{enableHighAccuracy:false, maximumAge:Math.max(4000,geoMs()-1000), timeout:8000});
+}
+/* 位置走專屬節點，不跟主資料一起送（實測差 120 倍流量） */
+function posPush(){
+  if(!FB_DB||!ST.room||ST.me==null||!MYPOS) return;
+  fetch(FB_DB.replace(/\/$/,"")+"/"+FB_PATH+"/"+encodeURIComponent(ST.room)+"/pos/"+ST.me+".json",
+   {method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(MYPOS)})
+  .catch(function(){});
+}
+function posDelete(){
+  if(!FB_DB||!ST.room||ST.me==null) return;
+  fetch(FB_DB.replace(/\/$/,"")+"/"+FB_PATH+"/"+encodeURIComponent(ST.room)+"/pos/"+ST.me+".json",
+   {method:"DELETE"}).catch(function(){});
+}
+function posPull(){
+  if(!FB_DB||!ST.room) return;
+  fetch(FB_DB.replace(/\/$/,"")+"/"+FB_PATH+"/"+encodeURIComponent(ST.room)+"/pos.json",
+   {cache:"no-store"}).then(function(r){ return r.json() })
+  .then(function(j){ posMerge(j); if(ST.tab==="sos") render() })
+  .catch(function(){});
+}
+/* 合併規則：別人的只取比較新的；自己的不覆蓋；型別防呆 */
+function posMerge(remote){
+  if(!remote||typeof remote!=="object") return;
+  for(var i=0;i<MEMBERS.length;i++){
+    if(i===ST.me) continue;                       /* 自己的最準，不覆蓋 */
+    var v=remote[i];
+    if(!v||typeof v!=="object") continue;
+    if(typeof v.lat!=="number"||typeof v.lng!=="number") continue;   /* 型別防呆 */
+    if(!isFinite(v.lat)||!isFinite(v.lng)) continue;
+    var at=(typeof v.at==="number")?v.at:0;
+    var cur=ST.pos[i];
+    if(!cur||typeof cur.at!=="number"||at>cur.at) ST.pos[i]={lat:v.lat,lng:v.lng,at:at};
+  }
+  save();
+}
+function distM(a,b){
+  if(!a||!b) return null;
+  var R=6371000,p=Math.PI/180;
+  var x=0.5-Math.cos((b.lat-a.lat)*p)/2+
+    Math.cos(a.lat*p)*Math.cos(b.lat*p)*(1-Math.cos((b.lng-a.lng)*p))/2;
+  return Math.round(2*R*Math.asin(Math.sqrt(x)));
+}
+function agoTxt(t){
+  if(!t) return "";
+  var s=Math.floor((Date.now()-t)/1000);
+  if(s<60) return "剛剛";
+  if(s<3600) return Math.floor(s/60)+" 分鐘前";
+  return Math.floor(s/3600)+" 小時前";
+}
+function posList(){
+  var mine=ST.me!=null? ST.pos[ST.me] : null;
+  var rows=MEMBERS.map(function(_,i){
+    var v=ST.pos[i];
+    var av=avHTML(i,1);
+    if(!v||typeof v.lat!=="number"){
+      return '<tr><td>'+av+' '+esc(mem(i))+'</td><td colspan="2" class="note">⚪ 未開啟</td></tr>';
+    }
+    var old=(Date.now()-(v.at||0))>600000;         /* 超過 10 分鐘視為過舊 */
+    var d=(i===ST.me)?null:distM(mine,v);
+    var where=(i===ST.me)?"📍 我":
+      (d==null? "📍 已分享" : (old?"⚠️ ":"📍 ")+(d>=1000?(d/1000).toFixed(1)+" km":d+" m"));
+    return '<tr'+(old?' style="color:var(--gold)"':'')+'>'+
+      '<td>'+av+' '+esc(mem(i))+'</td>'+
+      '<td>'+where+'<br><span class="note">'+agoTxt(v.at)+(old?'（可能已移動）':'')+'</span></td>'+
+      '<td>'+(i===ST.me?'':'<button class="btn sec" data-nav="'+v.lat+','+v.lng+'">帶我去</button>')+'</td></tr>';
+  }).join("");
+  return '<table>'+rows+'</table>';
+}
+function geoCard(where){
+  var errTxt={denied:"🚨 <b>權限被拒</b>。去「設定 → 隱私權與安全性 → 定位服務」把這個瀏覽器打開，再回來按一次。",
+    timeout:"⏳ <b>抓不到位置</b>。室內、地下街、停車場常會這樣，走到窗邊或戶外就會恢復。",
+    fail:"❌ 定位失敗，稍後再試。",
+    unsupported:"這支手機或瀏覽器不支援定位。"}[GEOERR]||"";
+  var h='<div class="card"><h3>📍 位置共享</h3>';
+  if(where==="sos"){
+    h+='<div class="note">開著 App 時互相看得到彼此在哪。</div>'+posList();
+  }
+  h+='<div class="acts" style="margin-top:10px">'+
+    '<button class="btn '+(ST.geoOn?"on":"go")+'" id="geo_go">'+(ST.geoOn?"✓ 已開啟":"開啟位置共享")+'</button>'+
+    (ST.geoOn?'<button class="btn sec" id="geo_rate">'+esc(geoName())+'（'+esc(geoEvery())+'）</button>':'')+
+    '</div>';
+  if(errTxt) h+='<div class="note" style="margin-top:8px">'+errTxt+'</div>';
+  if(where!=="sos") h+='<div class="note" style="margin-top:8px">'+
+    '<b>開了就是互相看得到</b>，不做單向追蹤——誰開了大家都知道。清單在「緊急」頁。<br>'+
+    '🚨 <b>網頁 App 拿不到背景定位</b>，這是瀏覽器的限制不是權限問題。App 關掉或切到背景太久就不會更新。'+
+    '<b>要真正的背景共享請用 Google 地圖的「位置共享」功能。</b><br>'+
+    '位置只送自己那一筆（約 55 bytes），不會跟分帳資料一起傳。</div>';
+  return h+'</div>';
+}
+
 /* ===== 朗讀 ===== */
 function say(txt,lang){
   if(!("speechSynthesis" in window)){ toast("這支手機不支援朗讀"); return }
@@ -1271,11 +1560,15 @@ function tick(){ var n=auNow();
 document.addEventListener("click",function(ev){
   var el=ev.target.closest("[data-fs],[data-tab],[data-nav],[data-say],[data-sayen],[data-arr],[data-mo],"+
     "[data-edit],[data-del],[data-remind],[data-add],[data-clearlag],[data-delx],[data-paid],"+
-    "[data-dels],[data-delp],#e_add,#s_add,#p_add,#d_add,#rm_new,#rm_up,#rm_dn,#rm_ck,#sc_cp,#pc_go,#bk_cp,#bk_dl,#bk_sh,#ics_dl,#wx_go,#fx_go,#upd_ck,#upd_go");
+    "[data-dels],[data-delp],#e_add,#s_add,#p_add,#d_add,#rm_new,#rm_up,#rm_dn,#rm_ck,#sc_cp,#pc_go,#bk_cp,#bk_dl,#bk_sh,#ics_dl,#wx_go,#fx_go,#upd_ck,#upd_go,#geo_go,#geo_rate");
   if(!el)return;
   var d=el.dataset,id=el.id;
-  if(id==="upd_ck"){ UPD.checking=true; render(); checkUpdate(function(){ render();
-    toast(hasUpdate()? "有新版本 v"+UPD.latest : (UPD.err||"已是最新版")) }); return }
+  if(id==="geo_go"){ if(ST.geoOn) geoStop(); else geoStart(); return }
+  if(id==="geo_rate"){ ST.geoRate=((ST.geoRate|0)+1)%GEORATE.length; save();
+    if(ST.geoOn) geoStart(); else render();
+    toast("更新頻率："+geoName()+"（"+geoEvery()+"）"); return }
+  if(id==="upd_ck"){ setVst("...","檢查中"); refreshVst();
+    setTimeout(function(){ render(); toast(hasUpdate()? "有新版本" : (VST.note||"已是最新版")) },1500); return }
   if(id==="upd_go"){ doUpdate(); return }
   if(id==="wx_go"){ WX.err="讀取中…"; render(); loadWX(function(){ render() }); return }
   if(id==="fx_go"){ FX.err="讀取中…"; render(); loadFX(function(){ render() }); return }
@@ -1351,6 +1644,7 @@ document.addEventListener("change",function(ev){
   if(el.classList.contains("s_ck")){ ST.shop[+d.i].done=el.checked; save(); render(); return }
   if(el.classList.contains("p_ck")){ ST.done["pk|"+d.k]=el.checked; save(); render(); return }
   if(el.classList.contains("m_n")){ ST.members[+d.i]=el.value.trim(); save(); return }
+  if(el.classList.contains("me_r")){ ST.me=+el.value; save(); render(); return }
   if(el.classList.contains("d_ck")){ var v=el.value,i=ST.dietOn.indexOf(v);
     if(el.checked){ if(i<0)ST.dietOn.push(v) } else if(i>=0)ST.dietOn.splice(i,1); save(); return }
   if(el.classList.contains("m_a")){ var f=el.files&&el.files[0]; if(!f)return;
@@ -1367,32 +1661,26 @@ fbCheck(function(){ if(ST.tab==="share")render() });
 try{ var _fx=JSON.parse(localStorage.getItem(LSKEY+"_fx")||"null"); if(_fx)FX=_fx }catch(e){}
 loadWX(function(){ if(ST.tab==="info")render() });
 loadFX(function(){ if(ST.tab==="info")render() });
-/* ===== 自動檢查更新：不需要使用者主動去按 =====
-   加到主畫面的 PWA 可以在背景存活數天，只在冷啟動檢查一次是不夠的 */
-var _lastCheck=0;
-function autoCheck(force){
-  if(navigator.onLine===false) return;
-  var now=Date.now();
-  if(!force && now-_lastCheck < 15*60*1000) return;   /* 15 分鐘內不重複打 */
-  _lastCheck=now;
-  checkUpdate(function(){ if(hasUpdate()||ST.tab==="help") render() });
-}
-autoCheck(true);                                        /* ① 開啟時 */
-document.addEventListener("visibilitychange",function(){ /* ② 從背景切回來 */
-  if(!document.hidden) autoCheck();
-});
-window.addEventListener("focus",function(){ autoCheck() });   /* ③ 視窗取得焦點 */
-window.addEventListener("online",function(){ autoCheck(true) });/* ④ 網路恢復 */
-setInterval(function(){ autoCheck() }, 30*60*1000);            /* ⑤ 每 30 分鐘 */
-
-/* Service Worker 發現新版時也立刻反映 */
+/* ===== 自動檢查更新：獨立於 Service Worker，註冊失敗也要能查 ===== */
+if(ST.geoOn) geoStart();
+(function(){
+  var t=null;
+  function soon(ms){ clearTimeout(t); t=setTimeout(refreshVst, ms||600) }
+  window.addEventListener("load",function(){ soon(1500) });
+  document.addEventListener("visibilitychange",function(){ if(!document.hidden) soon(900) });
+  window.addEventListener("focus",function(){ soon(1200) });
+  window.addEventListener("online",function(){ soon(1200) });
+  window.addEventListener("offline",function(){ setVst("warn","離線") });
+  setInterval(function(){ if(!document.hidden) refreshVst() }, 3600000);   /* 每小時 */
+  soon(300);
+})();
 if("serviceWorker" in navigator){
   var _reloaded=false;
   navigator.serviceWorker.addEventListener("controllerchange",function(){
     if(_reloaded)return; _reloaded=true; location.reload();
   });
   navigator.serviceWorker.ready.then(function(reg){
-    reg.addEventListener("updatefound",function(){ autoCheck(true) });
+    reg.addEventListener("updatefound",function(){ refreshVst() });
   }).catch(function(){});
 }
 if("serviceWorker" in navigator){ window.addEventListener("load",function(){

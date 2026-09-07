@@ -1,5 +1,5 @@
-/* 澳洲 11 天 · Service Worker v8 —— 快取只在自己的命名空間內操作 */
-var CACHE='australia-v8';
+/* 澳洲 11 天 · Service Worker v10 —— 快取只在自己的命名空間內操作 */
+var CACHE='australia-v10';
 var PREFIX='australia-';
 var CORE=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./icon-512-maskable.png'];
 
@@ -22,6 +22,9 @@ self.addEventListener('fetch',function(e){
   var req=e.request;
   if(req.method!=='GET') return;
   var url=new URL(req.url);
+
+  /* 🚨 排除自己 —— 版本檢查要抓 sw.js 讀 CACHE，被快取住就永遠讀到舊版 */
+  if(url.pathname.indexOf('sw.js')>=0) return;
 
   /* Firebase 一律走網路，不快取 */
   if(url.hostname.indexOf('firebasedatabase.app')>=0) return;
@@ -81,4 +84,11 @@ self.addEventListener('fetch',function(e){
   );
 });
 
-self.addEventListener('message',function(e){ if(e.data==='skipWaiting') self.skipWaiting(); });
+self.addEventListener('message',function(e){
+  if(!e.data) return;
+  if(e.data==='skipWaiting') self.skipWaiting();            /* 舊格式相容 */
+  if(e.data.type==='SKIP_WAITING') self.skipWaiting();
+  if(e.data.type==='VER'&&e.ports&&e.ports[0]){
+    try{ e.ports[0].postMessage(CACHE); }catch(err){}
+  }
+});
