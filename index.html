@@ -141,6 +141,8 @@ main{padding:var(--sp) 14px 90px;max-width:720px;margin:0 auto}
 .btn.ico{width:48px;padding:0;font-size:1.05em}
 .btn.go{background:var(--go);color:#fff}
 .btn.sec{background:var(--white);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.btn.warn{background:var(--red);color:#fff}
+.dark .btn.warn{background:#8C3A32;color:#fff}
 .btn.on{background:var(--go-d);color:#fff}
 .more{display:flex;flex-wrap:wrap;gap:7px;margin:9px 0 0}
 .more button,.more a{min-height:36px;padding:0 12px;border-radius:6px;font-size:.82em;
@@ -273,7 +275,7 @@ td .tel{margin:2px 0}
 <body>
 <header>
   <div class="hrow"><h1>澳洲</h1>
-    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v038 ⋯</button>
+    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v041 ⋯</button>
     <button class="sbtn" id="sbtn" title="搜尋行程" aria-label="搜尋">🔍</button>
     <div class="clock" id="clk"></div></div>
 
@@ -561,7 +563,7 @@ var ST={members:["","","",""],avatars:["","","",""],
   shop:[],budget:0,pack:[],packHide:{},
   room:"",tab:"help",fs:"m",lastEdit:0,
   me:null,pos:{},geoOn:false,geoRate:1,
-  q:"",myPlaces:[],expDel:[],theme:"auto",myName:"",_loginStep:null};
+  q:"",myPlaces:[],expDel:[],theme:"auto",myName:"",_loginStep:null,_lastRoom:"",roomOwner:false,roomClosed:false,_movedTo:""};
 var CAN=false;
 try{
   var raw=localStorage.getItem(LSKEY); if(raw) ST=Object.assign(ST,JSON.parse(raw));
@@ -593,6 +595,10 @@ function ensureST(){
   if(["auto","light","dark"].indexOf(ST.theme)<0) ST.theme="auto";
   if(typeof ST.room!=="string") ST.room="";
   if(typeof ST.myName!=="string") ST.myName="";
+  if(typeof ST._lastRoom!=="string") ST._lastRoom="";
+  ST.roomOwner=!!ST.roomOwner; ST.roomClosed=!!ST.roomClosed;
+  if(typeof ST._movedTo!=="string") ST._movedTo="";
+  if(!ST.room){ ST.roomClosed=false }
   /* 每一筆分帳都要有合法金額與付款人 */
   ST.exp=ST.exp.filter(function(e){
     if(!e||typeof e!=="object") return false;
@@ -1065,9 +1071,11 @@ function applyCode(c){
   merge(r.data); save(); render(); toast("已合併同步資料");
 }
 /* 合併：不比較兩支手機的時戳；我 90 秒內剛改過就留我的 */
-function merge(rm){
+function merge(rm,force){
   if(!rm||typeof rm!=="object") return;
-  var mine=(Date.now()-(ST.lastEdit||0))<90000;
+  /* force=true 用在搬家：目的就是把雲端最新的帶走，
+     不能套用「90 秒內剛改過就留我的」，否則會漏掉別人的帳 */
+  var mine=force? false : (Date.now()-(ST.lastEdit||0))<90000;
   ["exp","shop","pack"].forEach(function(k){ if(Array.isArray(rm[k])&&!mine) ST[k]=rm[k] });
   ["paid","arr","edit","adhoc","hide","done","packHide"].forEach(function(k){
     if(rm[k]&&typeof rm[k]==="object"){ if(mine) ST[k]=Object.assign({},rm[k],ST[k]); else ST[k]=Object.assign({},ST[k],rm[k]) } });
@@ -1099,9 +1107,161 @@ function fbPull(){ if(!FB_DB||!ST.room){ toast("先產生房號"); return }
   fetch(fbURL(),{cache:"no-store"}).then(function(r){return r.json()})
    .then(function(j){ if(j&&j.d){ applyCode(j.d) } else toast("房間裡還沒有資料") })
    .catch(function(){ toast("目前離線，改用同步碼") }) }
+/* ===== 離開房間 ===== */
+function leaveRoom(){
+  if(!ST.room){ toast("目前沒有在任何房間"); return }
+  var msg="離開房間之後：\n\n"+
+    "・不再和其他三位同步\n"+
+    "・你自己的資料全部保留（分帳、購物、名字、照片）\n"+
+    "・位置共享會關掉，其他人看不到你\n"+
+    "・房號會清空，之後可以再貼回來\n\n"+
+    "確定要離開？";
+  if(!confirm(msg)) { toast("已取消，還在房間裡"); return }
+  var old=ST.room;
+  /* 先把自己的位置從雲端刪掉，其他人立刻看不到 */
+  try{ posDelete() }catch(e){}
+  if(ST.geoOn){ try{ geoStop() }catch(e){} }
+  ST.room=""; ST._lastRoom=old; save(); render();
+  toast("已離開房間。資料都還在，房號是 "+old);
+}
+function rejoinRoom(){
+  if(!ST._lastRoom){ toast("沒有上一個房號"); return }
+  ST.room=ST._lastRoom; save();
+  toast("已回到 "+ST.room+"，正在取回資料");
+  try{ fbPull() }catch(e){}
+  setTimeout(function(){ render() },800);
+}
+/* ===== 搬到新房間（只有建立者） =====
+   🚨 順序不能反：一定要先從舊房間取回最新，合併進本機，才推到新房間。
+   直接推本機資料會漏掉別人在你上次取回之後記的帳。 */
+function newRoomCode(){
+  var c="",A="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  for(var i=0;i<10;i++)c+=A[Math.floor(Math.random()*A.length)];
+  return c;
+}
+function migrateRoom(){
+  if(!ST.room){ toast("目前沒有在任何房間"); return }
+  if(!ST.roomOwner){ toast("只有建立房號的人可以搬家"); return }
+  if(!FB_DB){ toast("目前離線，連上網路再試"); return }
+  if(ST._migrating){ toast("正在搬家，請稍候"); return }
+  if(!confirm("搬到新房間會做這些事：\n\n"+
+    "① 先從舊房間取回最新資料，合併進來\n"+
+    "② 產生一組新房號\n"+
+    "③ 把合併後的完整資料上傳到新房間\n"+
+    "④ 舊房間標記為已解散，其他三位會收到提示\n\n"+
+    "舊房間的資料不會刪，隨時可以貼回舊房號。\n\n"+
+    "確定要搬家？")){ toast("已取消"); return }
+
+  ST._migrating=true;
+  var oldRoom=ST.room;
+  toast("① 正在從舊房間取回最新資料…");
+
+  fetch(fbURL(),{cache:"no-store"}).then(function(r){ return r.json() })
+   .then(function(j){
+     /* 有資料就合併，沒有就用本機的 */
+     if(j&&j.d){
+       try{
+         var r=readCode(j.d);
+         /* 🚨 強制採用雲端，否則「90 秒內剛改過」會讓別人的帳漏掉 */
+         if(r.ok&&r.data) merge(r.data,true);
+       }catch(e){}
+     }
+     ST.room=oldRoom; save();
+     var code=newRoomCode();
+     toast("② 新房號 "+code+"，正在上傳…");
+     var payload=JSON.stringify({d:mkSync(),at:Date.now(),from:oldRoom});
+     var url=FB_DB.replace(/\/$/,"")+"/"+FB_PATH+"/"+encodeURIComponent(code)+".json";
+     return fetch(url,{method:"PUT",body:payload}).then(function(r2){
+       if(!r2.ok) throw new Error("上傳失敗");
+       return code;
+     });
+   })
+   .then(function(code){
+     /* 把舊房間標記為已解散，其他人才知道要換 */
+     var flag=FB_DB.replace(/\/$/,"")+"/"+FB_PATH+"/"+encodeURIComponent(oldRoom)+"/closed.json";
+     return fetch(flag,{method:"PUT",headers:{"Content-Type":"application/json"},
+       body:JSON.stringify({at:Date.now(),by:ST.myName||"",moved:code})})
+      .catch(function(){})
+      .then(function(){ return code });
+   })
+   .then(function(code){
+     ST.room=code; ST.roomOwner=true; ST.roomClosed=false;
+     ST._lastRoom=oldRoom; ST._migrating=false;
+     save(); render();
+     toast("搬家完成！新房號 "+code+"，記得分享給其他三位");
+   })
+   .catch(function(e){
+     ST.room=oldRoom; ST._migrating=false; save(); render();
+     toast("搬家失敗："+((e&&e.message)||"網路問題")+"。還在原本的房間");
+   });
+}
+/* ===== 解散房間（只有建立者看得到） =====
+   做法 B：不刪雲端資料，只掛一個「已解散」的旗標。
+   誤觸的代價只是大家多按一次「取回房間資料」，不會丟資料。 */
+function fbFlagURL(){
+  return FB_DB.replace(/\/$/,"")+"/"+FB_PATH+"/"+encodeURIComponent(ST.room)+"/closed.json";
+}
+function closeRoom(){
+  if(!ST.room){ toast("目前沒有在任何房間"); return }
+  if(!ST.roomOwner){ toast("只有建立房號的人可以解散"); return }
+  if(!confirm("解散房間之後：\n\n"+
+    "・其他三位打開 App 會看到提示，請他們重新加入\n"+
+    "・雲端資料不會刪掉，重新加入還是拿得回來\n"+
+    "・每個人可以重新選自己是誰\n"+
+    "・你自己的資料完全不受影響\n\n"+
+    "確定要解散？")){ toast("已取消"); return }
+  if(!FB_DB){ toast("目前離線，連上網路再試"); return }
+  fetch(fbFlagURL(),{method:"PUT",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({at:Date.now(),by:ST.myName||""})})
+   .then(function(){ ST.roomClosed=true; save(); render();
+     toast("已解散。其他三位打開 App 會收到提示") })
+   .catch(function(){ toast("解散失敗，請確認網路") });
+}
+function reopenRoom(){
+  if(!ST.room||!ST.roomOwner) return;
+  fetch(fbFlagURL(),{method:"DELETE"})
+   .then(function(){ ST.roomClosed=false; save(); render(); toast("已取消解散，房間恢復") })
+   .catch(function(){ toast("失敗，請確認網路") });
+}
+/* 每次同步時順便看房間有沒有被解散 */
+function checkClosed(){
+  if(!FB_DB||!ST.room||ST.roomOwner) return;
+  fetch(fbFlagURL(),{cache:"no-store"}).then(function(r){ return r.json() })
+   .then(function(j){
+     var was=ST.roomClosed;
+     ST.roomClosed = !!(j&&j.at);
+     ST._movedTo = (j&&j.moved)? String(j.moved) : "";
+     if(ST.roomClosed!==was){ save(); render();
+       if(ST.roomClosed) toast("房主已解散這個房間") }
+   }).catch(function(){});
+}
+/* 重新加入：回到登入的「貼房號」那一步，可以重選身分 */
+function rejoinFlow(){
+  ST.roomClosed=false; ST._lastRoom=ST.room;
+  ST.room = ST._movedTo || "";   /* 房主搬家的話直接預填新房號 */
+  ST.myName=""; ST.me=null; ST._loginStep="join"; ST._loginErr="";
+  save(); render();
+  toast("請重新貼上房號並選擇你是誰");
+}
 /* ===== 分享 ===== */
 function renderShare(){
   var h='<div class="dayhead"><h2>分享</h2><div class="sub">四支手機之間傳資料</div></div>';
+  if(ST.roomClosed && !ST.roomOwner){
+    h+='<div class="card warn"><h3>📣 房主已解散這個房間</h3><div class="note">'+
+     '<b>你的資料完全沒有受影響</b>——分帳、購物清單、名字都還在。<br>'+
+     '雲端資料也還在，重新加入就拿得回來。<br><br>'+
+     (ST._movedTo? '📦 <b>房主搬到新房間了，新房號是</b><br>'+
+       '<span class="roomcode" style="display:block;font-size:1.5em;margin:8px 0">'+esc(ST._movedTo)+'</span>'+
+       '按下面的「重新加入」，貼上這組新房號。<br><br>' : '')+
+     '<b>重新加入</b>會回到登入畫面，可以<b>重新選自己是誰</b>。</div>'+
+     '<div class="acts" style="margin-top:12px">'+
+       '<button class="btn go" id="rm_rejoin" style="flex:1;min-height:56px">↩ 重新加入房間</button></div>'+
+     '<div class="note" style="margin-top:8px">不想重新加入也可以繼續用，只是不再同步。</div></div>';
+  }
+  if(ST.roomOwner && ST.roomClosed){
+    h+='<div class="card warn"><h3>📣 你已解散這個房間</h3><div class="note">'+
+     '其他三位打開 App 會看到提示。雲端資料還在，隨時可以取消解散。</div></div>';
+  }
   if(ST.room){
     h+='<div class="card ok"><h3>🔑 你的房號</h3>'+
      '<div class="roomcode">'+esc(ST.room)+'</div>'+
@@ -1119,6 +1279,38 @@ function renderShare(){
        '<button class="btn sec" id="rm_ck">重新檢查連線</button></div>'+
        '<div class="note">🚨 換房號等於換一個房間，原本的資料不會跟著走。</div>'+
      '</div></details>'+
+     (ST.roomOwner? '<details style="margin-top:8px"><summary>搬到新房間（只有你看得到）</summary><div class="body">'+
+       '<div class="note">房號外流、或想重開一間但不想重打資料時用。<br><br>'+
+       '<b>會做的事</b>：<br>'+
+       '① 🚨 <b>先從舊房間取回最新資料</b>——其他人記的帳才不會漏<br>'+
+       '② 產生新房號<br>'+
+       '③ 把合併後的完整資料上傳到新房間<br>'+
+       '④ 舊房間標記為已解散，其他三位收到提示<br><br>'+
+       '<b>舊房間的資料不會刪</b>，隨時可以貼回舊房號。<br>'+
+       '🚨 搬完要<b>把新房號分享給其他三位</b>，他們才進得來。</div>'+
+       '<div class="acts" style="margin-top:10px">'+
+         '<button class="btn go" id="rm_migrate">📦 搬到新房間</button></div>'+
+     '</div></details>' : '')+
+     (ST.roomOwner? '<details style="margin-top:8px"><summary>解散房間（只有你看得到）</summary><div class="body">'+
+       '<div class="note">你是這個房號的<b>建立者</b>。解散之後：<br>'+
+       '・其他三位打開 App 會看到提示，請他們重新加入<br>'+
+       '・<b>雲端資料不會刪掉</b>，重新加入還是拿得回來<br>'+
+       '・每個人可以<b>重新選自己是誰</b><br>'+
+       '・你自己的資料完全不受影響<br>'+
+       '🚨 旅途中應該用不到，誤按了可以馬上取消。</div>'+
+       '<div class="acts" style="margin-top:10px">'+
+         (ST.roomClosed
+           ? '<button class="btn go" id="rm_reopen">↩ 取消解散，恢復房間</button>'
+           : '<button class="btn warn" id="rm_close">📣 解散房間</button>')+
+       '</div></div></details>' : '')+
+     '<details style="margin-top:8px"><summary>離開房間</summary><div class="body">'+
+       '<div class="note">不再和其他三位同步。<b>你自己的資料全部保留</b>——'+
+       '分帳、購物清單、名字、照片都不會消失，只是不再互通。<br>'+
+       '位置共享會一起關掉，其他人立刻看不到你。<br>'+
+       '房號會記著，之後可以一鍵回去。</div>'+
+       '<div class="acts" style="margin-top:10px">'+
+         '<button class="btn warn" id="rm_leave">🚪 離開房間</button></div>'+
+     '</div></details>'+
      '<div class="note" style="margin-top:10px">連線狀態：<b>'+esc(FBST)+'</b></div>';
   } else {
     h+='<div class="card warn"><h3>🔑 還沒有房號</h3>'+
@@ -1131,6 +1323,9 @@ function renderShare(){
        '<input id="rm" value="" placeholder="10 碼英數字"></div></div>'+
      '<div class="acts"><button class="btn sec" id="rm_dn">貼好了，取回資料</button>'+
      '<button class="btn sec" id="rm_ck">重新檢查連線</button></div>'+
+     (ST._lastRoom? '<div class="note" style="margin-top:12px">'+
+       '剛才離開的房號是 <b>'+esc(ST._lastRoom)+'</b></div>'+
+       '<div class="acts"><button class="btn go" id="rm_back">↩ 回到剛才的房間</button></div>' : '')+
      '<div class="note" style="margin-top:10px">連線狀態：<b>'+esc(FBST)+'</b></div>';
   }
   h+='</div>';
@@ -1193,7 +1388,7 @@ function renderPrep(){
 /* ===== 使用說明 ===== */
 function renderHelp(){
   var d=auNow();
-  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v038</div></div>'+
+  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v041</div></div>'+
   countdownHTML()+'<div class="card ok"><h3>現在澳洲時間 '+fmt(auMins())+'</h3><div class="note">'+
    (d.getMonth()===8&&d.getDate()>=17&&d.getDate()<=27? '旅程進行中。':'旅程尚未開始。')+
    ' 澳洲東部時間比台灣快 2 小時，全程不換夏令時間。</div></div>'+
@@ -1507,8 +1702,8 @@ function fareCard(){
 }
 
 /* ===== 版本與更新（依規格：抓 sw.js 讀 CACHE，繞過 SW 生命週期）===== */
-var APP_VER="038";
-var APPVER="australia-v38";            /* 與 sw.js 的 CACHE 一致 */
+var APP_VER="041";
+var APPVER="australia-v41";            /* 與 sw.js 的 CACHE 一致 */
 var VST={state:"...",note:"",latest:null};   /* ok / new / warn / ... */
 
 /* 直接抓 sw.js（約 3 KB），讀它的 CACHE 版本。
@@ -2092,7 +2287,7 @@ function loginJoin(){
   var room=r? r.value.trim() : "";
   if(!room){ ST._loginErr="請先貼上房號"; render(); return }
   if(room.length<8){ ST._loginErr="房號至少 8 碼，可能沒貼完整"; render(); return }
-  ST.room=room; ST._loginErr=""; save();
+  ST.room=room; ST.roomOwner=false; ST.roomClosed=false; ST._loginErr=""; save();
   toast("同步中…");
   if(!FB_DB){ ST._loginStep="who"; render(); return }
   fetch(fbURL(),{cache:"no-store"}).then(function(r2){ return r2.json() })
@@ -2407,7 +2602,7 @@ function tick(){ var n=auNow();
 document.addEventListener("click",function(ev){
   var el=ev.target.closest("[data-walk],[data-th],[data-goday],[data-delmp],[data-undox],[data-fs],[data-tab],[data-nav],[data-say],[data-sayen],[data-arr],[data-mo],"+
     "[data-edit],[data-del],[data-remind],[data-add],[data-clearlag],[data-delx],[data-paid],"+
-    "[data-dels],[data-delp],#e_add,#s_add,#p_add,#d_add,#rm_new,#rm_up,#rm_dn,#rm_ck,#sc_cp,#pc_go,#bk_cp,#bk_dl,#bk_sh,#ics_dl,#wx_go,#fx_go,#vbtn,#upd_ck,#upd_go,#geo_go,#geo_rate,#q_go,#q_cl,#mp_add,#sbtn,#login_go,#lg_join,#lg_new,#lg_pull,#lg_toWho,#lg_back,#rm_cp,#rm_sh");
+    "[data-dels],[data-delp],#e_add,#s_add,#p_add,#d_add,#rm_new,#rm_up,#rm_dn,#rm_ck,#sc_cp,#pc_go,#bk_cp,#bk_dl,#bk_sh,#ics_dl,#wx_go,#fx_go,#vbtn,#upd_ck,#upd_go,#geo_go,#geo_rate,#q_go,#q_cl,#mp_add,#sbtn,#login_go,#lg_join,#lg_new,#lg_pull,#lg_toWho,#lg_back,#rm_cp,#rm_sh,#rm_leave,#rm_back,#rm_close,#rm_reopen,#rm_rejoin,#rm_migrate");
   if(!el)return;
   var d=el.dataset,id=el.id;
   if(d.goday){ go(d.goday); return }
@@ -2416,6 +2611,12 @@ document.addEventListener("click",function(ev){
     else { var det=document.querySelector('[data-k="'+d.walk+'"] details'); if(det) det.open=true }
     return }
   if(d.delmp!=null){ ST.myPlaces.splice(+d.delmp,1); save(); render(); return }
+  if(id==="rm_migrate"){ migrateRoom(); return }
+  if(id==="rm_close"){ closeRoom(); return }
+  if(id==="rm_reopen"){ reopenRoom(); return }
+  if(id==="rm_rejoin"){ rejoinFlow(); return }
+  if(id==="rm_leave"){ leaveRoom(); return }
+  if(id==="rm_back"){ rejoinRoom(); return }
   if(id==="rm_cp"){ copyTxt(ST.room); toast("房號已複製，貼到群組"); return }
   if(id==="rm_sh"){
     var msg="澳洲之旅 App\n\n網址："+location.href.split("?")[0]+"\n房號："+ST.room+
@@ -2498,7 +2699,7 @@ document.addEventListener("click",function(ev){
   if(id==="p_add"){ var pn=document.getElementById("p_n").value.trim(); if(!pn)return; ST.pack.push(pn); save(); render(); return }
   if(id==="d_add"){ var dn=document.getElementById("d_n").value.trim(); if(!dn)return;
     if(ST.diet.indexOf(dn)<0)ST.diet.push(dn); save(); render(); return }
-  if(id==="rm_new"){ var c="",A="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  if(id==="rm_new"){ ST.roomOwner=true; save(); var c="",A="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     for(var i=0;i<10;i++)c+=A[Math.floor(Math.random()*A.length)];
     ST.room=c; save(); render(); toast("房號已產生，四支手機都輸入這組"); return }
   if(id==="rm_up"){ ST.room=document.getElementById("rm").value.trim(); save(); fbPush(); return }
@@ -2582,6 +2783,8 @@ try{
   setInterval(function(){ if(!document.hidden) refreshVst() }, 3600000);   /* 每小時 */
   soon(300);
 })();
+setInterval(function(){ if(!document.hidden) checkClosed() }, 60000);
+document.addEventListener("visibilitychange",function(){ if(!document.hidden) checkClosed() });
 if("serviceWorker" in navigator){
   var _reloaded=false;
   navigator.serviceWorker.addEventListener("controllerchange",function(){
