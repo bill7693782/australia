@@ -273,7 +273,7 @@ td .tel{margin:2px 0}
 <body>
 <header>
   <div class="hrow"><h1>澳洲</h1>
-    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v037 ⋯</button>
+    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v038 ⋯</button>
     <button class="sbtn" id="sbtn" title="搜尋行程" aria-label="搜尋">🔍</button>
     <div class="clock" id="clk"></div></div>
 
@@ -1193,7 +1193,7 @@ function renderPrep(){
 /* ===== 使用說明 ===== */
 function renderHelp(){
   var d=auNow();
-  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v037</div></div>'+
+  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v038</div></div>'+
   countdownHTML()+'<div class="card ok"><h3>現在澳洲時間 '+fmt(auMins())+'</h3><div class="note">'+
    (d.getMonth()===8&&d.getDate()>=17&&d.getDate()<=27? '旅程進行中。':'旅程尚未開始。')+
    ' 澳洲東部時間比台灣快 2 小時，全程不換夏令時間。</div></div>'+
@@ -1507,8 +1507,8 @@ function fareCard(){
 }
 
 /* ===== 版本與更新（依規格：抓 sw.js 讀 CACHE，繞過 SW 生命週期）===== */
-var APP_VER="037";
-var APPVER="australia-v37";            /* 與 sw.js 的 CACHE 一致 */
+var APP_VER="038";
+var APPVER="australia-v38";            /* 與 sw.js 的 CACHE 一致 */
 var VST={state:"...",note:"",latest:null};   /* ok / new / warn / ... */
 
 /* 直接抓 sw.js（約 3 KB），讀它的 CACHE 版本。
@@ -1540,8 +1540,12 @@ function swVer(cb){
    結果每檢查一次就跳一次 toast，切出去切回來幾次就洗版。 */
 var _newAlerted=null;      /* 記住已提醒過哪一版 */
 function setVst(st,note,latest){
+  var was=VST.state;
   VST={state:st,note:note||"",latest:latest||null};
   paintVer();
+  /* 🚨 狀態變了就要重畫，否則 updBanner() 永遠不會被插進畫面，
+     使用者看到版本鈕變「有新版」卻找不到「立即更新」按鈕。 */
+  if(was!==st && !needLogin()){ try{ render() }catch(e){} }
   if(st==="new"){
     /* 同一個新版本只提醒一次；出現「更新的新版」時才再提醒 */
     if(_newAlerted!==latest){
@@ -1578,33 +1582,47 @@ function paintVer(){
   var b=document.getElementById("vbtn"); if(!b)return;
   b.className="vbtn "+VST.state;
   b.textContent=verLabel();
-  b.title = VST.state==="new" ? "有新版，點一下更新" : "版本 ・ 點一下檢查更新";
-}
-/* 硬重載：時間戳繞快取，replace 不留歷史 */
-function hardReload(){
-  var u=location.pathname+"?u="+Date.now()+location.hash;
-  try{ location.replace(u) }catch(e){ location.reload() }
+  b.title = VST.state==="new" ? "有新版，點一下立刻更新" : "版本 ・ 點一下檢查更新";
+  b.setAttribute("aria-label", b.title);
 }
 function doUpdate(){
   /* 🚨 離線時不能先刪快取再重載，會把 App 清成空白且救不回來 */
   if(navigator.onLine===false){ toast("目前離線，連上網路後再更新"); return }
+  if(VST._updating){ toast("正在更新，請稍候"); return }
+  VST._updating=true;
   toast("更新中，請稍候…");
-  if(!("serviceWorker" in navigator)) return hardReload();
-  navigator.serviceWorker.getRegistration().then(function(r){
-    if(!r) return hardReload();
-    var w=r.waiting||r.installing;
-    if(w&&w.postMessage){
-      try{ w.postMessage({type:"SKIP_WAITING"}) }catch(e){}
-      return setTimeout(hardReload,500);
-    }
-    /* 還沒有新的 SW：先叫它去抓，抓到再重載 */
-    r.update().then(function(){
-      var w2=r.waiting||r.installing;
-      if(w2&&w2.postMessage){ try{ w2.postMessage({type:"SKIP_WAITING"}) }catch(e){} }
-      setTimeout(hardReload,600);
-    }).catch(hardReload);
-  }).catch(hardReload);
+
+  /* 🚨 保底：不管 Service Worker 那邊發生什麼事，2.5 秒後一定重載。
+     之前的版本只在特定分支呼叫 hardReload，getRegistration() 不 resolve
+     （iOS 標準模式常見）就整個卡死，使用者按了完全沒反應。 */
+  var done=false;
+  function go(){ if(done)return; done=true; hardReload() }
+  setTimeout(go, 2500);
+
+  try{
+    if(!("serviceWorker" in navigator)) return go();
+    navigator.serviceWorker.getRegistration().then(function(r){
+      if(!r) return go();
+      var w=r.waiting||r.installing;
+      if(w&&w.postMessage){
+        try{ w.postMessage({type:"SKIP_WAITING"}) }catch(e){}
+        return setTimeout(go,400);
+      }
+      return r.update().then(function(){
+        var w2=r.waiting||r.installing;
+        if(w2&&w2.postMessage){ try{ w2.postMessage({type:"SKIP_WAITING"}) }catch(e){} }
+        setTimeout(go,500);
+      });
+    }).catch(go);
+  }catch(e){ go() }
 }
+function hardReload(){
+  /* 時間戳讓瀏覽器與 SW 都不可能命中舊快取；replace 不留歷史，
+     使用者按上一頁不會回到舊版 */
+  var u=location.pathname+"?u="+Date.now()+location.hash;
+  try{ location.replace(u) }catch(e){ try{ location.reload(true) }catch(e2){ location.reload() } }
+}
+
 function updBanner(){
   if(!hasUpdate()) return "";
   return '<div class="card warn"><h3>🔄 有新版本'+(VST.latest?'（'+esc(VST.latest)+'）':'')+'</h3>'+
@@ -2389,7 +2407,7 @@ function tick(){ var n=auNow();
 document.addEventListener("click",function(ev){
   var el=ev.target.closest("[data-walk],[data-th],[data-goday],[data-delmp],[data-undox],[data-fs],[data-tab],[data-nav],[data-say],[data-sayen],[data-arr],[data-mo],"+
     "[data-edit],[data-del],[data-remind],[data-add],[data-clearlag],[data-delx],[data-paid],"+
-    "[data-dels],[data-delp],#e_add,#s_add,#p_add,#d_add,#rm_new,#rm_up,#rm_dn,#rm_ck,#sc_cp,#pc_go,#bk_cp,#bk_dl,#bk_sh,#ics_dl,#wx_go,#fx_go,#upd_ck,#upd_go,#geo_go,#geo_rate,#q_go,#q_cl,#mp_add,#sbtn,#login_go,#lg_join,#lg_new,#lg_pull,#lg_toWho,#lg_back,#rm_cp,#rm_sh");
+    "[data-dels],[data-delp],#e_add,#s_add,#p_add,#d_add,#rm_new,#rm_up,#rm_dn,#rm_ck,#sc_cp,#pc_go,#bk_cp,#bk_dl,#bk_sh,#ics_dl,#wx_go,#fx_go,#vbtn,#upd_ck,#upd_go,#geo_go,#geo_rate,#q_go,#q_cl,#mp_add,#sbtn,#login_go,#lg_join,#lg_new,#lg_pull,#lg_toWho,#lg_back,#rm_cp,#rm_sh");
   if(!el)return;
   var d=el.dataset,id=el.id;
   if(d.goday){ go(d.goday); return }
@@ -2429,6 +2447,11 @@ document.addEventListener("click",function(ev){
   if(id==="geo_rate"){ ST.geoRate=((ST.geoRate|0)+1)%GEORATE.length; save();
     if(ST.geoOn) geoStart(); else render();
     toast("更新頻率："+geoName()+"（"+geoEvery()+"）"); return }
+  if(id==="vbtn"){
+    if(hasUpdate()){ doUpdate(); return }
+    setVst("...","檢查中"); refreshVst();
+    setTimeout(function(){ toast(hasUpdate()? "有新版本，再按一次就更新" : (VST.note||"已是最新版")) },1600);
+    return }
   if(id==="upd_ck"){ setVst("...","檢查中"); refreshVst();
     setTimeout(function(){ render(); toast(hasUpdate()? "有新版本" : (VST.note||"已是最新版")) },1500); return }
   if(id==="upd_go"){ doUpdate(); return }
