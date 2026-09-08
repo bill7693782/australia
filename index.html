@@ -275,7 +275,7 @@ td .tel{margin:2px 0}
 <body>
 <header>
   <div class="hrow"><h1>澳洲</h1>
-    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v041 ⋯</button>
+    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v042 ⋯</button>
     <button class="sbtn" id="sbtn" title="搜尋行程" aria-label="搜尋">🔍</button>
     <div class="clock" id="clk"></div></div>
 
@@ -1388,7 +1388,7 @@ function renderPrep(){
 /* ===== 使用說明 ===== */
 function renderHelp(){
   var d=auNow();
-  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v041</div></div>'+
+  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v042</div></div>'+
   countdownHTML()+'<div class="card ok"><h3>現在澳洲時間 '+fmt(auMins())+'</h3><div class="note">'+
    (d.getMonth()===8&&d.getDate()>=17&&d.getDate()<=27? '旅程進行中。':'旅程尚未開始。')+
    ' 澳洲東部時間比台灣快 2 小時，全程不換夏令時間。</div></div>'+
@@ -1702,8 +1702,8 @@ function fareCard(){
 }
 
 /* ===== 版本與更新（依規格：抓 sw.js 讀 CACHE，繞過 SW 生命週期）===== */
-var APP_VER="041";
-var APPVER="australia-v41";            /* 與 sw.js 的 CACHE 一致 */
+var APP_VER="042";
+var APPVER="australia-v42";            /* 與 sw.js 的 CACHE 一致 */
 var VST={state:"...",note:"",latest:null};   /* ok / new / warn / ... */
 
 /* 直接抓 sw.js（約 3 KB），讀它的 CACHE 版本。
@@ -2315,11 +2315,26 @@ function doLogin(){
 }
 /* ===== 出發倒數（標頭正下方，全頁可見） ===== *//* ===== 出發倒數（標頭正下方，全頁可見） ===== */
 function tripDays(){
-  var now=auNow();
-  var dep=new Date(Date.UTC(2026,8,17,6,40));   /* 9/17 16:40 台灣 = 06:40 UTC */
-  var end=new Date(Date.UTC(2026,8,27,12,10));  /* 9/27 22:10 台灣 */
-  var ms=dep-new Date(now.getTime()-600*60000); /* 還原成真實 UTC */
-  return {toDep:Math.ceil(ms/86400000), started:now>=dep&&now<=end, ended:now>end};
+  /* 🚨 台灣是 UTC+8，不是 UTC+10。
+     9/17 16:40 台灣 = 08:40 UTC　（之前寫 06:40，差了 2 小時）
+     9/16 22:00 台灣 = 14:00 UTC　（Day 0 開始打包的時間）
+     9/27 22:10 台灣 = 14:10 UTC　（回到桃園） */
+  var real=new Date(auNow().getTime()-600*60000);   /* auNow 是 +10，還原成真實 UTC */
+  /* Day 0 的「開始」算當天 00:00（台灣）＝ 前一天 16:00 UTC，
+     不是 22:00 打包那一刻。不然 9/16 白天會顯示「距 Day 0 還有 1 天」。 */
+  var d0 =Date.UTC(2026,8,15,16,0);
+  var dep=Date.UTC(2026,8,17,8,40);
+  var end=Date.UTC(2026,8,27,14,10);
+  var t=real.getTime();
+  return {
+    toD0 : Math.ceil((d0-t)/86400000),
+    toDep: Math.ceil((dep-t)/86400000),
+    hToDep: Math.floor((dep-t)/3600000),
+    mToDep: Math.ceil((dep-t)/60000),
+    d0Passed: t>=d0,
+    started: t>=dep && t<=end,
+    ended: t>end
+  };
 }
 function depBanner(){
   var t=tripDays();
@@ -2335,10 +2350,22 @@ function depBanner(){
     line='<div class="dep-lab">旅程進行中</div>'+
       '<div class="dep-big">第 '+(di>=0?di:1)+' 天</div>'+
       '<div class="dep-sub">'+esc(today)+'　'+(di>=0?esc(DAYS[di].title):"")+'</div>';
+  } else if(t.d0Passed){
+    /* 已過 9/16 晚上，只剩起飛倒數。不到 24 小時就改用小時，
+       不然起飛前 40 分鐘還顯示「還有 1 天」會誤導 */
+    var big = t.hToDep<24
+      ? (t.hToDep<1 ? Math.max(0,t.mToDep)+' 分鐘後起飛' : t.hToDep+' 小時後起飛')
+      : '還有 '+t.toDep+' 天';
+    line='<div class="dep-lab">出發倒數</div>'+
+      '<div class="dep-big">'+big+'</div>'+
+      '<div class="dep-sub">'+
+      (t.hToDep<24 ? '🚨 <b>今天出發</b>　' : '🧳 <b>Day 0 已經開始，今晚要打包完</b><br>')+
+      esc(firstTxt)+'</div>';
   } else {
     line='<div class="dep-lab">出發倒數</div>'+
-      '<div class="dep-big">還有 '+t.toDep+' 天</div>'+
-      '<div class="dep-sub">'+esc(firstTxt)+'</div>';
+      '<div class="dep-big">距 Day 0 還有 '+Math.max(0,t.toD0)+' 天</div>'+
+      '<div class="dep-sub">距起飛 '+t.toDep+' 天　・　'+esc(firstTxt)+'<br>'+
+      '🧳 <b>9/16（三）晚上就要打包</b>，那天才是真正要動起來的日子</div>';
   }
   if(nd){
     var h=Math.floor(nd.diff/60), m=nd.diff%60;
