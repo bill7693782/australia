@@ -167,10 +167,23 @@ details li{margin:5px 0}
 .dep-lab{font-size:.72em;color:#8FA39D;letter-spacing:.08em}
 .dep-big{font-size:1.75em;font-weight:700;line-height:1.15;margin:2px 0 4px;letter-spacing:-.02em}
 .dep-sub{font-size:.82em;color:#B9C7C2;line-height:1.5}
-.dep-dl{margin-top:8px;padding-top:8px;border-top:1px solid #2B3A35;font-size:.8em;color:#C9D6D1}
+.dep-dl{margin-top:8px;padding-top:8px;border-top:1px solid #2B3A35;font-size:.8em;color:#C9D6D1;
+  overflow-wrap:anywhere}
+@media (max-width:340px){.dep-dl{font-size:.74em}.dep-big{font-size:1.5em}}
 .dep-dl b{color:var(--gold)}
 .dep-dl.hot b{color:#FF8A80}
 .dep-dl.hot{color:#FFC9C4}
+.login{max-width:440px;margin:0 auto;padding:18px 14px 40px}
+.login-icon{font-size:3.4em;text-align:center;line-height:1.1}
+.login-h{text-align:center;font-size:1.6em;font-weight:700;margin:6px 0 8px;letter-spacing:-.02em}
+.login-sub{text-align:center;font-size:.88em;color:var(--ink2);line-height:1.6}
+.av-up.sm{width:46px;height:46px;font-size:1.1em;flex:0 0 auto}
+.chip.big{min-height:56px;padding:0 20px;font-size:1.08em;font-weight:700}
+.chip.big input{width:22px;height:22px}
+.av-up{display:inline-flex;align-items:center;justify-content:center;width:78px;height:78px;
+  border-radius:50%;background:var(--gold);color:#2A1B05;font-size:1.8em;font-weight:700;
+  cursor:pointer;overflow:hidden}
+.av-up img{width:100%;height:100%;object-fit:cover}
 mark{background:#FDF0DC;color:var(--ink);padding:0 2px;border-radius:3px;font-weight:700}
 table{width:100%;border-collapse:collapse;font-size:.92em}
 th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line);vertical-align:middle}
@@ -255,7 +268,7 @@ td .tel{margin:2px 0}
 <body>
 <header>
   <div class="hrow"><h1>澳洲</h1>
-    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v027 ⋯</button>
+    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v031 ⋯</button>
     <button class="sbtn" id="sbtn" title="搜尋行程" aria-label="搜尋">🔍</button>
     <div class="clock" id="clk"></div></div>
 
@@ -537,7 +550,7 @@ var ST={members:["","","",""],avatars:["","","",""],
   shop:[],budget:0,pack:[],packHide:{},
   room:"",tab:"help",fs:"m",lastEdit:0,
   me:null,pos:{},geoOn:false,geoRate:1,
-  q:"",myPlaces:[],expDel:[],theme:"auto"};
+  q:"",myPlaces:[],expDel:[],theme:"auto",myName:"",_loginStep:null};
 var CAN=false;
 try{
   var raw=localStorage.getItem(LSKEY); if(raw) ST=Object.assign(ST,JSON.parse(raw));
@@ -556,6 +569,7 @@ function ensureST(){
     ST[k]=ST[k].filter(function(x){ return x!==null&&x!==undefined });
   });
   /* 成員名單長度不對就補齊 */
+  ST.members=ST.members.map(function(x){ return typeof x==="string"?x:"" });
   if(ST.members.length!==MEMBERS.length)
     ST.members=MEMBERS.map(function(_,i){ return (ST.members&&ST.members[i])||"" });
   if(ST.avatars.length!==MEMBERS.length)
@@ -567,6 +581,7 @@ function ensureST(){
   if(typeof ST.fs!=="string"||["s","m","l","xl"].indexOf(ST.fs)<0) ST.fs="m";
   if(["auto","light","dark"].indexOf(ST.theme)<0) ST.theme="auto";
   if(typeof ST.room!=="string") ST.room="";
+  if(typeof ST.myName!=="string") ST.myName="";
   /* 每一筆分帳都要有合法金額與付款人 */
   ST.exp=ST.exp.filter(function(e){
     if(!e||typeof e!=="object") return false;
@@ -656,6 +671,14 @@ var TABS=[{k:"help",n:"使用說明",sub:"先看這個"}].concat(DAYS.map(functi
 function isToday(k){ var d=DAYS.filter(function(x){return x.id===k})[0];
   return d? todayIs(d.date) : false }
 function hasDead(id){ return /^d\d+$/.test(id) && slotsOf(id).some(function(s){return s.dead}) }
+function scrollNavToActive(){
+  try{
+    var nav=document.getElementById("nav"); if(!nav)return;
+    var on=nav.querySelector("button.on"); if(!on)return;
+    var l=on.offsetLeft-(nav.clientWidth-on.offsetWidth)/2;
+    nav.scrollLeft=Math.max(0,l);
+  }catch(e){}
+}
 function renderNav(){
   document.getElementById("nav").innerHTML=TABS.map(function(t){
     var c=[]; if(ST.tab===t.k)c.push("on"); if(isToday(t.k))c.push("today");
@@ -691,6 +714,7 @@ function slotHTML(s,d,lag){
      dead+dietWarn+arr+
    '<div class="acts">'+
      (q? '<button class="btn go" data-nav="'+esc(q)+'">📍 帶我去</button>' : '')+
+     (s.walk? '<button class="btn sec" data-walk="'+esc(s._k)+'">🧭 怎麼走</button>' : '')+
      '<button class="btn sec ico" data-say="'+esc(s._k)+'" aria-label="朗讀">🔊</button>'+
      '<button class="btn ico '+(ST.arr[s._k]!=null?"on":"sec")+'" data-arr="'+esc(s._k)+'" aria-label="標記已抵達">✓</button>'+
      '<button class="btn sec ico" data-mo="'+esc(s._k)+'" aria-label="更多">⋯</button>'+
@@ -766,6 +790,11 @@ function settle(){
 }
 function renderSplit(){
   var h='<div class="dayhead"><h2>分帳</h2><div class="sub">幣別 AUD．四人</div></div>';
+  if(!ST.members.filter(function(x){return typeof x==="string"&&x.trim()}).length)
+    h+='<div class="card warn"><h3>還沒填名字</h3><div class="note">'+
+      '現在只會顯示「成員1／2／3／4」，記帳時容易搞錯人。'+
+      '<b>到「準備」頁填四個人的名字。</b></div>'+
+      '<div class="acts"><button class="btn go" data-tab="prep">去填名字</button></div></div>';
   if(ST.exp.length){
     var tr0=settle(),left0=tr0.filter(function(_,i){return !ST.paid["t"+i]}).length;
     var tot0=ST.exp.reduce(function(a,e){return a+(e.type==="each"?(e.each||[]).reduce(function(x,y){return x+(+y||0)},0):e.amt)},0);
@@ -1103,6 +1132,9 @@ function renderPrep(){
    '白天在澳洲的大太陽底下用<b>亮</b>比較看得清楚，晚上或飛機上用<b>暗</b>比較不刺眼。</div>'+
    '<div class="thbar" id="thbar" style="margin:10px 0 0"></div></div>';
   h+=geoCard("prep");
+  h+='<div class="card ok"><h3>👤 你登入的身分</h3><div class="note">'+
+   '目前是 <b>'+esc(ST.myName||"（未設定）")+'</b>，排在成員 '+((ST.me!=null?ST.me:0)+1)+' 的位置。'+
+   '<br>改名字直接改下面「成員 '+((ST.me!=null?ST.me:0)+1)+'」那一欄。</div></div>';
   h+='<div class="card"><h3>我是誰</h3><div class="note">選一個，位置共享和分帳才知道哪一筆是你。</div>'+
    '<div class="chips">'+MEMBERS.map(function(_,i){
      return '<label class="chip'+(ST.me===i?" on":"")+'"><input type="radio" name="me" class="me_r" value="'+i+'" '+(ST.me===i?"checked":"")+'>'+esc(mem(i))+'</label>'
@@ -1118,7 +1150,7 @@ function renderPrep(){
 /* ===== 使用說明 ===== */
 function renderHelp(){
   var d=auNow();
-  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v027</div></div>'+
+  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v031</div></div>'+
   countdownHTML()+'<div class="card ok"><h3>現在澳洲時間 '+fmt(auMins())+'</h3><div class="note">'+
    (d.getMonth()===8&&d.getDate()>=17&&d.getDate()<=27? '旅程進行中。':'旅程尚未開始。')+
    ' 澳洲東部時間比台灣快 2 小時，全程不換夏令時間。</div></div>'+
@@ -1432,8 +1464,8 @@ function fareCard(){
 }
 
 /* ===== 版本與更新（依規格：抓 sw.js 讀 CACHE，繞過 SW 生命週期）===== */
-var APP_VER="027";
-var APPVER="australia-v27";            /* 與 sw.js 的 CACHE 一致 */
+var APP_VER="031";
+var APPVER="australia-v31";            /* 與 sw.js 的 CACHE 一致 */
 var VST={state:"...",note:"",latest:null};   /* ok / new / warn / ... */
 
 /* 直接抓 sw.js（約 3 KB），讀它的 CACHE 版本。
@@ -1736,7 +1768,125 @@ function martsHTML(id){
       '<div class="acts"><button class="btn go" data-nav="'+esc(s.q)+'">📍 帶我去</button></div></div>';
    }).join("")+'</div>';
 }
-/* ===== 出發倒數（標頭正下方，全頁可見） ===== */
+/* ===== 登入頁：沒填名字就進不去（照關西版做法） =====
+   引導卡可以被忽略，登入頁不行。分帳、位置共享、飲食限制都要知道誰是誰。 */
+function needLogin(){
+  return !(typeof ST.myName==="string" && ST.myName.trim());
+}
+function loginHTML(){
+  var err = ST._loginErr || "";
+  var step = ST._loginStep || "pick";
+  var named = MEMBERS.map(function(_,i){ return ST.members[i] })
+                     .filter(function(x){ return typeof x==="string" && x.trim() }).length;
+
+  function shell(inner){
+    return '<div class="login"><div class="login-icon">🐨</div>'+
+      '<h2 class="login-h">澳洲之旅</h2>'+inner+
+      (err? '<div class="card warn" style="margin-top:12px"><div class="note"><b>'+esc(err)+'</b></div></div>' : '')+
+      '</div>';
+  }
+
+  /* ── 第一畫面：你是誰家的？ ── */
+  if(step==="pick"){
+    return shell(
+      '<div class="login-sub">第一次打開，先選一個</div>'+
+      '<div class="card" style="margin-top:16px">'+
+        '<button class="btn go" id="lg_join" style="width:100%;min-height:64px;font-size:1.1em">'+
+          '📥 我有房號</button>'+
+        '<div class="note" style="margin-top:8px">群組裡有人分享房號給你，<b>貼上就好，不用打名字</b>。</div>'+
+      '</div>'+
+      '<div class="card" style="margin-top:12px">'+
+        '<button class="btn sec" id="lg_new" style="width:100%;min-height:56px">'+
+          '✏️ 我是第一個設定的人</button>'+
+        '<div class="note" style="margin-top:8px">填四個人的名字，然後產生房號分享給其他三位。</div>'+
+      '</div>');
+  }
+
+  /* ── 貼房號 ── */
+  if(step==="join"){
+    return shell(
+      '<div class="login-sub">把群組裡的房號貼進來</div>'+
+      '<div class="card" style="margin-top:16px">'+
+        '<label>房號</label>'+
+        '<input id="login_room" value="'+esc(ST.room||"")+'" placeholder="貼上房號" '+
+          'autocapitalize="characters" style="font-size:1.2em;letter-spacing:.08em">'+
+        '<div class="note" style="margin-top:8px">長按輸入框選「貼上」。房號是 10 碼英數字。</div>'+
+        '<div class="acts" style="margin-top:12px">'+
+          '<button class="btn go" id="lg_pull" style="flex:1">加入</button></div>'+
+      '</div>'+
+      '<div class="acts" style="margin-top:12px"><button class="btn sec" id="lg_back">← 回上一步</button></div>');
+  }
+
+  /* ── 選我是誰（房號同步完，或第一人填完名字） ── */
+  if(step==="who"){
+    return shell(
+      '<div class="login-sub">最後一步，點一下你自己</div>'+
+      '<div class="card" style="margin-top:16px">'+
+        (named?
+          '<div class="chips">'+MEMBERS.map(function(_,i){
+            var nm=ST.members[i];
+            if(!(typeof nm==="string" && nm.trim())) return "";
+            return '<label class="chip big'+(ST.me===i?" on":"")+'">'+
+              '<input type="radio" name="me0" class="me_r" value="'+i+'" '+(ST.me===i?"checked":"")+'>'+
+              esc(nm)+'</label>';
+          }).join("")+'</div>'
+          : '<div class="note">房間裡還沒有名字。請第一位設定的人先填完並產生房號。</div>')+
+      '</div>'+
+      '<div class="acts" style="margin-top:14px">'+
+        '<button class="btn go" id="login_go" style="flex:1;min-height:56px">開始使用</button></div>'+
+      '<div class="acts" style="margin-top:10px"><button class="btn sec" id="lg_back">← 回上一步</button></div>');
+  }
+
+  /* ── 第一人填四個名字 ── */
+  return shell(
+    '<div class="login-sub">填四個人的名字，之後大家都看得到</div>'+
+    '<div class="card" style="margin-top:16px"><h3>四個人的名字</h3>'+
+      MEMBERS.map(function(_,i){
+        return '<div class="row" style="align-items:center;margin-top:10px">'+
+          '<label class="av-up sm" for="lav'+i+'">'+
+            (ST.avatars[i]? '<img src="'+esc(ST.avatars[i])+'" alt="">' : String(i+1))+'</label>'+
+          '<input type="file" accept="image/*" id="lav'+i+'" class="m_a" data-i="'+i+'" style="display:none">'+
+          '<div style="flex:1"><label>成員 '+(i+1)+'</label>'+
+            '<input class="m_n" data-i="'+i+'" value="'+esc(ST.members[i]||"")+'" placeholder="名字"></div></div>';
+      }).join("")+
+      '<div class="note" style="margin-top:8px">點左邊圓圈可以上傳照片。之後到「分享」頁產生房號，把房號給其他三位就好。</div>'+
+    '</div>'+
+    '<div class="acts" style="margin-top:14px">'+
+      '<button class="btn go" id="lg_toWho" style="flex:1;min-height:56px">下一步：選我是誰</button></div>'+
+    '<div class="acts" style="margin-top:10px"><button class="btn sec" id="lg_back">← 回上一步</button></div>');
+}
+function loginJoin(){
+  var r=document.getElementById("login_room");
+  var room=r? r.value.trim() : "";
+  if(!room){ ST._loginErr="請先貼上房號"; render(); return }
+  if(room.length<8){ ST._loginErr="房號至少 8 碼，可能沒貼完整"; render(); return }
+  ST.room=room; ST._loginErr=""; save();
+  toast("同步中…");
+  if(!FB_DB){ ST._loginStep="who"; render(); return }
+  fetch(fbURL(),{cache:"no-store"}).then(function(r2){ return r2.json() })
+   .then(function(j){
+     if(j&&j.d){ applyCode(j.d); ST.room=room; ST._loginStep="who"; save(); render();
+       toast("同步完成，選一下你自己") }
+     else { ST._loginErr="這個房號裡還沒有資料。請第一位設定的人先填完名字並上傳。";
+       ST._loginStep="join"; render() }
+   })
+   .catch(function(){
+     ST._loginErr="連不上，請確認有網路。也可以直接進去，之後到「分享」頁再同步。";
+     ST._loginStep="who"; render();
+   });
+}
+function doLogin(){
+  var named=MEMBERS.filter(function(_,i){
+    return typeof ST.members[i]==="string" && ST.members[i].trim() });
+  if(!named.length){ ST._loginErr="還沒有任何名字"; ST._loginStep="new"; render(); return }
+  if(ST.me===null || !(typeof ST.members[ST.me]==="string" && ST.members[ST.me].trim())){
+    ST._loginErr="請點一下你自己"; render(); return }
+  ST._loginErr=""; ST._loginStep=null;
+  ST.myName=ST.members[ST.me].trim();
+  save(); render();
+  toast("歡迎，"+ST.myName+"！");
+}
+/* ===== 出發倒數（標頭正下方，全頁可見） ===== *//* ===== 出發倒數（標頭正下方，全頁可見） ===== */
 function tripDays(){
   var now=auNow();
   var dep=new Date(Date.UTC(2026,8,17,6,40));   /* 9/17 16:40 台灣 = 06:40 UTC */
@@ -1778,11 +1928,16 @@ function searchAll(kw){
   var out=[];
   DAYS.forEach(function(d){
     slotsOf(d.id).forEach(function(s){
-      var hay=(s.t+" "+(s.g||[]).join(" ")+" "+(s.x||"").replace(/<[^>]+>/g," ")+" "+(s.q||"")+
-        " "+(s.dead||"")+" "+d.date+" "+d.title).toLowerCase();
-      if(hay.indexOf(kw)>=0) out.push({d:d,s:s});
+      var title=(s.t+" "+(s.q||"")).toLowerCase();
+      var tags=((s.g||[]).join(" ")+" "+(s.dead||"")).toLowerCase();
+      var body=((s.x||"").replace(/<[^>]+>/g," ")+" "+d.date+" "+d.title).toLowerCase();
+      /* 命中位置決定權重：標題 > 標籤/死線 > 內文。
+         不排序的話搜「Victor」會先跳出說明裡提到它的其他格 */
+      var w = title.indexOf(kw)>=0 ? 0 : tags.indexOf(kw)>=0 ? 1 : body.indexOf(kw)>=0 ? 2 : -1;
+      if(w>=0) out.push({d:d,s:s,w:w});
     });
   });
+  out.sort(function(a,b){ return a.w-b.w });
   return out;
 }
 function hi(txt,kw){
@@ -1801,7 +1956,8 @@ function searchHTML(){
   var r=searchAll(kw);
   if(!r.length) return h+'<div class="card"><div class="empty"><b>找不到「'+esc(kw)+'」</b>'+
     '<div class="note">試試店名的一部分，或改用中文／英文。</div></div></div>';
-  h+='<div class="sec-t">找到 '+r.length+' 筆</div>';
+  var nT=r.filter(function(x){return x.w===0}).length;
+  h+='<div class="sec-t">找到 '+r.length+' 筆'+(nT&&nT<r.length? '（前 '+nT+' 筆是名稱直接命中）':'')+'</div>';
   h+=r.map(function(x){
     var plain=(x.s.x||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
     var i=plain.toLowerCase().indexOf(kw.toLowerCase());
@@ -1810,8 +1966,8 @@ function searchHTML(){
       '<div class="note"><span class="pill">'+esc(x.d.date)+'（'+esc(x.d.dow)+'）'+esc(x.s.a)+'</span>'+
       (x.s.dead?' <span class="tag t-warn">🔴 '+esc(x.s.dead)+'</span>':'')+
       '<br>'+hi(snip,kw)+'…</div>'+
-      '<div class="acts"><button class="btn sec" data-goday="'+esc(x.d.id)+'">看這一天</button>'+
-      (x.s.q?'<button class="btn go" data-nav="'+esc(x.s.q)+'">📍 帶我去</button>':'')+'</div></div>';
+      '<div class="acts"><button class="btn go" data-goday="'+esc(x.d.id)+'">看這一天</button>'+
+      (x.s.q?'<button class="btn sec" data-nav="'+esc(x.s.q)+'">📍 帶我去</button>':'')+'</div></div>';
   }).join("");
   return h;
 }
@@ -1959,7 +2115,22 @@ function sayerSlot(k){
 }
 /* ===== 主渲染 ===== */
 function render(){
-  applyFS(); renderNav(); renderFS(); renderTheme();
+  /* 🚨 沒登入就只畫登入頁，導覽列與倒數都不畫 —— 這才是「強制」而不是「建議」 */
+  if(needLogin()){
+    applyFS();
+    document.getElementById("main").innerHTML=loginHTML();
+    /* 重畫會失焦，把游標放回剛才那一格並移到字尾 */
+    if(ST._reFocus!=null){
+      var el=document.querySelector('.m_n[data-i="'+ST._reFocus+'"]');
+      if(el){ try{ el.focus(); el.setSelectionRange(el.value.length,el.value.length) }catch(e){} }
+      ST._reFocus=null;
+    }
+    var nv=document.getElementById("nav"); if(nv) nv.innerHTML="";
+    var db=document.getElementById("depbar"); if(db) db.innerHTML="";
+    var fb=document.getElementById("fsbar"); if(fb) fb.innerHTML="";
+    return;
+  }
+  applyFS(); renderNav(); renderFS(); renderTheme(); scrollNavToActive();
   var k=ST.tab,h="";
   if(k==="help")h=renderHelp();
   else if(/^d\d+$/.test(k))h=renderDay(k);
@@ -2005,13 +2176,29 @@ function tick(){ var n=auNow();
     fmt(twNow().getHours()*60+twNow().getMinutes()); }
 /* ===== 事件 ===== */
 document.addEventListener("click",function(ev){
-  var el=ev.target.closest("[data-th],[data-goday],[data-delmp],[data-undox],[data-fs],[data-tab],[data-nav],[data-say],[data-sayen],[data-arr],[data-mo],"+
+  var el=ev.target.closest("[data-walk],[data-th],[data-goday],[data-delmp],[data-undox],[data-fs],[data-tab],[data-nav],[data-say],[data-sayen],[data-arr],[data-mo],"+
     "[data-edit],[data-del],[data-remind],[data-add],[data-clearlag],[data-delx],[data-paid],"+
-    "[data-dels],[data-delp],#e_add,#s_add,#p_add,#d_add,#rm_new,#rm_up,#rm_dn,#rm_ck,#sc_cp,#pc_go,#bk_cp,#bk_dl,#bk_sh,#ics_dl,#wx_go,#fx_go,#upd_ck,#upd_go,#geo_go,#geo_rate,#q_go,#q_cl,#mp_add,#sbtn");
+    "[data-dels],[data-delp],#e_add,#s_add,#p_add,#d_add,#rm_new,#rm_up,#rm_dn,#rm_ck,#sc_cp,#pc_go,#bk_cp,#bk_dl,#bk_sh,#ics_dl,#wx_go,#fx_go,#upd_ck,#upd_go,#geo_go,#geo_rate,#q_go,#q_cl,#mp_add,#sbtn,#login_go,#lg_join,#lg_new,#lg_pull,#lg_toWho,#lg_back");
   if(!el)return;
   var d=el.dataset,id=el.id;
   if(d.goday){ go(d.goday); return }
+  if(d.walk){ var w=document.getElementById("more_"+d.walk);
+    if(w){ w.style.display = w.style.display==="block"?"none":"block"; w.scrollIntoView({block:"nearest"}) }
+    else { var det=document.querySelector('[data-k="'+d.walk+'"] details'); if(det) det.open=true }
+    return }
   if(d.delmp!=null){ ST.myPlaces.splice(+d.delmp,1); save(); render(); return }
+  if(id==="lg_join"){ ST._loginStep="join"; ST._loginErr=""; render(); return }
+  if(id==="lg_new"){ ST._loginStep="new"; ST._loginErr=""; render(); return }
+  if(id==="lg_pull"){ loginJoin(); return }
+  if(id==="lg_toWho"){
+    var n=MEMBERS.filter(function(_,i){ return typeof ST.members[i]==="string" && ST.members[i].trim() });
+    if(!n.length){ ST._loginErr="至少要填一個名字"; render(); return }
+    ST._loginErr=""; ST._loginStep="who"; render(); return }
+  if(id==="lg_back"){
+    var s=ST._loginStep;
+    ST._loginStep = (s==="who" && ST.room) ? "join" : (s==="who" ? "new" : "pick");
+    ST._loginErr=""; render(); return }
+  if(id==="login_go"){ doLogin(); return }
   if(id==="sbtn"){ go("find"); setTimeout(function(){ var e=document.getElementById("q_in"); if(e)e.focus() },100); return }
   if(id==="q_go"){ var v=document.getElementById("q_in"); ST.q=v?v.value.trim():""; save(); render(); return }
   if(id==="q_cl"){ ST.q=""; save(); render(); return }
@@ -2089,6 +2276,16 @@ function cp(t,n){ if(navigator.clipboard&&navigator.clipboard.writeText)
     navigator.clipboard.writeText(t).then(function(){toast(n+"已複製")},function(){prompt("手動複製",t)});
   else prompt("手動複製",t) }
 document.addEventListener("input",function(ev){
+  /* 🚨 名字欄位要在 input 就存，不能等 change（失焦）——
+     登入頁填完最後一格直接按「開始使用」，那一格會來不及存 */
+  if(ev.target.classList && ev.target.classList.contains("m_n")){
+    var i=+ev.target.dataset.i;
+    if(i>=0&&i<MEMBERS.length){
+      ST.members[i]=ev.target.value.trim(); save();
+      if(needLogin()){ ST._reFocus=i; render(); }
+    }
+    return;
+  }
   if(ev.target.id==="fx_a"){
     var v=parseFloat(ev.target.value), t=document.getElementById("fx_t");
     if(t) t.textContent=(FX.rate&&!isNaN(v))? "NT$"+Math.round(v*FX.rate).toLocaleString() : "—";
@@ -2102,8 +2299,12 @@ document.addEventListener("change",function(ev){
   if(el.id==="b_v"){ ST.budget=+el.value||0; save(); render(); return }
   if(el.classList.contains("s_ck")){ ST.shop[+d.i].done=el.checked; save(); render(); return }
   if(el.classList.contains("p_ck")){ ST.done["pk|"+d.k]=el.checked; save(); render(); return }
-  if(el.classList.contains("m_n")){ ST.members[+d.i]=el.value.trim(); save(); return }
-  if(el.classList.contains("me_r")){ ST.me=+el.value; save(); render(); return }
+  if(el.classList.contains("m_n")){
+    ST.members[+d.i]=el.value.trim(); save();
+    /* 登入頁要即時長出「哪個是你」的選項 */
+    if(needLogin()) render();
+    return }
+  if(el.classList.contains("me_r")){ ST.me=+el.value; ST._loginErr=""; save(); render(); return }
   if(el.classList.contains("d_ck")){ var v=el.value,i=ST.dietOn.indexOf(v);
     if(el.checked){ if(i<0)ST.dietOn.push(v) } else if(i>=0)ST.dietOn.splice(i,1); save(); return }
   if(el.classList.contains("m_a")){ var f=el.files&&el.files[0]; if(!f)return;
