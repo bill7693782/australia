@@ -178,6 +178,11 @@ details li{margin:5px 0}
 .login-h{text-align:center;font-size:1.6em;font-weight:700;margin:6px 0 8px;letter-spacing:-.02em}
 .login-sub{text-align:center;font-size:.88em;color:var(--ink2);line-height:1.6}
 .av-up.sm{width:46px;height:46px;font-size:1.1em;flex:0 0 auto}
+.roomcode{font-size:1.9em;font-weight:700;letter-spacing:.14em;text-align:center;
+  padding:14px 10px;margin:10px 0 4px;background:var(--white);border-radius:12px;
+  font-variant-numeric:tabular-nums;overflow-wrap:anywhere;
+  box-shadow:inset 0 0 0 2px var(--go)}
+.dark .roomcode{background:#1A2320}
 .chip.big{min-height:56px;padding:0 20px;font-size:1.08em;font-weight:700}
 .chip.big input{width:22px;height:22px}
 .av-up{display:inline-flex;align-items:center;justify-content:center;width:78px;height:78px;
@@ -268,7 +273,7 @@ td .tel{margin:2px 0}
 <body>
 <header>
   <div class="hrow"><h1>澳洲</h1>
-    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v031 ⋯</button>
+    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v032 ⋯</button>
     <button class="sbtn" id="sbtn" title="搜尋行程" aria-label="搜尋">🔍</button>
     <div class="clock" id="clk"></div></div>
 
@@ -1084,15 +1089,40 @@ function fbPull(){ if(!FB_DB||!ST.room){ toast("先產生房號"); return }
 /* ===== 分享 ===== */
 function renderShare(){
   var h='<div class="dayhead"><h2>分享</h2><div class="sub">四支手機之間傳資料</div></div>';
-  h+='<div class="card"><h3>即時同步房間</h3><div class="note" style="margin-bottom:8px">狀態：<b>'+esc(FBST)+'</b></div>'+
-   '<div class="row"><div><label>房號（10 碼，四支手機輸入同一組）</label><input id="rm" value="'+esc(ST.room)+'" placeholder="按下面產生"></div></div>'+
-   '<div class="acts"><button class="btn sec" id="rm_new">產生房號</button>'+
-   '<button class="btn go" id="rm_up">上傳我的資料</button>'+
-   '<button class="btn sec" id="rm_dn">取回房間資料</button>'+
-   '<button class="btn sec" id="rm_ck">重新檢查</button></div>';
+  if(ST.room){
+    h+='<div class="card ok"><h3>🔑 你的房號</h3>'+
+     '<div class="roomcode">'+esc(ST.room)+'</div>'+
+     '<div class="note" style="text-align:center">把這組房號給其他三位，他們在登入頁按<b>「我有房號」</b>貼上就能進來。</div>'+
+     '<div class="acts" style="margin-top:12px">'+
+       '<button class="btn go" id="rm_cp" style="flex:1">📋 複製房號</button>'+
+       '<button class="btn go" id="rm_sh" style="flex:1">📤 分享到群組</button></div>'+
+     '<div class="note" style="margin-top:10px">🚨 <b>改好名字之後要按一次「上傳我的資料」</b>，其他人才看得到。</div>'+
+     '<div class="acts" style="margin-top:8px">'+
+       '<button class="btn go" id="rm_up">⬆️ 上傳我的資料</button>'+
+       '<button class="btn sec" id="rm_dn">⬇️ 取回房間資料</button></div>'+
+     '<details style="margin-top:10px"><summary>換一組房號</summary><div class="body">'+
+       '<div class="row"><div><label>房號（10 碼）</label><input id="rm" value="'+esc(ST.room)+'"></div></div>'+
+       '<div class="acts"><button class="btn sec" id="rm_new">重新產生</button>'+
+       '<button class="btn sec" id="rm_ck">重新檢查連線</button></div>'+
+       '<div class="note">🚨 換房號等於換一個房間，原本的資料不會跟著走。</div>'+
+     '</div></details>'+
+     '<div class="note" style="margin-top:10px">連線狀態：<b>'+esc(FBST)+'</b></div>';
+  } else {
+    h+='<div class="card warn"><h3>🔑 還沒有房號</h3>'+
+     '<div class="note">四支手機要輸入<b>同一組房號</b>才會同步分帳、名字、位置。<br>'+
+     '<b>你是第一個設定的人</b> → 按下面產生，再把房號分享到群組。<br>'+
+     '<b>別人已經給你房號</b> → 貼進下面的框。</div>'+
+     '<div class="acts" style="margin-top:12px">'+
+       '<button class="btn go" id="rm_new" style="flex:1;min-height:56px">🔑 產生房號</button></div>'+
+     '<div class="row" style="margin-top:12px"><div><label>或貼上別人給的房號</label>'+
+       '<input id="rm" value="" placeholder="10 碼英數字"></div></div>'+
+     '<div class="acts"><button class="btn sec" id="rm_dn">貼好了，取回資料</button>'+
+     '<button class="btn sec" id="rm_ck">重新檢查連線</button></div>'+
+     '<div class="note" style="margin-top:10px">連線狀態：<b>'+esc(FBST)+'</b></div>';
+  }
+  h+='</div>';
   if(/規則沒設對/.test(FBST)) h+='<div class="note" style="margin-top:10px">到 Firebase 主控台 → Realtime Database → 規則，貼上這段後按發布：<br>'+
    '<textarea readonly rows="11" style="margin-top:6px;font-family:monospace;font-size:12px">{\n  "rules": {\n    "australia": {\n      "rooms": {\n        "$room": {\n          ".read": "$room.length >= 8",\n          ".write": "$room.length >= 8"\n        }\n      }\n    }\n  }\n}</textarea></div>';
-  h+='</div>';
   h+='<div class="card"><h3>離線同步碼</h3><div class="note">沒網路也能用。複製給其他人，他們貼到下面的框按合併。</div>'+
    '<div class="acts"><button class="btn go" id="sc_cp">複製同步碼</button></div>'+
    '<details style="margin-top:6px"><summary>看代碼內容</summary><div class="body">'+
@@ -1150,7 +1180,7 @@ function renderPrep(){
 /* ===== 使用說明 ===== */
 function renderHelp(){
   var d=auNow();
-  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v031</div></div>'+
+  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v032</div></div>'+
   countdownHTML()+'<div class="card ok"><h3>現在澳洲時間 '+fmt(auMins())+'</h3><div class="note">'+
    (d.getMonth()===8&&d.getDate()>=17&&d.getDate()<=27? '旅程進行中。':'旅程尚未開始。')+
    ' 澳洲東部時間比台灣快 2 小時，全程不換夏令時間。</div></div>'+
@@ -1464,8 +1494,8 @@ function fareCard(){
 }
 
 /* ===== 版本與更新（依規格：抓 sw.js 讀 CACHE，繞過 SW 生命週期）===== */
-var APP_VER="031";
-var APPVER="australia-v31";            /* 與 sw.js 的 CACHE 一致 */
+var APP_VER="032";
+var APPVER="australia-v32";            /* 與 sw.js 的 CACHE 一致 */
 var VST={state:"...",note:"",latest:null};   /* ok / new / warn / ... */
 
 /* 直接抓 sw.js（約 3 KB），讀它的 CACHE 版本。
@@ -2119,12 +2149,7 @@ function render(){
   if(needLogin()){
     applyFS();
     document.getElementById("main").innerHTML=loginHTML();
-    /* 重畫會失焦，把游標放回剛才那一格並移到字尾 */
-    if(ST._reFocus!=null){
-      var el=document.querySelector('.m_n[data-i="'+ST._reFocus+'"]');
-      if(el){ try{ el.focus(); el.setSelectionRange(el.value.length,el.value.length) }catch(e){} }
-      ST._reFocus=null;
-    }
+
     var nv=document.getElementById("nav"); if(nv) nv.innerHTML="";
     var db=document.getElementById("depbar"); if(db) db.innerHTML="";
     var fb=document.getElementById("fsbar"); if(fb) fb.innerHTML="";
@@ -2178,7 +2203,7 @@ function tick(){ var n=auNow();
 document.addEventListener("click",function(ev){
   var el=ev.target.closest("[data-walk],[data-th],[data-goday],[data-delmp],[data-undox],[data-fs],[data-tab],[data-nav],[data-say],[data-sayen],[data-arr],[data-mo],"+
     "[data-edit],[data-del],[data-remind],[data-add],[data-clearlag],[data-delx],[data-paid],"+
-    "[data-dels],[data-delp],#e_add,#s_add,#p_add,#d_add,#rm_new,#rm_up,#rm_dn,#rm_ck,#sc_cp,#pc_go,#bk_cp,#bk_dl,#bk_sh,#ics_dl,#wx_go,#fx_go,#upd_ck,#upd_go,#geo_go,#geo_rate,#q_go,#q_cl,#mp_add,#sbtn,#login_go,#lg_join,#lg_new,#lg_pull,#lg_toWho,#lg_back");
+    "[data-dels],[data-delp],#e_add,#s_add,#p_add,#d_add,#rm_new,#rm_up,#rm_dn,#rm_ck,#sc_cp,#pc_go,#bk_cp,#bk_dl,#bk_sh,#ics_dl,#wx_go,#fx_go,#upd_ck,#upd_go,#geo_go,#geo_rate,#q_go,#q_cl,#mp_add,#sbtn,#login_go,#lg_join,#lg_new,#lg_pull,#lg_toWho,#lg_back,#rm_cp,#rm_sh");
   if(!el)return;
   var d=el.dataset,id=el.id;
   if(d.goday){ go(d.goday); return }
@@ -2187,11 +2212,19 @@ document.addEventListener("click",function(ev){
     else { var det=document.querySelector('[data-k="'+d.walk+'"] details'); if(det) det.open=true }
     return }
   if(d.delmp!=null){ ST.myPlaces.splice(+d.delmp,1); save(); render(); return }
+  if(id==="rm_cp"){ copyTxt(ST.room); toast("房號已複製，貼到群組"); return }
+  if(id==="rm_sh"){
+    var msg="澳洲之旅 App\n\n網址："+location.href.split("?")[0]+"\n房號："+ST.room+
+      "\n\n打開網址，按「我有房號」，貼上房號就好。";
+    if(navigator.share){ navigator.share({title:"澳洲之旅",text:msg}).catch(function(){}) }
+    else { copyTxt(msg); toast("已複製網址與房號，貼到群組") }
+    return }
   if(id==="lg_join"){ ST._loginStep="join"; ST._loginErr=""; render(); return }
   if(id==="lg_new"){ ST._loginStep="new"; ST._loginErr=""; render(); return }
   if(id==="lg_pull"){ loginJoin(); return }
   if(id==="lg_toWho"){
-    var n=MEMBERS.filter(function(_,i){ return typeof ST.members[i]==="string" && ST.members[i].trim() });
+    ST.members=ST.members.map(function(x){ return typeof x==="string"? x.trim() : "" }); save();
+    var n=MEMBERS.filter(function(_,i){ return ST.members[i] });
     if(!n.length){ ST._loginErr="至少要填一個名字"; render(); return }
     ST._loginErr=""; ST._loginStep="who"; render(); return }
   if(id==="lg_back"){
@@ -2279,11 +2312,11 @@ document.addEventListener("input",function(ev){
   /* 🚨 名字欄位要在 input 就存，不能等 change（失焦）——
      登入頁填完最後一格直接按「開始使用」，那一格會來不及存 */
   if(ev.target.classList && ev.target.classList.contains("m_n")){
+    /* 🚨 只存值，絕對不要 render()。
+       每打一個字就整頁重畫，輸入法還沒處理完就被重建，會變成打「1」出現「11」。
+       「哪個是你」已經是獨立的下一步，這裡不需要即時重畫。 */
     var i=+ev.target.dataset.i;
-    if(i>=0&&i<MEMBERS.length){
-      ST.members[i]=ev.target.value.trim(); save();
-      if(needLogin()){ ST._reFocus=i; render(); }
-    }
+    if(i>=0&&i<MEMBERS.length){ ST.members[i]=ev.target.value; save() }
     return;
   }
   if(ev.target.id==="fx_a"){
