@@ -1,5 +1,5 @@
-/* 澳洲之旅 · Service Worker v32 —— 快取只在自己的命名空間內操作 */
-var CACHE='australia-v32';
+/* 澳洲之旅 · Service Worker v37 —— 快取只在自己的命名空間內操作 */
+var CACHE='australia-v37';
 var PREFIX='australia-';
 var CORE=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./icon-512-maskable.png','./favicon.ico'];
 

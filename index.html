@@ -273,7 +273,7 @@ td .tel{margin:2px 0}
 <body>
 <header>
   <div class="hrow"><h1>澳洲</h1>
-    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v032 ⋯</button>
+    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v037 ⋯</button>
     <button class="sbtn" id="sbtn" title="搜尋行程" aria-label="搜尋">🔍</button>
     <div class="clock" id="clk"></div></div>
 
@@ -324,7 +324,7 @@ var DAYS=[
  {a:"14:40",b:"16:40",t:"✈️ 桃園機場第二航廈報到",g:["🕐 起飛前 2 小時","🚨 櫃檯會查澳洲簽證"],x:"<ul><li>訂位代號 <b>EAYH8Q</b>（澳洲航空開票，四段同一張票）</li><li>四人票號 081-2387398847～850</li><li>櫃檯問一句：<b>行李能不能直掛墨爾本？QF30 的登機證能不能一起發？</b></li><li>🛟 <b>趕不上怎麼辦</b>：長榮桃園櫃檯 <b>(03) 351-5151</b>。同一張票四段，<b>航空公司必須負責改簽</b>，但香港轉機只有 95 分鐘，改了很可能整串重排。<b>塞車就先打電話說明</b>，櫃檯有時會等。</li></ul>",q:"桃園國際機場第二航廈",dead:"16:40 起飛"},
  {a:"16:40",b:"18:30",t:"🛫 BR 871 桃園 → 香港",g:["🕐 飛行 1:50","Boeing 787-10"],x:"<ul><li>抵達香港第一航廈</li><li>下機不要先逛，先看螢幕確認 QF30 的登機門</li></ul>"},
  {a:"18:30",b:"20:05",t:"🔁 香港轉機（95 分鐘）",g:["🚨 澳航櫃檯 19:05 關閉"],x:"<ul><li><b>行李有直掛 → 直接走轉機通道去登機門</b></li><li>行李沒直掛 → 要出關提行李、重新報到，35 分鐘幾乎不可能。立刻找澳航人員</li><li>澳航香港站報到櫃檯在 <b>Aisle J</b></li><li>🛟 <b>沒接上怎麼辦</b>：立刻在轉機區找<b>澳洲航空地勤</b>（櫃檯在 Aisle J）。同一張票，改簽是他們的責任。下一班 QF30 是隔天同時間，會多住一晚香港。<b>不要自己出關</b>，出了就變成你的問題。</li></ul>",dead:"19:05 澳航報到截止"},
- {a:"20:05",b:"07:20",t:"🛫 QF 30 香港 → 墨爾本（機上過夜）",g:["🕐 飛行 9:15","Airbus A330","🚨 這一夜睡在機上"],x:"<ul><li>隔日 07:20 抵達墨爾本第二航廈</li><li>🚨 <b>這是全程唯一在機上過夜的一晚，而且落地當天中午就有 12:15 的訂位。上機就睡，不要看電影</b></li><li>墨爾本比台灣快 2 小時——上機後<b>立刻把手錶調成澳洲時間</b>，用當地時間決定何時睡</li><li>機上供餐約在起飛後 1 小時與落地前 1.5 小時</li><li><b>空服員會發 Incoming Passenger Card，這是法律文件</b></li><li>有食物、藥品、木製品就打勾。申報不會罰，沒申報被查到才罰</li><li>機上發的水果不要帶下飛機</li></ul>"}
+ {a:"20:05",b:"07:20",t:"🛫 QF 30 香港 → 墨爾本（機上過夜）",g:["🕐 飛行 9:15","Airbus A330","🚨 這一夜睡在機上"],x:"<ul><li>隔日 07:20 抵達墨爾本第二航廈</li><li>🚨 <b>這是全程唯一在機上過夜的一晚，而且落地當天中午就有 12:15 的訂位。上機就睡，不要看電影</b></li><li>👵 <b>經濟艙九小時對長輩的腰很吃力</b>——每 2 小時起來走一次，可以預防腿部腫脹與血栓</li><li>💡 起飛後把座位調到最斜，用外套墊腰。<b>眼罩、耳塞、頸枕帶上機</b></li><li>墨爾本比台灣快 2 小時——上機後<b>立刻把手錶調成澳洲時間</b>，用當地時間決定何時睡</li><li>機上供餐約在起飛後 1 小時與落地前 1.5 小時</li><li><b>空服員會發 Incoming Passenger Card，這是法律文件</b></li><li>有食物、藥品、木製品就打勾。申報不會罰，沒申報被查到才罰</li><li>機上發的水果不要帶下飛機</li></ul>"}
 ]},
 
 {id:"d2",date:"9/18",dow:"五",title:"抵達墨爾本 · Victor Churchill",sub:"落地當天最硬的一天",slots:[
@@ -381,7 +381,7 @@ var DAYS=[
  {a:"08:00",b:"10:00",t:"🚌 出發前往大洋路",g:["🕐 冬令時 08:00 出發"],x:"<ul><li><b>你們是冬令時那一欄</b>——澳洲夏令時間 10/4 才開始</li><li>訂單上的 1000／1115／1255 那組時間就是你們的時間，不用順延</li></ul>"},
  {a:"10:00",b:"10:15",t:"☕ Colac 小鎮休息",q:"Colac Victoria",g:["🕐 約 15 分鐘","🚻 上廁所"],x:"<ul><li>維多利亞州西部的農業小鎮，位在 Colac 湖畔</li><li>🚨 <b>下一次停靠是 11:15 的十二門徒，中間 1 小時在車上，而且車上禁止飲食</b>——現在上廁所</li><li>只停 15 分鐘，不要走遠</li><li>小鎮有超市與麵包店，想補行動糧可以趁現在（但要等下車後才能吃）</li></ul>"},
  {a:"11:15",b:"12:45",t:"🪨 十二門徒石",g:["🕐 約 90 分鐘","💴 直升機自費 AU$195／成人"],x:"<ul><li>直升機當天跟導遊訂</li><li>🚨 <b>沒有遮蔽的海崖，風很大</b>。帽子要能綁住或收進包包，會被直接吹走</li><li>海岸紫外線反射強，防曬要擦</li></ul>",q:"Twelve Apostles Great Ocean Road",
-  photo:"🚨 <b>現存只有 7 根</b>，名字叫十二門徒但不是十二根。<br>站在主觀景台上<b>沿海岸線望向石柱最密的那一側</b>，能一次帶到最多根。<br>從停車場要走一段步道穿過公路下方的地道才到觀景台，<b>時間要抓進 90 分鐘裡</b>。<br>海崖沒有遮蔽、風極大，<b>帽子要能綁住或收起來</b>，手機握緊。"},
+  photo:"🚨 <b>現存只有 7 根</b>，名字叫十二門徒但不是十二根。<br>👵 <b>從停車場到觀景台要走一段，還要穿過公路下方的地道</b>——這是全天走最多的一站。走不動的人可以在停車場的遊客中心等，那裡有廁所和座位。<br>站在主觀景台上<b>沿海岸線望向石柱最密的那一側</b>，能一次帶到最多根。<br>從停車場要走一段步道穿過公路下方的地道才到觀景台，<b>時間要抓進 90 分鐘裡</b>。<br>海崖沒有遮蔽、風極大，<b>帽子要能綁住或收起來</b>，手機握緊。"},
  {a:"12:55",b:"13:25",t:"🌊 洛克阿德峽谷",g:["🕐 約 30 分鐘","🚨 有階梯要走"],x:"<ul><li>名字來自 1878 年在此觸礁的鐵殼船 Loch Ard，船上只有兩人生還，兩人就是漂到這個峽谷上岸的</li><li>石灰岩被海水掏空形成的內凹海灣，兩側是垂直峭壁</li><li>🚨 <b>要走一段木階梯下到沙灘再走回來</b>，30 分鐘扣掉上下階梯的時間並不寬裕</li><li>階梯可能濕滑，<b>穿好走的鞋</b></li><li>不下沙灘的話，上方的觀景平台也看得到全景</li></ul>",q:"Loch Ard Gorge",
   photo:"<b>從上方觀景台拍全景</b>——能同時帶到兩側峭壁與中間的沙灘，這是明信片角度。<br>下到沙灘後往回拍，峭壁的高度才有壓迫感。<br>海風大，<b>手機用手腕帶或握緊</b>。"},
  {a:"13:40",b:"14:40",t:"🦘 大洋路動物園 · 午餐",q:"Great Ocean Road Wildlife Park",g:["🕐 約 60 分鐘","💴 門票 AU$37／成人","💴 午餐自費"],x:"<ul><li>Great Ocean Road Wildlife Park，自費入園</li><li><b>今天唯一的正餐</b></li><li>餵袋鼠時手掌攤平，不要用手指夾食物</li></ul>"},
@@ -396,8 +396,8 @@ var DAYS=[
  {a:"08:00",b:"11:00",t:"🚐 370 Queen St 門口上車",q:"370 Queen St Melbourne CBD VIC 3000",g:["🚨 確切時間昨晚才知道","🚨 提前 5 分鐘在樓下等"],x:"<ul><li>方案：選項 2 · CBD 飯店接載</li><li><b>共乘接送</b>，訂單註明實際時間可能提早或延遲</li><li>查到確切時間後用 ✎ 編輯改掉</li><li>🛟 <b>車沒來或睡過頭怎麼辦</b>：立刻開 <b>Klook App</b> 站內訊息聯絡供應商，或打 <b>Klook 台灣客服 02-7742-6889</b>。前一晚的通知信裡會有<b>司機直撥電話，存下來</b>。共乘車可能遲到，<b>先等 15 分鐘再說</b>。真的錯過 → 訂單頁另標的 <b>52 Spencer St</b> 是唯一寫死的地點，距住處 1.1 km、走 14 分。<b>全部趕不上就是損失這一天，Klook 一日遊過時不退費</b>。</li></ul>",dead:"通知時間前 5 分鐘"},
  {a:"11:00",b:"13:00",t:"🚂 普芬比利蒸汽小火車",g:["✅ 含單程票"],x:"<ul><li>1900 年起行駛於丹頓農山脈，志願者營運的遺產蒸汽火車</li><li>票是<b>單程</b>，不是來回</li><li>山區林間，比市區冷，<b>外套先穿上</b></li></ul>",q:"Puffing Billy Railway"},
  {a:"13:00",b:"14:30",t:"🐨 Maru 動物園",g:["💴 自費 成人 AU$33","💴 導遊費 AU$5／人","⚠️ 不保證能參加"],x:"<ul><li>訂單註明「視火車時刻表而定，不保證一定能搭乘」</li><li>可以抱無尾熊、親手餵袋鼠</li></ul>",q:"Maru Koala and Animal Park"},
- {a:"14:30",b:"15:30",t:"🍽️ 午餐（自費，行程未包含）",g:["🚨 全天唯一的正餐機會","💴 自費"],x:"<ul><li>🚨 <b>訂單的費用不含任何一餐</b>。08:00 出發、23:59 才回住處，中間 16 小時</li><li>導遊會安排用餐停留，但<b>時間與地點都不固定</b>，也可能只有便利商店</li><li><b>出門前先買好行動糧</b>：麵包、能量棒、水。企鵝島晚上很冷，餓著更冷</li><li>晚餐時間卡在企鵝歸巢，多半來不及好好吃</li></ul>"},
- {a:"17:30",b:"20:30",t:"🐧 菲利普島企鵝歸巢",g:["✅ 含普通觀景臺門票","🚨 全面禁止拍照"],x:"<ul><li>世界上最小的企鵝，日落後成群上岸回巢</li><li>🚨 <b>自 2025 年起手機、相機一律不得拍攝企鵝</b>，為保護企鵝視力。園方提供 QR code 看影像</li><li>🚨 <b>觀景臺是露天水泥階梯</b>，吹的是巴斯海峽的風。<b>厚外套、毛帽、圍巾都要</b></li><li>座位又冷又硬，建議帶條薄毯或坐墊</li></ul>",q:"Penguin Parade Phillip Island"},
+ {a:"14:30",b:"15:30",t:"🍽️ 午餐（自費，行程未包含）",g:["🚨 全天唯一的正餐機會","💴 自費","👵 唯一能坐著吃的時段"],x:"<ul><li>🚨 <b>訂單的費用不含任何一餐</b>。08:00 出發、23:59 才回住處，中間 16 小時</li><li>👵 <b>今天回不了住處，車程就是唯一的休息時間</b>——上車就閉眼睛，普芬比利到菲利普島之間有 2 小時車程</li><li>導遊會安排用餐停留，但<b>時間與地點都不固定</b>，也可能只有便利商店</li><li><b>出門前先買好行動糧</b>：麵包、能量棒、水。企鵝島晚上很冷，餓著更冷</li><li>晚餐時間卡在企鵝歸巢，多半來不及好好吃</li></ul>"},
+ {a:"17:30",b:"20:30",t:"🐧 菲利普島企鵝歸巢",g:["✅ 含普通觀景臺門票","🚨 全面禁止拍照","👵 露天看台要坐 30–60 分鐘"],x:"<ul><li>世界上最小的企鵝，日落後成群上岸回巢</li><li>👵 <b>露天階梯看台，沒有靠背、沒有遮蔽</b>。日落後氣溫掉得很快，要坐 30–60 分鐘等企鵝上岸。<b>帶可以墊的東西</b>（外套、圍巾），石階很冰</li><li>🚨 <b>自 2025 年起手機、相機一律不得拍攝企鵝</b>，為保護企鵝視力。園方提供 QR code 看影像</li><li>🚨 <b>觀景臺是露天水泥階梯</b>，吹的是巴斯海峽的風。<b>厚外套、毛帽、圍巾都要</b></li><li>座位又冷又硬，建議帶條薄毯或坐墊</li></ul>",q:"Penguin Parade Phillip Island"},
  {a:"21:30",b:"23:59",t:"🚐 送回 370 Queen St 門口",q:"370 Queen St Melbourne CBD VIC 3000",g:["🕐 訂單載明的回程窗口"],x:"<ul><li>💴 <b>導遊服務費 AU$5／人（已確認）</b>，四人 <b>AU$20 現金</b>，下車前給導遊</li><li>回到住處可能已超過 22:00</li><li>🚨 <b>明天 09:15 有 Cuff、15:00 有飛機。行李今天出門前就打包好</b></li></ul>"}
 ]},
 
@@ -425,7 +425,9 @@ var DAYS=[
 ]}
 ,
 {id:"d6",date:"9/22",dow:"二",title:"雪梨 · Porteño",sub:"住北雪梨，餐廳都在橋的南邊",slots:[
- {a:"09:00",b:"17:00",t:"🗺️ 雪梨自由時間",g:["🚨 從北雪梨每趟都要過橋","🍽️ 今天只排了晚餐"],x:"<ul><li>🚨 <b>今天行程只有 18:00 的 Porteño，早餐和午餐要自己找</b></li><li>飯店就在北雪梨車站旁 120 公尺，出門即上車</li><li>火車到 Central 約 10 分鐘</li><li>Opal 週五、六、日與假日每日上限 AU$9.65，週一至週四 AU$19.30</li><li>晚上是重肉的阿根廷烤肉，<b>午餐吃清淡一點</b></li></ul>"},
+ {a:"09:00",b:"13:00",t:"🗺️ 雪梨自由時間（上午）",g:["🚨 從北雪梨每趟都要過橋","🍽️ 今天只排了晚餐"],x:"<ul><li>🚨 <b>今天行程只有 18:00 的 Porteño，早餐和午餐要自己找</b></li><li>飯店就在北雪梨車站旁 120 公尺，出門即上車</li><li>火車到 Central 約 10 分鐘</li><li>Opal 週五、六、日與假日每日上限 AU$9.65，週一至週四 AU$19.30</li><li>晚上是重肉的阿根廷烤肉，<b>午餐吃清淡一點</b></li></ul>"},
+ {a:"13:00",b:"15:30",t:"😴 回飯店休息（強烈建議）",g:["🛏️ 車程只要 10 分鐘","👵 兩位長輩務必休息"],x:"<ul><li>🚨 <b>今天在外 12 小時半，中間完全沒有安排休息</b>——這是我排的，現在補上</li><li><b>View Sydney 就在北雪梨站旁 120 公尺</b>，從 CBD 或 Circular Quay 回去只要 10 分鐘車程</li><li>櫃檯 24 小時有人，白天回房完全沒問題</li><li>🚨 <b>晚上 18:00 的 Porteño 是重肉的阿根廷烤肉，會坐到 20:15</b>。下午躺一小時再出門，晚餐才吃得下、坐得住</li><li>不想回去的人可以留在市區，<b>但約好晚餐前在哪碰面</b></li><li>💡 皇家植物園、岩石區都有大量長椅可以坐，不回飯店也要找地方坐 30 分鐘</li></ul>"},
+ {a:"15:30",b:"17:15",t:"🗺️ 雪梨自由時間（下午）",g:["🕐 傍晚光線最好拍"],x:"<ul><li>休息完再出門，或直接從飯店出發往 Surry Hills</li><li>🚨 <b>17:15 一定要動身</b>，過橋加轉車要抓 45 分鐘</li><li>💡 <b>麥考利夫人石椅的黃昏</b>是雪梨最好的角度，這個時段剛好</li></ul>",q:"Mrs Macquaries Chair Sydney"},
  {a:"17:15",b:"18:00",t:"🚆 出發往 Surry Hills",
   walk:["View Sydney → Porteño（50 Holt St），抓 45 分鐘",
    ["北雪梨站就在飯店旁 <b>120 公尺</b>","搭 <b>T1 線往 City</b> 到 <b>Central</b>，約 10 分鐘",
@@ -454,7 +456,9 @@ var DAYS=[
    ["北雪梨站搭 <b>T1 線</b>到 <b>Central</b> 或 <b>Redfern</b>","Chippendale 在兩站中間，走路都約 10 分鐘","🚨 <b>地址待確認</b>——訂位信只寫店名。出發前先回訂位信問","比對到的是 <b>27 Abercrombie St</b>，但沒有確認","找不到就打 <b>+61 468 602 770</b>"],
    "看門牌號碼找 27 號。走到 Broadway 大路口代表過頭，退回來"],q:"Chippendale NSW",g:["⚠️ 地點待確認"],x:"<ul><li>北雪梨 → Central 或 Redfern</li><li>⚠️ 訂位確認信<b>只寫店名，沒有地址</b>。我比對到雪梨 Chippendale 的「Something for Jess - SFJ Cafe & Coffee」，27 Abercrombie St，但<b>沒有確認</b></li><li>出發前回訂位信問地址</li></ul>"},
  {a:"10:00",b:"11:30",t:"🥑 Something for Jess",g:["🕐 週三 07:00–14:00（待確認）","💴 中價位"],x:"<ul><li>27 Abercrombie St, Chippendale（<b>待確認</b>）／+61 468 602 770</li><li><b>必點</b>：breakfast wrap／Golden Wrap、corn fritter benedict、cold brew、Verde Vibes</li><li><b>吃法</b>：① 玉米餅是核心，三道招牌都有玉米餅，四人不要重複點 ② <b>有評論說食物送來是冷的、水波蛋像預做的</b>，上桌摸一下，冷了當場退 ③ 店裡有書，10:00 人不多可以慢慢吃</li><li>🛟 <b>找不到或遲到怎麼辦</b>：<b>+61 468 602 770</b>。🚨 <b>這家的地址本來就沒確認</b>，出發前一定要先回訂位信問。真找不到就放棄，今天 18:15 在 Bondi 才是重點。Chippendale 一帶咖啡店密集，隨便一家都能吃早午餐。</li></ul>",q:"Something for Jess Chippendale",dead:"10:00 訂位"},
- {a:"11:30",b:"17:00",t:"🗺️ 雪梨自由時間",g:["🍽️ 早餐到晚餐間隔 8 小時"],x:"<ul><li>🚨 <b>10:00 吃完早餐，18:15 才是 Totti's，中間要自己補一餐</b></li><li>🚨 若順道去海灘：<b>只在有救生員的沙灘、紅黃旗之間下水</b></li><li>澳洲水域每年約 280 人溺水，遠超蛇（1–2 人）與蜘蛛（自 1979–80 年後無死亡紀錄）</li><li>被離岸流帶走<b>不要逆游</b>，舉手握拳呼救，讓身體浮著</li></ul>"},
+ {a:"11:30",b:"14:30",t:"🗺️ 雪梨自由時間（午後）",g:["🍽️ 早餐到晚餐間隔 8 小時"],x:"<ul><li>🚨 <b>10:00 吃完早餐，18:15 才是 Totti's，中間要自己補一餐</b></li><li>🚨 若順道去海灘：<b>只在有救生員的沙灘、紅黃旗之間下水</b></li><li>澳洲水域每年約 280 人溺水，遠超蛇（1–2 人）與蜘蛛（自 1979–80 年後無死亡紀錄）</li><li>被離岸流帶走<b>不要逆游</b>，舉手握拳呼救，讓身體浮著</li></ul>"},
+ {a:"14:30",b:"16:30",t:"😴 回飯店休息或就近找地方坐",g:["🛏️ 車程 10 分鐘","👵 兩位長輩務必休息"],x:"<ul><li>🚨 <b>今天在外 12 小時 45 分</b>，晚上還要去 Bondi</li><li><b>去了塔龍加動物園的話一定要休息</b>——那是山坡地形，3–4 小時走下來腿會很酸</li><li>回 View Sydney 只要 10 分鐘車程，櫃檯 24 小時有人</li><li>🚨 <b>今晚 18:15 的 Totti's 在 Bondi，過去要抓滿 60 分鐘</b>，而且餐廳在酒吧樓上要走樓梯</li><li>💡 直接去 Bondi 也可以——<b>海灘旁有很多長椅與咖啡店</b>，提早到那邊坐著等，比在市區奔波好</li></ul>"},
+ {a:"16:30",b:"17:15",t:"🧴 出門前整理",g:["🌬️ Bondi 海邊風大"],x:"<ul><li>Bondi 在海邊，<b>晚上比市區冷</b>，帶件外套</li><li>🚨 餐廳<b>在 The Royal 酒吧樓上</b>，要走樓梯，穿好走的鞋</li></ul>"},
  {a:"17:15",b:"18:15",t:"🚌 出發往 Bondi",
   walk:["View Sydney → 283 Bondi Rd，抓滿 60 分鐘",
    ["北雪梨站搭火車到 <b>Bondi Junction</b>（要過雪梨港灣大橋）","出站到公車總站，找 <b>333 或 380</b> 號公車","🚨 <b>在 Bondi Rd 下車，不是 Bondi Beach</b>——餐廳比海灘早一站","找 <b>The Royal Hotel</b>，一棟有陽台的舊式酒吧","<b>餐廳在酒吧樓上</b>，從一樓內的樓梯上去"],
@@ -506,7 +510,8 @@ var DAYS=[
    "看到 Little Lonsdale St 的路牌就對了。走到 La Trobe St 代表過頭一個街廓，退回來"],g:["✅ SkyBus 公定假日時刻表不變"],x:"<ul><li>四人叫 maxi taxi，或 T3 外搭 SkyBus</li><li>SkyBus 官方 FAQ：墨爾本市區線在維多利亞州公定假日<b>維持原時刻表</b></li></ul>",q:"557 Little Lonsdale St Melbourne CBD VIC 3000"},
  {a:"10:00",b:"12:00",t:"🧳 行李寄放",g:["🚨 公寓可能 15:00 才能入住"],x:"<ul><li>557 Little Lonsdale St 是公寓，<b>沒有櫃檯</b>。9/24 在雪梨時就要問過屋主</li><li>寄放不了 → <b>Urloker 339 Queen St</b>（走 5 分／413 m，08:00–21:00）或 Urloker 190 Queen St（465 m，09:00–23:00）</li></ul>",q:"Urloker 339 Queen Street Melbourne"},
  {a:"12:30",b:"14:00",t:"🍕 La Cucina Melbourne",g:["🕐 12:30–14:00","🚨 公定假日加收約 15%"],x:"<ul><li>住處走 <b>3 分鐘（270 m）</b>／628 Little Bourke St（Cosgrave Lane 轉角，Holey Moley 對面）</li><li>☎ 訂位信寫 <b>03 8450 7682</b>，Google 登錄 03 8456 7682。<b>兩個號碼不一致，先打訂位信那支</b></li><li><b>必點</b>：carbonara、amatriciana rigatoni、calamari fritti、ortolana pizza、tiramisu</li><li><b>吃法</b>：① 薄脆餅皮，兩人可分一整個。四人點兩 pizza 加兩份麵剛好 ② <b>附的辣油很辣</b>，先沾一點試 ③ 份量偏大，不要每人各點一份主餐</li><li>🚨 <b>手機存好訂位確認信的離線截圖</b>——有一則 2026/4 的四人訂位評論寫，客人明明訂了位，店家卻說「你們沒有訂位、只能坐半小時」，並在五分鐘內送上帳單要求離席</li><li>🚨 多筆評論提到<b>訂了位、收到確認信，到現場仍要排隊</b>。準時到，不要早到太多</li><li>官網訂位政策：預授權 <b>$0</b>（不實際扣款）、取消或更改要<b>提前 1 小時</b>通知</li><li>🚨 有評論說坐滿 1 小時 40 分被請走。你們的訂位正好 90 分鐘</li><li>🛟 <b>遲到怎麼辦</b>：<b>03 8450 7682</b>。官網政策是<b>取消或更改要提前 1 小時通知</b>。🚨 <b>已經有客人訂了位、店家卻說查無紀錄的紀錄，手機一定要存訂位確認信的離線截圖</b>。真的吃不到 → 住處走 3 分鐘就到，附近 Little Bourke St 是唐人街，選擇很多。</li></ul>",q:"La Cucina Melbourne Little Bourke",dead:"12:30 訂位"},
- {a:"14:00",b:"18:00",t:"🗺️ 市區自由",g:["🚨 全州放假，銀行不開"],x:"<ul><li>AFL Grand Final Friday，維多利亞州公定假日</li><li>部分商店縮短營業，餐廳普遍加收約 15%</li><li>Yarra Park 有 Footy Fest（9/23–9/26），MCG 周邊人潮</li></ul>"}
+ {a:"14:00",b:"16:00",t:"😴 回住處補眠（今天 05:00 起床）",g:["🛏️ 走 8 分鐘就到","👵 兩位長輩務必休息"],x:"<ul><li>🚨 <b>今天 05:00 起床、坐了兩趟車一班飛機，已經在外 11 小時</b></li><li>557 Little Lonsdale St 從 La Cucina 走約 <b>8 分鐘</b></li><li>🚨 <b>公寓可能 15:00 才能入住</b>——到得早就把行李寄放，先在附近坐著等</li><li>明天 9/26 是總決賽日，市區會很擠，<b>今天睡飽比較重要</b></li><li>不想睡的人可以留在市區，Little Bourke St 唐人街就在旁邊</li></ul>",q:"557 Little Lonsdale St Melbourne"},
+ {a:"16:00",b:"18:00",t:"🗺️ 市區自由（休息後）",g:["🚨 全州放假，銀行不開"],x:"<ul><li>AFL Grand Final Friday，維多利亞州公定假日</li><li>部分商店縮短營業，餐廳普遍加收約 15%</li><li>Yarra Park 有 Footy Fest（9/23–9/26），MCG 周邊人潮</li></ul>"}
 ]},
 
 {id:"d10",date:"9/26",dow:"六",title:"Reine & La Rue",sub:"🚨 AFL 總決賽日",slots:[
@@ -521,12 +526,13 @@ var DAYS=[
     "看到哥德式拱頂的挑高大廳就是進對地方了"],
    "看到 ANZ 銀行的哥德式大廳就對了。走到 Flinders St 或看到亞拉河代表走過頭，往回退一個街廓。9/26 是總決賽日，提早 20 分鐘出門"],
   photo:"這裡是<b>墨爾本舊證券交易所</b>，哥德式拱頂與彩繪玻璃是一半的價值。<br><b>進門先抬頭拍天花板</b>，坐下後角度就沒了。<br>服裝要求 elegant smart casual，拍起來也比較好看。"},
- {a:"15:30",b:"17:00",t:"🗺️ 市區（避開東側）",g:["🚨 17:00 前後散場"],x:"<ul><li><b>下午 5 點前後不要搭電車或火車經過 Richmond／Jolimont 方向</b></li></ul>"},
+ {a:"15:30",b:"16:30",t:"😴 回住處休息",g:["🛏️ 走 9 分鐘","🏉 總決賽人潮最多的時段"],x:"<ul><li>🚨 <b>Reine 從 13:00 坐到 15:00 左右，吃得很飽</b></li><li><b>14:30 總決賽開賽</b>，這個時段人潮往 MCG 移動，市區東側最擠</li><li>557 Little Lonsdale St 從 Collins St 走約 <b>9 分鐘</b></li><li>🚨 <b>今晚要打包、訂明早 07:00 的車</b>，回去順便處理</li></ul>",q:"557 Little Lonsdale St Melbourne"},
+ {a:"16:30",b:"17:00",t:"🗺️ 市區（避開東側）",g:["🚨 17:00 前後散場"],x:"<ul><li><b>下午 5 點前後不要搭電車或火車經過 Richmond／Jolimont 方向</b></li></ul>"},
  {a:"19:00",b:"21:00",t:"🧳 打包、訂明早的車",g:["🚨 公寓無櫃檯，要自己訂車"],x:"<ul><li>訂明早 <b>07:00</b> 的 maxi taxi——13cabs <b>13 2227</b></li><li>💴 <b>把所有 tax invoice 整理好放隨身行李</b></li><li>退稅品要放隨身行李，不能託運</li><li>🛟 <b>忘了訂車怎麼辦</b>：<b>13cabs 13 2227</b>。🚨 <b>557 Little Lonsdale St 是公寓，沒有櫃檯能幫你叫車</b>，這點跟雪梨不同。當場叫不到 maxi taxi 就叫兩台一般計程車。<b>再不行走 8 分鐘到 Southern Cross 搭 SkyBus</b>，但要多抓 30 分鐘。</li></ul>",dead:"21:00 訂好車"}
 ]},
 
 {id:"d11",date:"9/27",dow:"日",title:"墨爾本 → 香港 → 桃園",sub:"總決賽隔天的週日早上",slots:[
- {a:"06:30",b:"07:00",t:"🧳 最後檢查",g:["🚨 退稅品放隨身"],x:"<ul><li>tax invoice 原始紙本、退稅品在隨身行李</li><li>公寓鑰匙依屋主指定方式歸還</li></ul>"},
+ {a:"06:30",b:"07:00",t:"🧳 最後檢查",g:["👵 後段 12 小時都在機上，撐過機場就好"],g:["🚨 退稅品放隨身"],x:"<ul><li>tax invoice 原始紙本、退稅品在隨身行李</li><li>公寓鑰匙依屋主指定方式歸還</li></ul>"},
  {a:"07:00",b:"07:15",t:"🚕 前往墨爾本機場 T2",
   walk:["557 Little Lonsdale St → 墨爾本機場 T2",
    ["🚨 <b>前一晚就要訂好車</b>——公寓沒有櫃檯可以幫忙，13cabs <b>13 2227</b>",
@@ -535,7 +541,7 @@ var DAYS=[
     "🚨 <b>退稅品要放隨身行李</b>，報到前先給 ABF 驗超大件或液體",
     "🚨 <b>TRS 最晚 09:45</b>，排太長就放棄退稅，不要賭班機"],
    "看到 Qantas 的紅色袋鼠招牌就對了。走到 T3 代表走過頭，T2 才是國際線"],g:["💴 maxi taxi 約 AU$65–81"],x:"<ul><li>總決賽隔天的週日早上，時間抓寬一點</li></ul>",q:"Melbourne Airport Terminal 2"},
- {a:"07:15",b:"09:45",t:"🛄 報到、TRS 退稅",q:"Melbourne Airport Terminal 2",g:["🚨 09:45 前完成 TRS"],x:"<ul><li>澳航櫃檯起飛前 3 小時開櫃、<b>起飛前 60 分鐘關閉</b></li><li>超大件或液體退稅品要在 check-in <b>前</b>先給 ABF 驗</li><li>🚨 <b>TRS 最晚在起飛前 30 分鐘受理</b></li><li>排太長就放棄退稅，不要賭班機</li></ul>",dead:"09:45 TRS 截止"},
+ {a:"07:15",b:"09:45",t:"🛄 報到、TRS 退稅",q:"Melbourne Airport Terminal 2",g:["🚨 09:45 前完成 TRS"],x:"<ul><li>澳航櫃檯起飛前 3 小時開櫃、<b>起飛前 60 分鐘關閉</b></li><li>超大件或液體退稅品要在 check-in <b>前</b>先給 ABF 驗</li><li>🚨 <b>TRS 最晚在起飛前 30 分鐘受理 → 09:45 截止</b></li><li>🚨 <b>櫃檯在過了護照查驗之後</b>，在免稅店裡面，不是報到大廳</li><li>ABF 建議 <b>08:45 前</b>通過海關（起飛前 90 分鐘）</li><li>櫃檯要拿出：<b>護照・登機證・原始 tax invoice・商品本身</b></li><li>📖 <b>完整流程看「資訊」頁的 TRS 那張卡</b></li><li>排太長就放棄退稅，不要賭班機</li></ul>",dead:"09:45 TRS 截止"},
  {a:"10:15",b:"17:55",t:"✈️ QF 29 墨爾本 → 香港",g:["🕐 飛行 9:40","🍽️ 機上供餐"],x:"<ul><li>抵達香港第一航廈</li><li>9 小時 40 分的航程，機上會供餐兩次</li><li>落地香港後<b>手錶調回台灣時間</b>（香港與台灣同時區）</li></ul>"},
  {a:"17:55",b:"20:10",t:"🔁 香港轉機（135 分鐘）",g:["🕐 比去程寬鬆"],x:"<ul><li>比去程的 95 分鐘寬鬆，就算要重新報到也夠</li><li>先看螢幕確認 CI920 的登機門，再去吃東西</li><li>🚨 <b>香港買的東西也算入台灣的免稅額</b>：行李物品 NT$35,000、酒 1.5 公升、菸 200 支</li></ul>"},
  {a:"20:10",b:"22:10",t:"🛫 CI 920 香港 → 桃園",g:["🕐 飛行 2:00"],x:"<ul><li>🚨 <b>回台灣不要帶肉製品</b>——自非洲豬瘟疫區攜帶豬肉製品，初犯罰 NT$20 萬、再犯 100 萬</li><li>肉乾、肉鬆、香腸、含肉餡糕點、<b>飛機上的肉類餐點</b>都算</li><li>台灣入境免稅額：行李物品 NT$35,000、酒 1.5 公升、菸 200 支</li></ul>"}
@@ -767,6 +773,7 @@ function renderDay(id){
     '</div></div>';
   h+='<div class="rail">'+ss.map(function(s){return slotHTML(s,d,lag)}).join("")+'</div>';
   h+=spotsHTML(id);
+  h+=uggHTML(id);
   h+=martsHTML(id);
   h+='<div class="acts" style="margin-top:16px"><button class="btn sec" data-add="'+id+'">＋ 加一格</button>'+
      (lag?'<button class="btn sec" data-clearlag="'+id+'">重設抵達紀錄</button>':'')+'</div>';
@@ -847,6 +854,11 @@ function renderShop(){
   var spent=ST.shop.filter(function(s){return s.done}).reduce(function(a,b){return a+(+b.price||0)},0);
   var bud=+ST.budget||0, rest=bud-spent;
   var h='<div class="dayhead"><h2>購物</h2><div class="sub">預算與已花的錢連動</div></div>';
+  h+='<div class="card ok"><h3>🥾 UGG</h3><div class="note">'+
+   '要買 UGG 的話，<b>各天的行程頁下方有店家清單</b>（距離、營業時間、評價、真假辨識）。<br>'+
+   '🚨 <b>四個人買同一家、開同一張發票</b>才湊得到 TRS 的 AU$300 門檻，退 10%。<br>'+
+   '門檻看的是<b>同一個 ABN</b>（澳洲的統編，11 位數字），不是同一家店招牌。<br>'+
+   '<b>鞋要放隨身行李</b>才退得到。完整說明在「資訊」頁。</div></div>';
   h+='<div class="card"><div class="row"><div><label>總預算 AU$</label><input id="b_v" type="number" inputmode="decimal" value="'+(bud||"")+'"></div>'+
     '<div><label>已花</label><div class="mono" style="font-size:20px;font-weight:700;padding-top:6px">AU$'+spent.toFixed(2)+'</div></div>'+
     '<div><label>剩餘</label><div class="mono" style="font-size:20px;font-weight:700;padding-top:6px;color:'+(rest<0?"var(--red)":"var(--go-d)")+'">AU$'+rest.toFixed(2)+'</div></div></div></div>';
@@ -917,6 +929,7 @@ var PHRASES=[
 function renderInfo(){
   var h='<div class="dayhead"><h2>資訊</h2><div class="sub">天氣、匯率、時差、錢、交通、規矩</div></div>';
   h+=wxCard()+fxCard();
+  h+=trsHTML();
   h+=fareCard();
   h+='<div class="card"><h3>🕐 時差</h3><div class="note">全程 <b>AEST（UTC+10）</b>，比台灣<b>快 2 小時</b>。'+
    '澳洲夏令時間 2026/10/4 才開始，你們 9/27 就離境，<b>全程不用換錶</b>。墨爾本與雪梨同時區。</div></div>';
@@ -1180,7 +1193,7 @@ function renderPrep(){
 /* ===== 使用說明 ===== */
 function renderHelp(){
   var d=auNow();
-  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v032</div></div>'+
+  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v037</div></div>'+
   countdownHTML()+'<div class="card ok"><h3>現在澳洲時間 '+fmt(auMins())+'</h3><div class="note">'+
    (d.getMonth()===8&&d.getDate()>=17&&d.getDate()<=27? '旅程進行中。':'旅程尚未開始。')+
    ' 澳洲東部時間比台灣快 2 小時，全程不換夏令時間。</div></div>'+
@@ -1354,7 +1367,7 @@ var SPOTS={
   {n:"州立圖書館 State Library Victoria",w:"走 9 分（750 m）",t:"40–60 分",p:"免費",k:"輕鬆",
    q:"State Library Victoria",x:"<b>La Trobe 圓形閱覽室</b>的六角形穹頂是墨爾本最好拍的室內空間，樓上還有<b>尼德・凱利的鐵甲</b>。落地第一天體力有限，這裡有位子可以坐。"},
   {n:"維多利亞女王市場",w:"走 4 分（324 m）",t:"40–60 分",p:"免費入場",k:"輕鬆",
-   q:"Queen Victoria Market",x:"1878 年營業至今。<b>American Doughnut Kitchen 的熱果醬甜甜圈</b>是招牌。🚨 <b>週一、週三公休</b>，9/18 是週五有開。"},
+   q:"Queen Victoria Market",x:"1878 年營業至今。<b>American Doughnut Kitchen 的熱果醬甜甜圈</b>是招牌。🚨 <b>週一、週三公休</b>，9/18 是週五有開。<br>🥾 <b>買 UGG 的話這裡是最便宜的</b>——E113-114 的 Jumbo UGG 是墨爾本本地工廠，⭐5.0。詳見下方 UGG 專區。"},
   {n:"Hosier Lane 塗鴉巷",w:"電車 ＋ 走，約 15 分",t:"20–30 分",p:"免費",k:"輕鬆",
    q:"Hosier Lane Melbourne",x:"整條巷子的牆面塗鴉<b>每次去都不一樣</b>。就在 Flinders St 車站對面，可以跟聯邦廣場一起看。"}]},
  d5:{from:"370 Queen St",list:[
@@ -1398,7 +1411,7 @@ var SPOTS={
    q:"Royal Botanic Gardens Melbourne",x:"38 公頃，每日 07:30 至日落，全年免費。外圍的 <b>Tan Track 是 3.8 公里環狀步道</b>。9 月是春天，正在開花。"}]},
  d10:{from:"557 Little Lonsdale St",list:[
   {n:"維多利亞女王市場",w:"走 8 分（645 m）",t:"1 小時",p:"免費入場",k:"輕鬆",
-   q:"Queen Victoria Market",x:"🚨 <b>9/26 是週六，市場有開</b>，而且週六是最熱鬧的一天。<b>13:00 有 Reine 的訂位，11:30 前要離開</b>。"},
+   q:"Queen Victoria Market",x:"🚨 <b>9/26 是週六，市場有開</b>，而且週六是最熱鬧的一天。<b>13:00 有 Reine 的訂位，11:30 前要離開</b>。<br>🥾 <b>最後一次買 UGG 的機會</b>——E113-114 的 Jumbo UGG，週六 08:00–16:00。9/27 上午只剩機場。"},
   {n:"州立圖書館 ＋ 塗鴉巷",w:"走 10 分",t:"1–1.5 小時",p:"免費",k:"輕鬆",
    q:"State Library Victoria",x:"兩個都在 CBD 內，走路可達，<b>不會因為總決賽的人潮受影響</b>。往東邊 MCG 方向的交通今天要避開。"},
   {n:"Block Arcade ＋ Royal Arcade 拱廊",w:"走 10 分",t:"40 分",p:"免費",k:"輕鬆",
@@ -1494,8 +1507,8 @@ function fareCard(){
 }
 
 /* ===== 版本與更新（依規格：抓 sw.js 讀 CACHE，繞過 SW 生命週期）===== */
-var APP_VER="032";
-var APPVER="australia-v32";            /* 與 sw.js 的 CACHE 一致 */
+var APP_VER="037";
+var APPVER="australia-v37";            /* 與 sw.js 的 CACHE 一致 */
 var VST={state:"...",note:"",latest:null};   /* ok / new / warn / ... */
 
 /* 直接抓 sw.js（約 3 KB），讀它的 CACHE 版本。
@@ -1742,6 +1755,177 @@ function geoCard(where){
   return h+'</div>';
 }
 
+/* ===== TRS 退稅完整流程 ===== */
+function trsHTML(){
+  return '<div class="card"><h3>💴 TRS 退稅怎麼退</h3>'+
+   '<div class="note">退的是 <b>10% GST</b>。算法：<b>含稅總價 ÷ 11</b>。'+
+   '例如買了 AU$600 → 退 <b>AU$54.55</b>。</div>'+
+   '<div class="card ok" style="margin:10px 0 0"><h3>🏷️ ABN 是什麼</h3><div class="note">'+
+   '<b>Australian Business Number，澳洲商業登記號碼，11 位數字。</b>'+
+   '就像台灣的<b>統一編號</b>——每家合法營業的公司都有一組，印在發票上。<br><br>'+
+   '長這樣：<span class="mono"><b>ABN 69 787 845 118</b></span><br><br>'+
+   '<b>為什麼重要</b>：TRS 的門檻是「<b>同一個 ABN</b> 累計滿 AU$300」，不是「同一家店」。<br>'+
+   '・<b>同集團的不同分店，ABN 通常相同</b> → 兩張發票可以加起來算<br>'+
+   '・<b>看起來像同一家、ABN 不同</b> → 不能加<br><br>'+
+   '🚨 <b>沒有 ABN 的收據退不了稅</b>——手寫的、只印金額的、收銀機小白單都不行。<br><br>'+
+   '<b>結帳時直接問</b>：<br>'+
+   '<span style="font-size:1.1em;font-weight:700">Can I have a tax invoice with your ABN?</span><br>'+
+   '<span class="note">講不通就到「指差對話」那段把螢幕轉給對方看。</span>'+
+   '</div></div>'+
+   '<div class="card warn" style="margin:10px 0 0"><h3>🚨 女王市場容易踩的坑</h3><div class="note">'+
+   '<b>市場攤位多半是各自獨立的小公司，ABN 都不同。</b><br>'+
+   '四個人分別在不同攤位買 UGG，就算總共花了 AU$800 也<b>退不了</b>——'+
+   '因為沒有任何一個 ABN 累計到 AU$300。<br><br>'+
+   '<b>要退稅就四雙在同一攤買，開一張發票。</b>'+
+   '</div></div>'+
+
+   '<div class="sec-t">四個條件，缺一不可</div><table>'+
+   '<tr><td><b>金額</b></td><td>同一個 <b>ABN</b> 累計滿 <b>AU$300</b>（含稅）<br>'+
+     '<span class="note">同集團不同分店只要 ABN 相同就能累計</span></td></tr>'+
+   '<tr><td><b>時間</b></td><td>離境前 <b>60 天</b>內買的<br>'+
+     '<span class="note">9/27 離境 → <b>7/29 之後</b>買的都算</span></td></tr>'+
+   '<tr><td><b>發票</b></td><td><b>原始 tax invoice</b>，要有店家 ABN<br>'+
+     '<span class="note">🚨 單筆滿 AU$1,000 的發票必須印你護照上的英文姓名</span></td></tr>'+
+   '<tr><td><b>貨</b></td><td><b>放隨身行李或穿在身上</b>，要能拿出來給看<br>'+
+     '<span class="note">液體、噴霧、膠狀、超大件另有流程，見下方</span></td></tr></table>'+
+
+   '<div class="sec-t">出發前先做（省很多時間）</div><div class="note">'+
+   '下載官方 App <b>「My TRS Claim」</b>或上 <b>trs.border.gov.au</b>，'+
+   '把航班資訊和每張發票輸進去，會產生一個 <b>QR code</b>。<br>'+
+   '🚨 <b>填了不等於申請完成</b>，還是要本人到櫃檯讓官員掃 QR。'+
+   '但填過的可以走<b>專用隊伍</b>，櫃檯只要一兩分鐘。<br>'+
+   '沒填的話官員要現場一筆一筆打字，<b>每個人約 15 分鐘</b>。</div>'+
+
+   '<div class="sec-t">9/27 當天的動線</div>'+
+   '<div class="plan"><b>① 07:15 到 T2，先看行李</b>'+
+   '<div class="note">🚨 <b>要退稅的東西不能托運</b>。UGG 四雙很佔位，先想好怎麼裝隨身。<br>'+
+   '真的塞不下、或有液體噴霧膠狀、超大件 → <b>先去 T2 入境層的 ABF 辦公室驗貨</b>，'+
+   '驗完才去 check-in 托運，之後憑收據在 TRS 櫃檯退。</div></div>'+
+   '<div class="plan"><b>② 澳航櫃檯報到</b>'+
+   '<div class="note">起飛前 3 小時開櫃、<b>起飛前 60 分鐘關閉</b>。QF29 是 10:15，所以 <b>09:15 關櫃</b>。</div></div>'+
+   '<div class="plan"><b>③ 過海關與安檢</b>'+
+   '<div class="note">🚨 <b>TRS 櫃檯在過了護照查驗之後</b>（airside），不是在報到大廳。'+
+   'ABF 建議<b>起飛前 90 分鐘</b>就要通過海關，也就是 <b>08:45 前</b>。</div></div>'+
+   '<div class="plan"><b>④ 找 TRS 櫃檯</b>'+
+   '<div class="note">在 <b>T2 出境區的免稅店裡面</b>。跟著 <b>TRS</b> 或 <b>Tax Refund</b> 指標走。</div></div>'+
+   '<div class="plan"><b>⑤ 在櫃檯要拿出來的四樣</b>'+
+   '<div class="note"><b>護照 ・ 登機證 ・ 原始 tax invoice ・ 商品本身</b><br>'+
+   '有 QR code 就先掃。買的衣服鞋子<b>直接穿在身上也算</b>。</div></div>'+
+   '<div class="plan hot"><b>⑥ 🚨 最晚 09:45</b>'+
+   '<div class="note"><b>TRS 只受理到起飛前 30 分鐘</b>，QF29 起飛 10:15 → <b>09:45 截止</b>。'+
+   '<br>🚨 <b>櫃檯不通融，排到就是排到</b>。有旅客排到一半被截止、當場哭著離開的紀錄。'+
+   '<br><b>排太長就放棄退稅，不要賭班機。</b></div></div>'+
+
+   '<div class="sec-t">退款怎麼收</div><table>'+
+   '<tr><td><b>信用卡</b></td><td>2–8 週入帳，看發卡行<br><span class="note">最常見，不用排領現金</span></td></tr>'+
+   '<tr><td>澳洲銀行帳戶</td><td>你們沒有，跳過</td></tr>'+
+   '<tr><td>支票</td><td>寄到指定地址，最慢，不建議</td></tr></table>'+
+
+   '<div class="card warn" style="margin:10px 0 0"><h3>🚨 四個人怎麼配才划算</h3><div class="note">'+
+   '<b>門檻是「同一個 ABN 滿 AU$300」，不是每人各滿 AU$300。</b><br>'+
+   '一張發票上可以有多件商品，<b>四個人在同一家店買的東西可以開在同一張發票上</b>，'+
+   '由其中一人具名申報。<br><br>'+
+   '<b>建議做法</b>：買 UGG 時四雙一起結帳，開<b>一張</b>發票，'+
+   '由帶隊的那位具名。四雙約 AU$400–800，<b>退 AU$36–73</b>。<br><br>'+
+   '🚨 <b>但這樣四雙鞋都要在那個人的隨身行李裡</b>，過 TRS 時要一起拿出來。'+
+   '</div></div>'+
+
+   '<div class="note" style="margin-top:10px">💡 <b>值不值得</b>：買 AU$300 只退約 AU$27，'+
+   '卻要多花 30–60 分鐘排隊。<b>買得少就別排</b>，把時間拿去吃早餐。</div></div>';
+}
+/* ===== UGG 專區 ===== */
+var UGG={
+ mel:[
+  {n:"Jumbo UGG Boots",a:"女王市場 E113-114",d:"336 m・走 4 分（從 370 Queen St）",
+   s:"⭐ 5.0（31 則）",q:"Jumbo Ugg Boots Queen Victoria Market",
+   h:"🚨 <b>週一、週三公休</b>／二四五 08:00–15:00／六 08:00–16:00／日 09:00–16:00",
+   x:"<b>1989 年墨爾本本地家族工廠</b>，自己做自己賣。評論一致：「找遍雪梨墨爾本才在這裡找到真正澳洲製的」「品質跟市區賣的差很多」。<br>🚨 <b>9/18 是週五、9/26 是週六，兩天都有開。週一週三不要白跑。</b>"},
+  {n:"Millers Ugg",a:"513 Elizabeth St",d:"353 m・走 4 分",s:"⭐ 5.0（6 則）",
+   q:"Millers Ugg Elizabeth Street Melbourne",
+   h:"🚨 <b>週一、週三公休</b>／二四 06:00–14:00／五 06:00–16:00／六 06:00–15:00／日 09:00–16:00",
+   x:"也是女王市場一帶的老攤，評論說「九年前買的兩雙到現在還很好」。規模小，款式沒有大店多。"},
+  {n:"The UGG Shop（QV Melbourne）",a:"Red Cape Ln，QV 購物中心",d:"551 m・走 7 分",
+   s:"⭐ 4.9（<b>2097 則</b>）",q:"The UGG Shop QV Melbourne",
+   h:"<b>每日 10:00–21:00</b>",
+   x:"<b>評論數最多、時間最好配合的一家</b>，天天開到晚上九點。款式齊、有帽子等配件。澳洲人自營，不是美國 Deckers 那個 UGG。"},
+  {n:"The UGG Shop（Elizabeth St）",a:"118 Elizabeth St",d:"730 m・走 9 分",
+   s:"⭐ 4.9（559 則）",q:"The UGG Shop Elizabeth Street Melbourne",
+   h:"<b>每日 10:00–21:00</b>",x:"同集團另一家，靠近 Block Arcade。評論常提到有折扣。"},
+  {n:"Yellow Earth（Emporium）",a:"287 Lonsdale St",d:"548 m・走 7 分",
+   s:"⭐ 5.0（808 則）",q:"Yellow Earth Emporium Melbourne",
+   h:"一至三、六 10:00–19:00／四五 10:00–21:00",
+   x:"羊毛與羊駝毛製品為主，不只鞋。有評論說「跑遍墨爾本各家 UGG 店，最後在這裡買了三雙，品質最好價格也好」。"}],
+ syd:[
+  {n:"The UGG Shop（The Galeries）",a:"252 Pitt St，QVB 對面",d:"3.7 km・火車到 Town Hall 站",
+   s:"⭐ 5.0（<b>3114 則</b>）",q:"The UGG Shop The Galeries Sydney",
+   h:"一至三、五六 10:00–20:00／四 10:00–21:00／日 10:00–20:00",
+   x:"<b>雪梨評價最高的一家</b>，就在 QVB 對面。9/24 下午去 QVB 逛的話順路。"}]
+};
+function uggHTML(id){
+  var key = ["d2","d3","d4","d9","d10"].indexOf(id)>=0 ? "mel"
+          : ["d6","d7","d8"].indexOf(id)>=0 ? "syd" : null;
+  if(!key) return "";
+  return '<div class="card"><h3>🥾 買 UGG</h3>'+
+   '<div class="note">下面都是澳洲本地店。買之前先看下面那張「兩個 UGG」的說明。</div>'+
+   '<div class="card warn" style="margin-top:10px"><h3>🚨 有兩個 UGG，先搞清楚</h3><div class="note">'+
+   '<b>「ugg」在澳洲是通稱，不是品牌。</b>就像「雪靴」「登山鞋」，指的是一種羊毛內裡的靴子，'+
+   '從 1930 年代就這樣叫了。所以你會看到 Jumbo UGG、The UGG Shop、Millers Ugg…'+
+   '<b>一堆不同公司名字裡都有 ugg，因為那是產品類別。</b><br><br>'+
+   '<b>「UGG®」在美國是註冊商標</b>，持有人是 <b>Deckers Outdoor Corporation</b>。'+
+   '台灣百貨的 UGG 專櫃就是它，<b>產地多半在中國或越南</b>。<br><br>'+
+   'Deckers 告過好幾家澳洲廠商，澳洲廠商反過來主張 ugg 是通用詞不能獨佔。'+
+   '<b>在澳洲境內 Deckers 的商標不被承認</b>，所以本地廠商可以繼續用這個字。<br><br>'+
+   '🚨 <b>來澳洲買美國牌沒有意義</b>——台灣也買得到，還可能比較便宜。'+
+   '要買就買<b>澳洲製的本地貨</b>。'+
+   '</div></div>'+
+   '<div class="card warn" style="margin-top:10px"><h3>🚨 店名不能當判斷依據</h3><div class="note">'+
+   '因為 ugg 誰都能用，<b>店名有 ugg、有 Australia、有 Original，都不代表是澳洲製</b>。<br><br>'+
+   '<b>實例</b>：Swanston St 有一家叫「Original UGG Australia Classic」，聽起來很澳洲。'+
+   'Google 評論記載：客人買完發現是<b>中國製</b>，店家掛「不退款」告示，'+
+   '<b>客人報警之後警察要求店家退款</b>——因為澳洲法律禁止「一律不退款」的告示。<br>'+
+   '另一則評論寫：店員很親切，但買完才發現是中國公司的貨。<br><br>'+
+   '<b>唯一可靠的判斷</b>：綠色三角形袋鼠的 <b>Australian Made 認證標</b>，'+
+   '加上<b>翻開鞋子內側看產地標籤</b>。兩個都要看。'+
+   '</div></div>'+
+   UGG[key].map(function(s){
+     return '<div class="plan" style="margin-top:10px"><b>'+esc(s.n)+'</b>'+
+      '<div class="tags"><span class="tag">🚶 '+esc(s.d)+'</span><span class="tag">'+s.s+'</span>'+
+      '<span class="tag">📍 '+esc(s.a)+'</span></div>'+
+      '<div class="note" style="margin-top:6px">🕐 '+s.h+'<br>'+s.x+'</div>'+
+      '<div class="acts"><button class="btn go" data-nav="'+esc(s.q)+'">📍 帶我去</button></div></div>';
+   }).join("")+
+   '<div class="card warn" style="margin-top:12px"><h3>🚨 買之前一定要看</h3><div class="note">'+
+   '<b>① 認「Australian Made」綠色三角形袋鼠標</b>——那是官方認證，不是店家自己印的。<br>'+
+   '<b>② 翻鞋子內側的標籤看產地</b>。Google 評論有多起紀錄：外面掛 Made in Australia、'+
+   '裡面標 Made in China，客人報警才拿到退款。<b>市區觀光區的店最常見。</b><br>'+
+   '<b>③ 拿到 tax invoice 才走</b>——上面要有<b>店家 ABN（11 位數字，等於台灣的統編）、'+
+   '你的名字、金額、日期</b>。手寫收據或收銀機小白單<b>退不了稅</b>。<br>'+
+   '<b>④ 四個人買同一家</b>——TRS 要<b>同一個 ABN 累計滿 AU$300</b>。'+
+   'UGG 一雙約 AU$100–200，四人各一雙很容易過門檻，<b>退 10% GST</b>。<br>'+
+   '<b>⑤ 🚨 退稅的鞋要放隨身行李</b>，托運了就驗不到貨、退不了。'+
+   '四雙靴子很佔位，先想好怎麼裝。<br>'+
+   '<b>⑥ 當場翻標籤，不要回飯店才看</b>——離開店家後要退款會麻煩很多。'+
+   '</div></div>'+
+   '<div class="card ok" style="margin-top:10px"><h3>⚖️ 買到不符描述的，你有權退</h3><div class="note">'+
+   '澳洲消費者法（Australian Consumer Law）規定，商品與描述不符時<b>消費者有權要求退款</b>，'+
+   '店家<b>不能用「不退款」告示規避</b>——掛那種告示本身就違法。<br>'+
+   '掛 Made in Australia 但實際是中國製，就是不符描述。<br><br>'+
+   '<b>怎麼處理</b>：<br>'+
+   '① <b>留著收據</b>，拍下鞋內產地標籤與店家的「不退款」告示<br>'+
+   '② 當場要求退款，說依據是 <b>Australian Consumer Law</b>，商品與描述不符<br>'+
+   '③ 語言不通就打 <b>131 450</b>（TIS 政府翻譯專線，24 小時，可要中文）'+
+   '，請他們轉接並幫你翻譯<br>'+
+   '④ 店家不從 → 打<b>當地州政府</b>的消費者保護單位：<br>'+
+   '　　墨爾本 <b>Consumer Affairs Victoria　1300 55 81 81</b><br>'+
+   '　　雪梨 <b>NSW Fair Trading　13 32 20</b><br>'+
+   '🚨 <b>ACCC（1300 302 502）不處理個別糾紛</b>，它是監理機關；'+
+   '要真的拿回錢是找上面兩個州政府單位。<br>'+
+   '⑤ 對方態度惡劣或不讓你離開 → 打 <b>131 444</b>（非緊急報警）。'+
+   '前述那則評論就是報警之後拿到退款的。'+
+   '</div></div>'+
+   '<div class="note" style="margin-top:10px">💡 <b>價格參考</b>：本地廠約 AU$100–200／雙，'+
+   '觀光區店面常見 AU$200 以上。女王市場的攤位通常最便宜。</div></div>';
+}
 /* ===== 最近的超市（晚餐可能自己煮） ===== */
 var MARTS={
  mel1:{stay:"370 Queen St（9/18–9/21）",list:[
@@ -2081,7 +2265,9 @@ var POINT=[
  ["交通","Please take me to this address.","請載我到這個地址"],
  ["交通","How much will it cost, roughly?","大概多少錢"],
  ["購物","Do you do tax free / TRS?","可以退稅嗎"],
+ ["購物","Can I have a tax invoice with your ABN?","請開有 ABN 的統編發票"],
  ["購物","What is your ABN?","你們的 ABN 是多少"],
+ ["購物","We want everything on one invoice, please.","四個人的請開在同一張發票"],
  ["購物","Is there a card surcharge?","刷卡要另外收費嗎"],
  ["求助","I'm lost. Where is this place?","我迷路了，這個地方在哪"],
  ["求助","Can I leave my bags here?","行李可以寄放嗎"],
