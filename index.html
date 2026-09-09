@@ -92,9 +92,11 @@ button{font-family:inherit;font-size:inherit;cursor:pointer;border:0;background:
 header{position:sticky;top:0;z-index:40;background:linear-gradient(160deg,#1C2420 0%,#22302A 55%,#1E2A24 100%);overflow:hidden;color:var(--paper);
   padding:calc(env(safe-area-inset-top) + 10px) 14px 0}
 /* 標頭右上角的尤加利葉剪影，很淡，不搶內容 */
-header::before{content:"";position:absolute;top:-14px;right:-8px;width:148px;height:106px;
-  opacity:.15;pointer-events:none;background-repeat:no-repeat;background-size:contain;
-  background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 110'%3E%3Cg fill='%237C9885'%3E%3Cpath d='M20 96C36 74 58 52 92 34c-6 22-20 44-44 58-10 6-20 4-28 4z'/%3E%3Cpath d='M52 100C64 78 84 58 116 44c-4 20-16 40-38 52-10 6-18 6-26 4z'/%3E%3Cpath d='M86 104c8-18 24-36 50-48-2 18-12 34-30 44-8 4-14 5-20 4z'/%3E%3C/g%3E%3Cpath d='M10 104C40 84 78 58 132 38' stroke='%237C9885' stroke-width='3' fill='none' opacity='.7'/%3E%3C/svg%3E")}
+header::before{content:"";position:absolute;top:0;right:0;width:240px;height:78px;
+  opacity:.30;pointer-events:none;background-repeat:no-repeat;background-size:contain;
+  background-position:top right;
+  background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 78'%3E%3Cg fill='%237C9885'%3E%3Cellipse cx='208' cy='14' rx='30' ry='12' transform='rotate(-20 208 14)'/%3E%3Cellipse cx='170' cy='26' rx='32' ry='13' transform='rotate(-16 170 26)'/%3E%3Cellipse cx='200' cy='40' rx='27' ry='11' transform='rotate(-26 200 40)'/%3E%3Cellipse cx='134' cy='40' rx='30' ry='12' transform='rotate(-12 134 40)'/%3E%3Cellipse cx='164' cy='54' rx='25' ry='10' transform='rotate(-22 164 54)'/%3E%3Cellipse cx='100' cy='54' rx='26' ry='10' transform='rotate(-9 100 54)'/%3E%3Cellipse cx='128' cy='66' rx='22' ry='9' transform='rotate(-18 128 66)'/%3E%3C/g%3E%3Cpath d='M236 4C196 20 140 44 74 68' stroke='%237C9885' stroke-width='3.5' fill='none' opacity='.9'/%3E%3C/svg%3E")}
+.dark header::before{opacity:.24}
 header>.hrow,header>nav,header>div{position:relative;z-index:1}
 .hrow{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding-bottom:8px}
 .hrow h1{font-size:1.02em}
@@ -187,9 +189,9 @@ details li{margin:5px 0}
   background:linear-gradient(135deg,#1C2420 0%,#2A2119 60%,#1C2420 100%);
   position:relative;overflow:hidden}
 /* 南十字星，澳洲國旗上的星座 */
-.depbar::after{content:"";position:absolute;top:8px;right:12px;width:64px;height:78px;
-  opacity:.28;pointer-events:none;background-repeat:no-repeat;
-  background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 78'%3E%3Cg fill='%23E5B93C'%3E%3Ccircle cx='34' cy='10' r='3'/%3E%3Ccircle cx='46' cy='34' r='3.4'/%3E%3Ccircle cx='30' cy='44' r='2.6'/%3E%3Ccircle cx='36' cy='66' r='3.2'/%3E%3Ccircle cx='14' cy='38' r='2.2'/%3E%3C/g%3E%3C/svg%3E")}
+.depbar::after{content:"";position:absolute;top:6px;right:10px;width:82px;height:100px;
+  opacity:.75;pointer-events:none;background-repeat:no-repeat;background-size:contain;
+  background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 82 100'%3E%3Cg fill='%23E5B93C'%3E%3Cpath d='M44 4l2.6 7.4L54 14l-7.4 2.6L44 24l-2.6-7.4L34 14l7.4-2.6z'/%3E%3Cpath d='M62 40l3 8.4L73.4 51 65 54l-3 8.4L59 54l-8.4-3 8.4-2.6z'/%3E%3Cpath d='M38 52l2.2 6.2 6.2 2.2-6.2 2.2L38 69l-2.2-6.4-6.2-2.2 6.2-2.2z'/%3E%3Cpath d='M46 80l2.8 7.8 7.8 2.8-7.8 2.8L46 100l-2.8-6.6-7.8-2.8 7.8-2.8z'/%3E%3Cpath d='M14 44l1.8 5 5 1.8-5 1.8L14 58l-1.8-5.4-5-1.8 5-1.8z'/%3E%3C/g%3E%3C/svg%3E")}
 .depbar>*{position:relative;z-index:1}
 .dep-lab{font-size:.72em;color:#8FA39D;letter-spacing:.08em}
 .dep-big{font-size:1.75em;font-weight:700;line-height:1.15;margin:2px 0 4px;letter-spacing:-.02em}
@@ -300,7 +302,7 @@ td .tel{margin:2px 0}
 <body>
 <header>
   <div class="hrow"><h1>澳洲</h1>
-    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v056 ⋯</button>
+    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v057 ⋯</button>
     <button class="sbtn" id="sbtn" title="搜尋行程" aria-label="搜尋">🔍</button>
     <div class="clock" id="clk"></div></div>
 
@@ -1497,7 +1499,7 @@ function renderPrep(){
 /* ===== 使用說明 ===== */
 function renderHelp(){
   var d=auNow();
-  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v056</div></div>'+
+  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v057</div></div>'+
   countdownHTML()+'<div class="card ok"><h3>現在澳洲時間 '+fmt(auMins())+'</h3><div class="note">'+
    (d.getMonth()===8&&d.getDate()>=17&&d.getDate()<=27? '旅程進行中。':'旅程尚未開始。')+
    ' 澳洲東部時間比台灣快 2 小時，全程不換夏令時間。</div></div>'+
@@ -1764,8 +1766,8 @@ function fareCard(){
 }
 
 /* ===== 版本與更新（依規格：抓 sw.js 讀 CACHE，繞過 SW 生命週期）===== */
-var APP_VER="056";
-var APPVER="australia-v56";            /* 與 sw.js 的 CACHE 一致 */
+var APP_VER="057";
+var APPVER="australia-v57";            /* 與 sw.js 的 CACHE 一致 */
 var VST={state:"...",note:"",latest:null};   /* ok / new / warn / ... */
 
 /* 直接抓 sw.js（約 3 KB），讀它的 CACHE 版本。
