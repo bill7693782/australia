@@ -49,7 +49,13 @@
 .dark .fsbar button.on,.dark .thbar button.on{background:var(--go);color:#0E1614}
 .dark mark{background:#4A3A18;color:#FFE0A3}
 .dark .depbar{background:#0E1412;border-bottom-color:var(--go)}
+/* 寬螢幕：倒數的內容跟著內文一起收在 720px */
+.depbar .dep-lab,.depbar .dep-big,.depbar .dep-sub,.depbar .dep-dl{
+  max-width:720px;margin-left:auto;margin-right:auto}
 .dark header{background:#0E1412}
+/* 寬螢幕：標頭內容跟著內文一起收在 720px，不然時鐘會被推到螢幕最右邊 */
+header>.hrow,header>nav{max-width:720px;margin-left:auto;margin-right:auto}
+
 /* 標頭與倒數在深色下要自己指定顏色，不能吃 --ink（深色時 --ink 是亮色但 header 底本來就深） */
 .dark header h1{color:#E8EDEB}
 .dark .depbar .dep-big{color:#E8EDEB}
@@ -66,9 +72,9 @@
 :root{
   /* 配色取自澳洲的地景：尤加利葉的灰綠、內陸紅土、金合歡花的黃、
      南太平洋的藍。金合歡（wattle）與尤加利綠是澳洲的國家色。 */
-  --paper:#F4F3EE; --paper2:#EAE7DC; --ink:#1C2420; --ink2:#4F5B52; --dim:#83907F;
-  --line:#D6D2C4; --go:#2F6B4F; --go-d:#22503B; --red:#A8362A; --red-bg:#F8EAE6;
-  --gold:#D19A2E; --sea:#2A6E8F; --white:#FFFFFF;
+  --paper:#F7F2E9; --paper2:#EFE7D8; --ink:#1F2622; --ink2:#54604F; --dim:#8A9080;
+  --line:#DFD6C4; --go:#2F6B4F; --go-d:#22503B; --red:#A8362A; --red-bg:#FAEDE6;
+  --gold:#C98F26; --sea:#2A6E8F; --white:#FFFDF8;
   --ochre:#B5622F; --wattle:#E5B93C; --euca:#7C9885;
   --sp:16px; --r:10px;
   --fs:18px;
@@ -302,7 +308,7 @@ td .tel{margin:2px 0}
 <body>
 <header>
   <div class="hrow"><h1>澳洲</h1>
-    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v057 ⋯</button>
+    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v058 ⋯</button>
     <button class="sbtn" id="sbtn" title="搜尋行程" aria-label="搜尋">🔍</button>
     <div class="clock" id="clk"></div></div>
 
@@ -1499,7 +1505,7 @@ function renderPrep(){
 /* ===== 使用說明 ===== */
 function renderHelp(){
   var d=auNow();
-  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v057</div></div>'+
+  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v058</div></div>'+
   countdownHTML()+'<div class="card ok"><h3>現在澳洲時間 '+fmt(auMins())+'</h3><div class="note">'+
    (d.getMonth()===8&&d.getDate()>=17&&d.getDate()<=27? '旅程進行中。':'旅程尚未開始。')+
    ' 澳洲東部時間比台灣快 2 小時，全程不換夏令時間。</div></div>'+
@@ -1766,8 +1772,8 @@ function fareCard(){
 }
 
 /* ===== 版本與更新（依規格：抓 sw.js 讀 CACHE，繞過 SW 生命週期）===== */
-var APP_VER="057";
-var APPVER="australia-v57";            /* 與 sw.js 的 CACHE 一致 */
+var APP_VER="058";
+var APPVER="australia-v58";            /* 與 sw.js 的 CACHE 一致 */
 var VST={state:"...",note:"",latest:null};   /* ok / new / warn / ... */
 
 /* 直接抓 sw.js（約 3 KB），讀它的 CACHE 版本。
