@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+
+/* email 與長網址不斷行會撐爆版面，兩個引擎都抓到過 */
+.note,.plan,.card,td,li{overflow-wrap:anywhere;word-break:break-word}<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
@@ -161,10 +163,10 @@ main{padding:var(--sp) 14px 90px;max-width:720px;margin:0 auto}
 .dark .btn.warn{background:#8C3A32;color:#fff}
 .btn.on{background:var(--go-d);color:#fff}
 .more{display:flex;flex-wrap:wrap;gap:7px;margin:9px 0 0}
-.more button,.more a{min-height:36px;padding:0 12px;border-radius:6px;font-size:.82em;
+.more button,.more a{min-height:44px;padding:0 12px;border-radius:6px;font-size:.82em;
   background:var(--paper2);color:var(--ink2);display:inline-flex;align-items:center;text-decoration:none}
 details{margin:9px 0 0}
-details summary{min-height:34px;display:flex;align-items:center;
+details summary{min-height:44px;display:flex;align-items:center;
   font-weight:700;color:var(--go-d);cursor:pointer;font-size:.85em}
 details .body{font-size:.92em;color:var(--ink2);padding:6px 0 0;line-height:1.65}
 details ol{margin:0;padding-left:20px}
@@ -298,7 +300,7 @@ td .tel{margin:2px 0}
 <body>
 <header>
   <div class="hrow"><h1>澳洲</h1>
-    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v050 ⋯</button>
+    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v054 ⋯</button>
     <button class="sbtn" id="sbtn" title="搜尋行程" aria-label="搜尋">🔍</button>
     <div class="clock" id="clk"></div></div>
 
@@ -340,7 +342,7 @@ var MEET={
 var DAYS=[
 {id:"d0",date:"9/16",dow:"三",title:"出發前夜",sub:"台灣時間",slots:[
  {a:"20:00",b:"21:00",t:"🧳 最後打包",g:["🕐 台灣時間"],x:"<ul><li>食物、木製品、種子全部拿出來——澳洲生物安全罰則從 AU$660 起</li><li>行動電源、鋰電池一律放隨身行李</li><li>轉接頭：澳洲是 I 型三腳插座，230V</li><li>暈車藥（9/19、9/20 都是長途）</li></ul>"},
- {a:"21:00",b:"21:30",t:"📱 手機準備",g:["🕐 台灣時間"],x:"<ul><li>四人 ETA 核准畫面各截圖一張，存離線相簿</li><li>離線地圖：墨爾本 CBD、Armadale、雪梨、Bondi、大洋路沿線</li><li>eSIM 安裝好（落地才裝會沒網路可裝）</li><li>下載 TRS App「My TRS Claim」</li></ul>"},
+ {a:"21:00",b:"21:30",t:"📱 手機準備",g:["🕐 台灣時間"],x:"<ul><li>四人 ETA 核准畫面各截圖一張，存離線相簿</li><li>離線地圖：墨爾本 CBD、Armadale、雪梨、Bondi、大洋路沿線</li><li>eSIM 安裝好（落地才裝會沒網路可裝）</li><li>下載 TRS App「My TRS Claim」</li><li>🚨 <b>入境卡（Incoming Passenger Card）在機上發，用英文填</b>——先想好住宿地址怎麼寫：<b>370 Queen St, Melbourne VIC 3000</b></li></ul>"},
  {a:"21:30",b:"22:00",t:"💴 現金與證件",g:["💴 AU$200–300／人"],x:"<ul><li>準備 AU$5 零鈔——9/19 導遊小費每人 AU$5，四人 AU$20，只收現金</li><li>護照效期確認 6 個月以上</li><li>每人兩張不同發卡行的信用卡</li></ul>"},
  {a:"22:00",b:"23:00",t:"😴 早睡",g:[],x:"<ul><li>明天 14:40 要到桃園機場，但後天早上 07:20 就落地墨爾本，接著 12:15 有訂位</li><li>這趟的疲勞高峰在第 2、3 天</li></ul>"}
 ]},
@@ -349,7 +351,7 @@ var DAYS=[
  {a:"14:40",b:"16:40",t:"✈️ 桃園機場第二航廈報到",g:["🕐 起飛前 2 小時","🚨 櫃檯會查澳洲簽證"],x:"<ul><li>訂位代號 <b>EAYH8Q</b>（澳洲航空開票，四段同一張票）</li><li>四人票號 081-2387398847～850</li><li>櫃檯問一句：<b>行李能不能直掛墨爾本？QF30 的登機證能不能一起發？</b></li><li>🛟 <b>趕不上怎麼辦</b>：長榮桃園櫃檯 <b>(03) 351-5151</b>。同一張票四段，<b>航空公司必須負責改簽</b>，但香港轉機只有 95 分鐘，改了很可能整串重排。<b>塞車就先打電話說明</b>，櫃檯有時會等。</li></ul>",q:"桃園國際機場第二航廈",dead:"16:40 起飛"},
  {a:"16:40",b:"18:30",t:"🛫 BR 871 桃園 → 香港",g:["🕐 飛行 1:50","Boeing 787-10"],x:"<ul><li>抵達香港第一航廈</li><li>下機不要先逛，先看螢幕確認 QF30 的登機門</li></ul>"},
  {a:"18:30",b:"20:05",t:"🔁 香港轉機（95 分鐘）",g:["🚨 若要重新報到，18:35 就關閉"],x:"<ul><li><b>行李有直掛 → 直接走轉機通道去登機門</b></li><li>🚨 <b>行李沒直掛 → 要出關提行李、重新報到。澳航國際線報到<u>起飛前 90 分鐘</u>關閉，QF30 20:05 起飛就是 18:35 關櫃——你們 18:30 才落地，等於<u>只有 5 分鐘</u>，實務上做不到</b></li><li>🚨 <b>所以行李直掛是必須的，不是可有可無</b>。出發前一定要用 qantas.com 輸入 EAYH8Q 確認</li><li>真的沒直掛就<b>立刻在下機空橋找地勤</b>，不要自己跑櫃檯</li><li>澳航香港站報到櫃檯在 <b>Aisle J</b></li><li>🛟 <b>沒接上怎麼辦</b>：立刻在轉機區找<b>澳洲航空地勤</b>（櫃檯在 Aisle J）。同一張票，改簽是他們的責任。下一班 QF30 是隔天同時間，會多住一晚香港。<b>不要自己出關</b>，出了就變成你的問題。</li></ul>",dead:"19:05 澳航報到截止"},
- {a:"20:05",b:"07:20",t:"🛫 QF 30 香港 → 墨爾本（機上過夜）",g:["🕐 飛行 9:15","Airbus A330","🚨 這一夜睡在機上"],x:"<ul><li>隔日 07:20 抵達墨爾本第二航廈</li><li>🚨 <b>這是全程唯一在機上過夜的一晚，而且落地當天中午就有 12:15 的訂位。上機就睡，不要看電影</b></li><li>🚨 <b>經濟艙九小時，每 2 小時起來走一次</b>——預防腿部腫脹與血栓，這對每個人都適用</li><li>💡 起飛後把座位調到最斜，用外套墊腰。<b>眼罩、耳塞、頸枕帶上機</b></li><li>墨爾本比台灣快 2 小時——上機後<b>立刻把手錶調成澳洲時間</b>，用當地時間決定何時睡</li><li>機上供餐約在起飛後 1 小時與落地前 1.5 小時</li><li><b>空服員會發 Incoming Passenger Card，這是法律文件</b></li><li>有食物、藥品、木製品就打勾。申報不會罰，沒申報被查到才罰</li><li>機上發的水果不要帶下飛機</li></ul>"}
+ {a:"20:05",b:"07:20",t:"🛫 QF 30 香港 → 墨爾本（機上過夜）",g:["🕐 飛行 9:15","Airbus A330","🚨 這一夜睡在機上"],x:"<ul><li>隔日 07:20 抵達墨爾本第二航廈</li><li>🚨 <b>這是全程唯一在機上過夜的一晚，而且落地當天中午就有 12:15 的訂位。上機就睡，不要看電影</b></li><li>🚨 <b>經濟艙九小時，每 2 小時起來走一次</b>——預防腿部腫脹與血栓，這對每個人都適用</li><li>💡 起飛後把座位調到最斜，用外套墊腰。<b>眼罩、耳塞、頸枕帶上機</b></li><li>墨爾本比台灣快 2 小時——上機後<b>立刻把手錶調成澳洲時間</b>，用當地時間決定何時睡</li><li>機上供餐約在起飛後 1 小時與落地前 1.5 小時</li><li><b>空服員會發 Incoming Passenger Card，這是法律文件</b></li><li>有食物、藥品、木製品就打勾。申報不會罰，沒申報被查到才罰</li><li>機上發的水果不要帶下飛機</li><li>🛟 <b>延誤的連鎖影響</b>：QF30 預定 07:20 抵達，之後 <b>12:15 有 Victor Churchill 的訂位</b>（每月 1 號才開放訂位、取消補不回來）。<br>・<b>延誤 1 小時內</b> → 入境提行李約 1 小時，還來得及<br>・<b>延誤超過 2 小時</b> → 立刻打 <b>+61 3 9978 1968</b> 改時間或告知會晚到<br>・<b>延誤到中午之後</b> → 直接放棄午餐，問同店當晚 18:00 起有沒有位（9/18 是週五）<br>🚨 <b>不要為了趕訂位在機場衝</b>——生物安全檢查跑不掉，X 光排隊也跑不掉</li></ul>"}
 ]},
 
 {id:"d2",date:"9/18",dow:"五",title:"抵達墨爾本 · Victor Churchill",sub:"落地當天最硬的一天",slots:[
@@ -387,8 +389,11 @@ var DAYS=[
     "櫥窗看得到掛著的整塊熟成肉，看到就是了"],
    "看到掛肉的櫥窗就對了。走過頭會到 Kooyong Rd 大路口，那就退回來"],
   photo:"櫃檯後方的<b>玻璃熟成室</b>與<b>喜馬拉雅岩鹽磚牆</b>是這家的招牌畫面。<br>整塊肉<b>會先端出來展示再拿去切</b>，那是唯一能拍到全貌的時機，手機先解鎖等著。<br>吧檯只有約 13 席，拍照時注意不要擋到別人。"},
- {a:"14:30",b:"17:30",t:"🚶 回市區、休息",g:["🚨 17:30 要開始注意訊息"],x:"<ul><li>時差只有 2 小時，但飛了 14 小時</li><li>明天 08:00 出發大洋路，今天早點睡</li></ul>",q:"370 Queen St Melbourne CBD VIC 3000"},
- {a:"17:30",b:"18:00",t:"📱 收 9/19 大洋路的出團通知",g:["🚨 澳洲時間 18:00 前","🚨 收到要回覆確認"],x:"<ul><li>供應商 <b>ROYAL DISCOVERY HOLIDAY</b> 會在<b>今天 18:00 前</b>透過 <b>WeChat 或 KKday 站內訊息</b>通知：<b>司機電話、車牌、上車地址的具體時間</b></li><li>🚨 <b>對方明講「請仔細閱讀並且回覆確認」——沒回覆可能被當成沒人要上車</b></li><li>🚨 <b>要留一支出行當天聯絡得到你本人的電話</b>。台灣號碼在澳洲不一定收得到，建議給 eSIM 的澳洲號碼或確認 WeChat 能收</li><li>收到後用 <b>⋯ → ✎ 改</b>把明天上車那格的時間改成通知的時間</li><li>18:00 過了還沒收到 → 立刻在 KKday 站內訊息催，或打 <b>03 8080 2288</b></li></ul>",dead:"18:00 前收到通知並回覆"},
+ {a:"14:30",b:"16:30",t:"📚 州立圖書館與塗鴉巷",g:["💴 全部免費","🚶 平路","📸 全澳最好拍的室內"],x:"<ul><li>📚 <b>州立圖書館 State Library Victoria</b>——La Trobe 閱覽室的八角形穹頂是全澳最好拍的室內空間。<b>上到第 6 層往下拍</b>才拍得到完整的放射狀桌椅。免費、不用預約，<b>有沙發、廁所、飲水機</b></li><li>🎨 <b>Hosier Lane 塗鴉巷</b>——整條巷子的塗鴉隨時在變。巷子窄光線暗，<b>拍細節比拍全景好看</b>。就在 Flinders Street 車站對面</li><li>💡 <b>兩個都在 CBD 走路可達，累了隨時回住處</b></li><li>時差只有 2 小時，但飛了 14 小時</li><li>明天 08:00 出發大洋路，今天早點睡</li></ul>",q:"State Library Victoria"},
+ {a:"16:30",b:"17:30",t:"🛌 回住處放鬆",q:"370 Queen St Melbourne CBD VIC 3000",
+  g:["🛏️ 走 4 分鐘就到","🕐 落地第一天"],
+  x:"<ul><li>🚨 <b>今天在外 12 小時 40 分，而且昨晚是在飛機上過的</b></li><li>370 Queen St 從 CBD 任何地方走都不超過 10 分鐘</li><li>💡 晚餐 18:00 才開始，回去躺一小時剛好</li><li>🚨 <b>17:30 要收 9/19 大洋路的出團通知</b>，手機開著</li></ul>"},
+ {a:"17:30",b:"18:00",t:"📱 收 9/19 大洋路的出團通知",g:["🚨 澳洲時間 18:00 前","🚨 收到要回覆確認"],x:"<ul><li>供應商 <b>ROYAL DISCOVERY HOLIDAY</b> 會在<b>今天 18:00 前</b>透過 <b>WeChat 或 KKday 站內訊息</b>通知：<b>司機電話、車牌、上車地址的具體時間</b></li><li>🚨 <b>對方明講「請仔細閱讀並且回覆確認」——沒回覆可能被當成沒人要上車</b></li><li>🚨 <b>要留一支出行當天聯絡得到你本人的電話</b>。台灣號碼在澳洲不一定收得到，建議給 eSIM 的澳洲號碼或確認 WeChat 能收</li><li>收到後用 <b>⋯ → ✎ 改</b>把明天上車那格的時間改成通知的時間</li><li>18:00 過了還沒收到 → 立刻在 KKday 站內訊息催，或打 <b>03 8080 2288</b></li><li>🛟 <b>18:00 過了還沒收到怎麼辦</b>：在 <b>KKday 訂單頁</b>用站內訊息催，或打 <b>03 8080 2288</b>。也可用 WeChat。<br>🚨 <b>真的問不到就抓最早的 08:00 準備</b>，07:55 站在 120 A'Beckett St 等——寧可白等也不要錯過，這團不退費。</li></ul>",dead:"18:00 前收到通知並回覆"},
  {a:"18:00",b:"20:00",t:"🍽️ 晚餐（自由）",g:["🚨 澳洲商店多半 17–18 點關"],x:"<ul><li>超市 Coles、Woolworths 開到 21–22 點</li><li>超市不賣酒，要去 bottle shop（Dan Murphy's、BWS、Liquorland）</li></ul>"}
 ]}
 ,
@@ -429,7 +434,7 @@ var DAYS=[
 {id:"d5",date:"9/21",dow:"一",title:"Cuff 早餐 → 飛雪梨",sub:"VA0853 · 換城市",slots:[
  {a:"08:00",b:"09:00",t:"🧳 退房、行李帶著",q:"370 Queen St Melbourne CBD VIC 3000",g:[],x:"<ul><li>370 Queen St 是公寓，退房方式跟屋主確認過的方法</li><li>行李先寄放或直接帶去餐廳附近</li></ul>"},
  {a:"09:15",b:"10:30",t:"☕ Cuff",g:["🕐 週一 07:00–16:00","💴 中價位"],dead:"09:15 訂位",x:"<ul><li>住處走 12 分鐘（931 m）／325 Flinders Lane</li><li><b>必點</b>：crispy skin barramundi（脆皮金目鱸）、corn fritters、French toast with bacon、caramelised brioche</li><li><b>吃法</b>：① 先點咖啡再看菜單，咖啡要等 ② 金目鱸底下的野生米有嚼勁，跟魚一起吃不要分開 ③ 角落座位較難叫到人，進門可以說想坐靠走道</li><li>🛟 <b>睡過頭怎麼辦</b>：<b>(03) 9620 7122</b>。這家不是高級訂位制，遲到通常還有位。<b>真的來不及就直接放棄</b>——今天 14:30 要在 T3 報到，<b>飛機比早餐重要</b>。附近 Degraves Street 咖啡巷走 3 分鐘，不用訂位。</li></ul>",q:"Cuff Flinders Lane Melbourne"},
- {a:"10:30",b:"13:00",t:"🚶 市區自由時間",g:["🚨 買伴手禮不要留到晚上"],x:"<ul><li>維多利亞女王市場距 370 Queen St 走 4 分鐘（324 m）</li><li>澳洲商店多半 17–18 點關門</li><li>💴 TRS 退稅：同一 ABN 滿 AU$300 才能退，<b>結帳當下就要拿 tax invoice</b></li></ul>",q:"Queen Victoria Market"},
+ {a:"10:30",b:"13:00",t:"☕ 咖啡巷與 NGV 美術館",g:["💴 NGV 常設展免費","🚶 平路","📸 水幕玻璃牆"],x:"<ul><li>🏛️ <b>聯邦廣場與 Flinders Street 車站</b>就在 NGV 對面過橋——📸 <b>那棟黃色的車站是墨爾本最有名的建築</b>，「在鐘下見」是當地人約碰面的講法</li><li>☕ <b>Degraves Street 咖啡巷</b>——墨爾本咖啡文化的縮影，整條巷子都是露天座位，一杯約 AU$5</li><li>🖼️ <b>NGV International</b>——常設展<b>免費、不用預約</b>。📸 入口的<b>水幕玻璃牆</b>手可以貼上去；<b>大廳天花板的彩繪玻璃</b>躺在地上往上看是標準拍法</li><li>💡 館內有座位與廁所，<b>下午要飛雪梨，這裡是好的緩衝點</b></li><li>🚨 <b>13:00 一定要離開</b></li><li>維多利亞女王市場距 370 Queen St 走 4 分鐘（324 m）</li><li>澳洲商店多半 17–18 點關門</li><li>💴 TRS 退稅：同一 ABN 滿 AU$300 才能退，<b>結帳當下就要拿 tax invoice</b></li></ul>",q:"NGV International Melbourne"},
  {a:"13:00",b:"13:30",t:"🚕 前往墨爾本機場 T3",
   walk:["370 Queen St → 墨爾本機場 T3，約 30 分鐘",
    ["打 <b>13cabs：13 2227</b> 叫 <b>maxi taxi</b>（四人四件行李）","或走到 <b>Southern Cross 車站</b>搭 SkyBus，10–15 分一班","🚨 <b>T3 是國內線</b>，不是入境時的 T2","下車後找 <b>Virgin Australia</b> 的報到櫃檯","🚨 <b>14:30 硬性截止</b>，15:00 起飛"],
@@ -450,9 +455,28 @@ var DAYS=[
 ]}
 ,
 {id:"d6",date:"9/22",dow:"二",title:"雪梨 · Porteño",sub:"住北雪梨，餐廳都在橋的南邊",slots:[
- {a:"09:00",b:"13:00",t:"🗺️ 雪梨自由時間（上午）",g:["🚨 從北雪梨每趟都要過橋","🍽️ 今天只排了晚餐"],x:"<ul><li>🚨 <b>今天行程只有 18:00 的 Porteño，早餐和午餐要自己找</b></li><li>飯店就在北雪梨車站旁 120 公尺，出門即上車</li><li>火車到 Central 約 10 分鐘</li><li>Opal 週五、六、日與假日每日上限 AU$9.65，週一至週四 AU$19.30</li><li>晚上是重肉的阿根廷烤肉，<b>午餐吃清淡一點</b></li></ul>"},
+ {a:"09:00",b:"09:40",t:"🚆 出發往環形碼頭",g:["🕐 約 12 分車程"],
+  walk:["View Sydney → Circular Quay，約 25 分鐘",
+   ["北雪梨站就在飯店旁，走 3 分鐘",
+    "搭 <b>T1 線往 City</b> 方向，過雪梨港灣大橋",
+    "🚨 <b>坐右邊靠窗</b>——過橋時看得到歌劇院與港灣，這段車程本身就是景點",
+    "<b>Circular Quay</b> 下車，出站就是碼頭",
+    "歌劇院在 <b>Bennelong Point</b>，沿水邊走 <b>8 分鐘</b>"],
+   "看到白色帆殼就對了。走到皇家植物園代表過頭"],
+  q:"Circular Quay Sydney",x:"<ul><li>🚨 <b>10:00 的導覽要提前 15 分鐘報到</b>，09:45 前要到 Welcome Centre</li><li>Welcome Centre 在 <b>Lower Concourse</b>（下層平台），不是正門</li><li>🚨 <b>今天只排了 18:00 的 Porteño，早餐和午餐要自己找</b></li><li>💴 Opal 週一至週四每日上限 <b>AU$19.30</b>，9/22 是週二</li><li>晚上是重肉的阿根廷烤肉，<b>午餐吃清淡一點</b></li></ul>"},
+ {a:"09:45",b:"11:00",t:"🎭 雪梨歌劇院導覽",q:"Sydney Opera House",
+  g:["💴 成人約 AU$42","🕐 導覽 1 小時","🚨 09:45 報到"],
+  dead:"09:45 報到，遲到 5 分鐘就沒了",
+  x:"<ul><li>🚨 <b>務必出發前先上官網訂：sydneyoperahouse.com</b>。每團最多 35 人，現場不保證有位</li><li>🚨 <b>遲到超過 5 分鐘視為放棄，不退費</b>——這是官方明文</li><li>💴 官網成人 <b>A$42</b>（其他平台從 A$35 到 A$49 都有，<b>以官網為準</b>）。<b>持澳洲敬老卡或全職學生有優待票</b>，你們用不到</li><li>📍 <b>在 Lower Concourse 的 Welcome Centre 報到</b>，提前 15 分鐘</li><li>🎒 <b>比手提包大的包包要寄物</b>，行李箱與大背包<b>不能寄</b>，別帶去</li><li><b>看得到什麼</b>：音樂廳、歌劇院廳等平常只有持票觀眾能進的空間，還有 270 度環繞的數位故事展示。運氣好會碰到排練</li><li>💡 <b>官方建議 9am 或 10am 場</b>——避開中午遊覽車人潮，平日又比週末安靜。9/22 是週二上午，是最好的組合</li>"+
+  "<li>🚨 <b>標準導覽要爬約 300 階、走 2.5 公里、沒有電梯、全程不能坐</b>，1 小時都站著</li>"+
+  "<li>✅ <b>官方有「Mobility Access Tour」——全程無台階，每天都有，價格一樣</b>。走不動 300 階的人訂這個。<br>訂法：官網選 Mobility Access Tour，或寫信到官網的 <b>tourismbookings</b> 信箱（tourismbookings<wbr>@sydneyoperahouse.com），或打 <b>02 8188 3734</b></li>"+
+  "<li>💡 <b>四個人可以分開訂不同團</b>——想爬的訂標準團，不想爬的訂無台階團，時間差不多，結束後在外面會合</li>"+
+  "<li>🛟 <b>沒訂到或當天不想走怎麼辦</b>：<b>大廳、酒吧、餐廳都免費自由進出</b>，外觀與水邊步道完全免費，那才是最有名的畫面</li></ul>"},
+ {a:"11:00",b:"13:00",t:"🌿 皇家植物園與麥考利夫人石椅",q:"Mrs Macquaries Chair Sydney",
+  g:["💴 免費","🚶 平路好走","📸 歌劇院＋大橋同框"],
+  x:"<ul><li><b>從歌劇院沿水邊往東走約 15 分鐘</b>就進植物園，一路平坦</li><li>📸 <b>麥考利夫人石椅是拍「歌劇院＋港灣大橋同框」的經典角度</b>，全雪梨最多人拍的一個點</li><li><b>植物園免費、全年開放</b>，草地上可以坐，有大量長椅</li><li>💡 導覽站了一小時，<b>這裡剛好坐下來休息</b></li><li>🚨 中午的太陽很強，<b>帽子與太陽眼鏡</b></li></ul>"},
  {a:"13:00",b:"15:30",t:"😴 回飯店休息（強烈建議）",g:["🛏️ 車程只要 10 分鐘","🛏️ 建議休息"],x:"<ul><li>🚨 <b>今天在外 12 小時半，中間完全沒有安排休息</b>——這是我排的，現在補上</li><li><b>View Sydney 就在北雪梨站旁，走 3 分鐘</b>，從 CBD 或 Circular Quay 回去只要 10 分鐘車程</li><li>櫃檯 24 小時有人，白天回房完全沒問題</li><li>🚨 <b>晚上 18:00 的 Porteño 是重肉的阿根廷烤肉，會坐到 20:15</b>。下午躺一小時再出門，晚餐才吃得下、坐得住</li><li>不想回去的人可以留在市區，<b>但約好晚餐前在哪碰面</b></li><li>💡 皇家植物園、岩石區都有大量長椅可以坐，不回飯店也要找地方坐 30 分鐘</li></ul>"},
- {a:"15:30",b:"17:15",t:"🗺️ 雪梨自由時間（下午）",g:["🕐 傍晚光線最好拍"],x:"<ul><li>休息完再出門，或直接從飯店出發往 Surry Hills</li><li>🚨 <b>17:15 一定要動身</b>，過橋加轉車要抓 45 分鐘</li><li>💡 <b>麥考利夫人石椅的黃昏</b>是雪梨最好的角度，這個時段剛好</li></ul>",q:"Mrs Macquaries Chair Sydney"},
+ {a:"15:30",b:"17:15",t:"🏛️ 岩石區 The Rocks",g:["💴 免費","🚶 平路","📸 雪梨最早的殖民聚落"],x:"<ul><li>⛴️ <b>時間夠也可以改搭曼利渡輪</b>——Circular Quay 出發，單程 30 分，從海上看歌劇院與大橋。單程 AU$6.4–10.2（各來源差近一倍，抓 10 較保險）。🚨 <b>來回要 2.5 小時，17:15 要動身去 Surry Hills，時間會很緊</b></li><li><b>雪梨最早的殖民聚落</b>，石板街與 19 世紀砂岩老屋。<b>Fortune of War 是雪梨最老的酒吧（1828）</b></li><li>📸 <b>從岩石區高處看港灣大橋</b>，角度跟環形碼頭完全不同</li><li>🚨 <b>週末才有市集</b>，9/22 是週二沒有</li><li>離 Circular Quay 走 5 分鐘</li><li>休息完再出門，或直接從飯店出發往 Surry Hills</li><li>🚨 <b>17:15 一定要動身</b>，過橋加轉車要抓 45 分鐘</li><li>💡 <b>麥考利夫人石椅的黃昏</b>是雪梨最好的角度，這個時段剛好</li></ul>",q:"Mrs Macquaries Chair Sydney"},
  {a:"17:15",b:"18:00",t:"🚆 出發往 Surry Hills",
   walk:["View Sydney → Porteño（50 Holt St），抓 45 分鐘",
    ["北雪梨站就在飯店旁，<b>實走約 200 公尺、3 分鐘</b>","搭 <b>T1 線往 City</b> 到 <b>Central</b>，約 10 分鐘",
@@ -481,7 +505,7 @@ var DAYS=[
    ["北雪梨站搭 <b>T1 線</b>到 <b>Central</b> 或 <b>Redfern</b>","Chippendale 在兩站中間，走路都約 10 分鐘","✅ <b>27 Abercrombie St, Chippendale</b>（Google 商家資料已確認）","營業週三 07:00–14:00，10:00 的訂位在時間內","找不到就打 <b>+61 468 602 770</b>"],
    "看門牌號碼找 27 號。走到 Broadway 大路口代表過頭，退回來"],q:"Something for Jess Chippendale Sydney",g:["✅ 27 Abercrombie St"],x:"<ul><li>北雪梨 → Central 或 Redfern</li><li>⚠️ 訂位確認信<b>只寫店名，沒有地址</b>。我比對到雪梨 Chippendale 的「Something for Jess - SFJ Cafe & Coffee」，27 Abercrombie St，但<b>沒有確認</b></li><li>出發前回訂位信問地址</li></ul>"},
  {a:"10:00",b:"11:30",t:"🥑 Something for Jess",g:["🕐 週三 07:00–14:00（待確認）","💴 中價位"],x:"<ul><li>27 Abercrombie St, Chippendale（<b>待確認</b>）／+61 468 602 770</li><li><b>必點</b>：breakfast wrap／Golden Wrap、corn fritter benedict、cold brew、Verde Vibes</li><li><b>吃法</b>：① 玉米餅是核心，三道招牌都有玉米餅，四人不要重複點 ② <b>有評論說食物送來是冷的、水波蛋像預做的</b>，上桌摸一下，冷了當場退 ③ 店裡有書，10:00 人不多可以慢慢吃</li><li>🛟 <b>找不到或遲到怎麼辦</b>：<b>+61 468 602 770</b>。✅ <b>地址已確認：27 Abercrombie St, Chippendale</b>（Google 商家資料）。營業 <b>週三 07:00–14:00</b>，10:00 的訂位在營業時間內。Chippendale 一帶咖啡店密集，隨便一家都能吃早午餐。</li></ul>",q:"Something for Jess Chippendale",dead:"10:00 訂位"},
- {a:"11:30",b:"14:30",t:"🗺️ 雪梨自由時間（午後）",g:["🍽️ 早餐到晚餐間隔 8 小時"],x:"<ul><li>🚨 <b>10:00 吃完早餐，18:15 才是 Totti's，中間要自己補一餐</b></li><li>🚨 若順道去海灘：<b>只在有救生員的沙灘、紅黃旗之間下水</b></li><li>澳洲水域每年約 280 人溺水，遠超蛇（1–2 人）與蜘蛛（自 1979–80 年後無死亡紀錄）</li><li>被離岸流帶走<b>不要逆游</b>，舉手握拳呼救，讓身體浮著</li></ul>"},
+ {a:"11:30",b:"14:30",t:"🦒 塔龍加動物園",g:["💴 線上約 AU$53（現場 55）","⛴️ 渡輪 12 分","🚨 纜車停駛"],x:"<ul><li>🚶 <b>另一個選擇：邦代→庫吉海岸步道</b>——沿海崖走，全程 6 km、單程 1.5–2 小時。🚨 <b>今天 18:15 在 Bondi 有訂位，全程走完會來不及</b>，建議<b>只走到 Bronte 折返</b>（約 40 分鐘），沿途有懸崖、泳池、公墓景觀</li><li>🚨 <b>線上先買省最多 20%</b>，也不用排售票窗口</li><li>⛴️ <b>Circular Quay 搭 F2 渡輪 12 分鐘</b>，這段航程本身就是景點</li><li>🚨 <b>Sky Safari 纜車 2026 年整修停駛</b>，園區在陡坡上，只能搭接駁巴士或自己走</li><li>🕐 <b>9:30–17:00，最後入園 16:00</b></li><li>📸 <b>長頸鹿區能一次拍到長頸鹿＋港灣＋歌劇院＋大橋</b></li><li>🎤 <b>飼育員解說免費</b>：長頸鹿 10:40、狐獴 11:30、黑猩猩 12:00、<b>無尾熊 14:30</b>。提早 5 分鐘到</li><li>🛟 <b>不想走山坡就改去邦代海灘</b>（平路免費），晚餐本來就在那一區</li><li>🚨 <b>10:00 吃完早餐，18:15 才是 Totti's，中間要自己補一餐</b></li><li>🚨 若順道去海灘：<b>只在有救生員的沙灘、紅黃旗之間下水</b></li><li>澳洲水域每年約 280 人溺水，遠超蛇（1–2 人）與蜘蛛（自 1979–80 年後無死亡紀錄）</li><li>被離岸流帶走<b>不要逆游</b>，舉手握拳呼救，讓身體浮著</li></ul>"},
  {a:"14:30",b:"16:30",t:"😴 回飯店休息或就近找地方坐",g:["🛏️ 車程 10 分鐘","🛏️ 建議休息"],x:"<ul><li>🚨 <b>今天在外 12 小時 45 分</b>，晚上還要去 Bondi</li><li><b>去了塔龍加動物園的話一定要休息</b>——那是山坡地形，3–4 小時走下來腿會很酸</li><li>回 View Sydney 只要 10 分鐘車程，櫃檯 24 小時有人</li><li>🚨 <b>今晚 18:15 的 Totti's 在 Bondi，過去要抓滿 60 分鐘</b>，而且餐廳在酒吧樓上要走樓梯</li><li>💡 直接去 Bondi 也可以——<b>海灘旁有很多長椅與咖啡店</b>，提早到那邊坐著等，比在市區奔波好</li></ul>"},
  {a:"16:30",b:"17:15",t:"🧴 出門前整理",g:["🌬️ Bondi 海邊風大"],x:"<ul><li>Bondi 在海邊，<b>晚上比市區冷</b>，帶件外套</li><li>🚨 餐廳<b>在 The Royal 酒吧樓上</b>，要走樓梯，穿好走的鞋</li></ul>"},
  {a:"17:15",b:"18:15",t:"🚌 出發往 Bondi",
@@ -507,7 +531,7 @@ var DAYS=[
     "🚨 <b>14:30 收午餐</b>，不要拖"],
    "看到門牌 16 號就對了。走到 Elizabeth St 代表過頭，退回來"],g:[],x:"<ul><li>北雪梨 → Central，走到 16 Foster St</li></ul>",q:"NOMAD Sydney Surry Hills"},
  {a:"12:30",b:"14:30",t:"🍞 NOMAD Sydney",g:["🕐 週四午餐 12:00–14:30","💴 高價位"],x:"<ul><li>16 Foster Street, Surry Hills／<b>+61 2 9280 3395</b>／訂位 #7GHF26353W7Y</li><li><b>必點</b>：woodfired flatbread with Persian lime & wattleseed za'atar（<b>每人一份</b>）、charcuterie 拼盤、wagyu tongue、fried olives stuffed with 'nduja、Portuguese-style spatchcock、olive oil ice-cream sandwich</li><li><b>吃法</b>：① 薄餅配胡蘿蔔鷹嘴豆泥，一人一片不然會搶 ② <b>和牛舌切得極薄會很快變冷，直接從串上吃掉</b> ③ charcuterie 是輪替的，<b>問服務生今天有哪四種</b>再決定 ④ 四人單點比套餐划算</li><li>🚨 <b>14:30 收午餐</b></li><li>這家和墨爾本的 Reine & La Rue 同集團同主廚，<b>點菜避開重複品項</b></li><li>🛟 <b>遲到怎麼辦</b>：<b>+61 2 9280 3395</b>。🚨 <b>14:30 收午餐，遲到 30 分鐘等於只剩 90 分鐘</b>。打電話告知會晚到，他們通常會保留。完全趕不上 → 這家晚餐也有營業，問當晚有沒有位；或改吃 Surry Hills 一帶，那區餐廳密度全雪梨最高。</li></ul>",q:"NOMAD Sydney Surry Hills",dead:"12:30 訂位"},
- {a:"14:30",b:"18:00",t:"🛍️ 雪梨最後一個下午",g:["🚨 在雪梨買的東西今天要整理好"],x:"<ul><li>💴 <b>tax invoice 今天全部整理好</b>——明天離開雪梨就回不去了</li><li>單筆滿 AU$1,000 的發票要有護照英文姓名</li></ul>"},
+ {a:"14:30",b:"18:00",t:"🏛️ QVB・派迪斯市集・達令港",q:"Queen Victoria Building Sydney",g:["💴 全部免費入場","🧾 退稅品在 QVB 買","📸 傍晚天際線"],x:"<ul><li>🐟 <b>雪梨魚市場（可替換其中一站）</b>——南半球最大，生蠔、龍蝦、生魚片現點現吃。🚨 <b>下午收攤早，四點後攤商陸續關</b>。今天午餐已在 NOMAD 吃過，這裡適合當下午茶或買回飯店</li><li>🏛️ <b>QVB 維多利亞女王大廈</b>（1898）——彩繪玻璃穹頂與皇家大鐘。🧾 <b>要退稅就在這裡買</b>，正規店家都給含 ABN 的 tax invoice。<b>The UGG Shop 在對面的 The Galeries</b>，⭐5.0（3114 則）</li><li>🎁 <b>派迪斯市集</b>——伴手禮最集中：澳寶、羊毛、無尾熊玩偶、堅果。<b>9/24 週四有開</b>。🚨 <b>攤販多半不給 tax invoice，退不了稅</b></li><li>🌇 <b>達令港</b>——QVB 走 10 分鐘。📸 傍晚天際線是雪梨最好拍的角度之一，<b>今天不用趕晚餐可以待到日落</b>（約 17:50）</li><li>💴 <b>tax invoice 今天全部整理好</b>——明天離開雪梨就回不去了</li><li>單筆滿 AU$1,000 的發票要有護照英文姓名</li></ul>"},
  {a:"18:00",b:"20:00",t:"🍽️ 晚餐（自由）",g:[],x:"<ul><li>飯店附近北雪梨有餐廳，不用再過橋</li></ul>"},
  {a:"20:00",b:"21:00",t:"🧳 打包、結帳、訂車",g:["🚨 這三件今晚一定要做完"],x:"<ul><li>① <b>向 View Sydney 櫃檯結清帳款</b>，明早沒時間辦退房</li><li>② <b>訂明早 05:30 的 maxi taxi</b>——13cabs <b>13 2227</b> 或請櫃檯代訂。四人四件行李，轎車裝不下。<b>訂的時候直接問總價</b>，NSW 預約車資不受政府管制</li><li>③ 行李打包完成放門邊</li><li>🛟 <b>忘了訂車怎麼辦</b>：<b>13cabs 13 2227</b> 可以當場叫，但清晨 05:30 不保證有 maxi taxi。<b>備案是請 View Sydney 櫃檯代叫</b>（24 小時有人）。<b>再不行就叫兩台一般計程車</b>，四人四件行李分兩台，貴一點但保險。</li></ul>",dead:"21:00 訂好車"},
  {a:"21:00",b:"22:00",t:"😴 早睡",g:["🚨 明天 05:00 起床"],x:"<ul><li>四個人都設兩個鬧鐘</li></ul>"}
@@ -536,12 +560,12 @@ var DAYS=[
  {a:"10:00",b:"12:00",t:"🧳 行李寄放",g:["🚨 公寓可能 15:00 才能入住"],x:"<ul><li>557 Little Lonsdale St 是公寓，<b>沒有櫃檯</b>。9/24 在雪梨時就要問過屋主</li><li>寄放不了 → <b>Urloker 339 Queen St</b>（走 5 分／413 m，08:00–21:00）或 Urloker 190 Queen St（465 m，09:00–23:00）</li></ul>",q:"Urloker 339 Queen Street Melbourne"},
  {a:"12:30",b:"14:00",t:"🍕 La Cucina Melbourne",g:["🕐 12:30–14:00","🚨 公定假日加收約 15%"],x:"<ul><li>住處走 <b>3 分鐘（270 m）</b>／628 Little Bourke St（Cosgrave Lane 轉角，Holey Moley 對面）</li><li>☎ 訂位信寫 <b>03 8456 7682</b>，Google 登錄 03 8456 7682。<b>兩個號碼不一致，先打訂位信那支</b></li><li><b>必點</b>：carbonara、amatriciana rigatoni、calamari fritti、ortolana pizza、tiramisu</li><li><b>吃法</b>：① 薄脆餅皮，兩人可分一整個。四人點兩 pizza 加兩份麵剛好 ② <b>附的辣油很辣</b>，先沾一點試 ③ 份量偏大，不要每人各點一份主餐</li><li>🚨 <b>手機存好訂位確認信的離線截圖</b>——有一則 2026/4 的四人訂位評論寫，客人明明訂了位，店家卻說「你們沒有訂位、只能坐半小時」，並在五分鐘內送上帳單要求離席</li><li>🚨 多筆評論提到<b>訂了位、收到確認信，到現場仍要排隊</b>。準時到，不要早到太多</li><li>官網訂位政策：預授權 <b>$0</b>（不實際扣款）、取消或更改要<b>提前 1 小時</b>通知</li><li>🚨 有評論說坐滿 1 小時 40 分被請走。你們的訂位正好 90 分鐘</li><li>🛟 <b>遲到怎麼辦</b>：<b>03 8456 7682</b>。官網政策是<b>取消或更改要提前 1 小時通知</b>。🚨 <b>已經有客人訂了位、店家卻說查無紀錄的紀錄，手機一定要存訂位確認信的離線截圖</b>。真的吃不到 → 住處走 3 分鐘就到，附近 Little Bourke St 是唐人街，選擇很多。</li></ul>",q:"La Cucina Melbourne Little Bourke",dead:"12:30 訂位"},
  {a:"14:00",b:"16:00",t:"😴 回住處補眠（今天 05:00 起床）",g:["🛏️ 走 8 分鐘就到","🛏️ 建議休息"],x:"<ul><li>🚨 <b>今天 05:00 起床、坐了兩趟車一班飛機，已經在外 11 小時</b></li><li>557 Little Lonsdale St 從 La Cucina 走約 <b>8 分鐘</b></li><li>🚨 <b>公寓可能 15:00 才能入住</b>——到得早就把行李寄放，先在附近坐著等</li><li>明天 9/26 是總決賽日，市區會很擠，<b>今天睡飽比較重要</b></li><li>不想睡的人可以留在市區，Little Bourke St 唐人街就在旁邊</li></ul>",q:"557 Little Lonsdale St Melbourne"},
- {a:"16:00",b:"18:00",t:"🗺️ 市區自由（休息後）",g:["🚨 全州放假，銀行不開"],x:"<ul><li>AFL Grand Final Friday，維多利亞州公定假日</li><li>部分商店縮短營業，餐廳普遍加收約 15%</li><li>Yarra Park 有 Footy Fest（9/23–9/26），MCG 周邊人潮</li></ul>"}
+ {a:"16:00",b:"18:00",t:"🕊️ 戰爭紀念館與皇家植物園",g:["💴 免費","🚨 今天全州放假","📸 從屋頂看 CBD"],x:"<ul><li><b>戰爭紀念館免費</b>，可上屋頂平台，<b>從那裡看 CBD 天際線</b>是墨爾本經典角度</li><li>🕊️ <b>每天下午的追思儀式</b>——一道光束照在紀念石上，設計成每年 11/11 上午 11 點正好照到</li><li>🌿 <b>皇家植物園就在隔壁</b>，38 公頃，平路、大量長椅、有湖</li><li>🚶 搭電車到 <b>Shrine of Remembrance 站</b></li><li>AFL Grand Final Friday，維多利亞州公定假日</li><li>部分商店縮短營業，餐廳普遍加收約 15%</li><li>Yarra Park 有 Footy Fest（9/23–9/26），MCG 周邊人潮</li></ul>"}
 ]},
 
 {id:"d10",date:"9/26",dow:"六",title:"Reine & La Rue",sub:"🚨 AFL 總決賽日",slots:[
- {a:"09:00",b:"12:30",t:"🗺️ 市區自由",g:["🚨 10 萬人往 MCG 移動"],x:"<ul><li>AFL 總決賽 14:30 於 MCG 開賽，約 17:00 結束</li><li><b>12:00–14:00 正是人潮往 MCG 移動的時段</b></li></ul>"},
- {a:"12:40",b:"13:00",t:"🚶 走去 380 Collins St",g:["🕐 走 9 分（694 m）","🚨 提早 20 分鐘出門"],x:"<ul><li>住處到 380 Collins St 走 9 分鐘</li><li>380 Collins St 到 MCG 直線約 1.9 公里，比想像中近，市區會很擠</li></ul>",q:"Reine and La Rue Melbourne"},
+ {a:"09:00",b:"12:30",t:"🛒 女王市場與古典拱廊",g:["💴 免費入場","🥾 UGG 最便宜","📸 19 世紀馬賽克地板"],x:"<ul><li>🛒 <b>維多利亞女王市場</b>——🚨 <b>9/26 週六有開</b>，週六最熱鬧。🥾 <b>最後一次買 UGG 的機會</b>：E113-114 的 Jumbo UGG，週六 08:00–16:00，⭐5.0。<b>American Doughnut Kitchen 的熱果醬甜甜圈</b>是招牌</li><li>🏛️ <b>Block Arcade（1892）與 Royal Arcade（1870）</b>——墨爾本最古老的購物拱廊，📸 <b>馬賽克地板與玻璃天頂</b>是重點。☕ Hopetoun Tea Rooms 在裡面，1892 年開到現在，常要排隊</li><li>💡 <b>拱廊全程室內，總決賽日人擠時的好選擇</b></li><li>🚨 <b>12:40 要出發去 Reine，別走遠</b></li><li>AFL 總決賽 14:30 於 MCG 開賽，約 17:00 結束</li><li><b>12:00–14:00 正是人潮往 MCG 移動的時段</b></li></ul>"},
+ {a:"12:40",b:"13:00",t:"🚶 走去 380 Collins St",g:["🕐 走 9 分（694 m）","🚨 提早 20 分鐘出門"],x:"<ul><li>住處到 380 Collins St 走 9 分鐘</li><li>380 Collins St 到 MCG 直線約 1.9 公里，比想像中近，市區會很擠</li></ul>",q:"Queen Victoria Market Melbourne"},
  {a:"13:00",b:"15:30",t:"🥂 Reine & La Rue",g:["🕐 13:00","🚨 週六加收 10%","👔 elegant smart casual"],x:"<ul><li>380 Collins Street（Queen St 轉角，ANZ 銀行大廳後方）／<b>+61 3 9021 5241</b>／訂位 #5JP2ZF37DD95</li><li>🚨 <b>全程唯一有明文服裝要求的一家。不要穿短褲拖鞋</b></li><li><b>必點</b>：duck liver & foie gras parfait（約 AU$28）、生蠔、beef tartare 與 scallop gratin（單顆各約 AU$12）、Great Ocean duck（半隻約 AU$140）或 striploin 300g（約 AU$80）、cassoulet</li><li><b>主廚 Jacqui Challinor 親自推薦</b>：生蠔配<b>煙燻橄欖油與海藻 mignonette</b>、<b>Long Paddock 發酵奶油配 All Are Welcome 的長棍</b>（她說是全場的 showstopper）、<b>手潛女王扇貝配松露奶油</b>火烤、confit rabbit、saucisson、wood-roasted leeks</li><li>店內另有<b>生蠔吧</b>與<b>推車式起司車</b>，起司車會推到桌邊選</li><li><b>吃法</b>：① 進門先看空間——這是<b>墨爾本舊證券交易所</b>，哥德式拱頂與彩繪玻璃，這是一半的價值 ② <b>小點是單顆計價，四人各點一顆就能全部試到</b>，這是最划算的點法 ③ 鴨肝慕斯配麵包（baguette 另計約 AU$10），<b>要厚塗</b> ④ 隔壁有 <b>8 座</b>的小酒吧 La Rue，可以直接走進去不用訂位 ⑤ 這是 <b>138 年歷史的 Gothic Bank</b>，<b>2024 年拿下澳洲室內設計大獎首獎</b>，150 席</li><li>⚠️ 網路上有頁面把這家電話寫成 (02) 9280 3395——<b>那是 NOMAD 雪梨的號碼</b>。這家是 <b>+61 3 9021 5241</b></li><li>🛟 <b>遲到怎麼辦</b>：<b>+61 3 9021 5241</b>（🚨 不要打成 NOMAD 的 02 9280 3395）。🚨 <b>今天是 AFL 總決賽日，14:30 開賽，12:00–14:00 正是人潮往 MCG 移動的時段</b>——提早 20 分鐘出門。真的趕不上 → 隔壁 8 座的 <b>La Rue</b> 不用訂位可以直接走進去，菜單較精簡但同一個廚房。</li></ul>",q:"Reine and La Rue Melbourne",dead:"13:00 訂位",
   walk:["557 Little Lonsdale St → 380 Collins St，694 公尺，走 9 分鐘",
    ["出門走到 Lonsdale St，朝門牌號碼變小的方向",
@@ -566,7 +590,7 @@ var DAYS=[
     "🚨 <b>退稅品要放隨身行李</b>，報到前先給 ABF 驗超大件或液體",
     "🚨 <b>TRS 最晚 09:45</b>，排太長就放棄退稅，不要賭班機"],
    "看到 Qantas 的紅色袋鼠招牌就對了。走到 T3 代表走過頭，T2 才是國際線"],g:["💴 maxi taxi 約 AU$75–105 ＋出入費"],x:"<ul><li>總決賽隔天的週日早上，時間抓寬一點</li></ul>",q:"Melbourne Airport Terminal 2"},
- {a:"07:15",b:"09:45",t:"🛄 報到、TRS 退稅",q:"Melbourne Airport Terminal 2",g:["🚨 09:45 前完成 TRS"],x:"<ul><li>🚨 <b>澳航國際線報到起飛前 90 分鐘關閉 → QF29 是 08:45 關櫃</b>（不是 09:15）。櫃檯起飛前 3 小時開</li><li>🚨 <b>所以 07:15 到 T2，只有 90 分鐘辦完報到</b>——四人四件行李、又要顧退稅品放隨身，不要拖</li><li>超大件或液體退稅品要在 check-in <b>前</b>先給 ABF 驗</li><li>🚨 <b>TRS 最晚在起飛前 30 分鐘受理 → 09:45 截止</b></li><li>🚨 <b>櫃檯在過了護照查驗之後</b>，在免稅店裡面，不是報到大廳</li><li>ABF 建議 <b>08:45 前</b>通過海關（起飛前 90 分鐘）</li><li>櫃檯要拿出：<b>護照・登機證・原始 tax invoice・商品本身</b></li><li>📖 <b>完整流程看「資訊」頁的 TRS 那張卡</b></li><li>排太長就放棄退稅，不要賭班機</li></ul>",dead:"09:45 TRS 截止"},
+ {a:"07:15",b:"09:45",t:"🛄 報到、TRS 退稅",q:"Melbourne Airport Terminal 2",g:["🚨 09:45 前完成 TRS"],x:"<ul><li>🚨 <b>澳航國際線報到起飛前 90 分鐘關閉 → QF29 是 08:45 關櫃</b>（不是 09:15）。櫃檯起飛前 3 小時開</li><li>🚨 <b>所以 07:15 到 T2，只有 90 分鐘辦完報到</b>——四人四件行李、又要顧退稅品放隨身，不要拖</li><li>超大件或液體退稅品要在 check-in <b>前</b>先給 ABF 驗</li><li>🚨 <b>TRS 最晚在起飛前 30 分鐘受理 → 09:45 截止</b></li><li>🚨 <b>櫃檯在過了護照查驗之後</b>，在免稅店裡面，不是報到大廳</li><li>ABF 建議 <b>08:45 前</b>通過海關（起飛前 90 分鐘）</li><li>櫃檯要拿出：<b>護照・登機證・原始 tax invoice・商品本身</b></li><li>📖 <b>完整流程看「資訊」頁的 TRS 那張卡</b></li><li>排太長就放棄退稅，不要賭班機</li><li>🛟 <b>趕不上怎麼辦</b>：澳航國際線 <b>08:45 關櫃</b>，錯過就得改簽，同一張票是澳航的責任但香港段會全部重排。<br>🚨 <b>TRS 排太長就直接放棄退稅</b>——退個 AU$30–70 不值得賭掉四張機票。<br>塞車或睡過頭先打 <b>13cabs 13 2227</b> 並致電澳航。</li></ul>",dead:"09:45 TRS 截止"},
  {a:"10:15",b:"17:55",t:"✈️ QF 29 墨爾本 → 香港",g:["🕐 飛行 9:40","🍽️ 機上供餐"],x:"<ul><li>抵達香港第一航廈</li><li>9 小時 40 分的航程，機上會供餐兩次</li><li>落地香港後<b>手錶調回台灣時間</b>（香港與台灣同時區）</li></ul>"},
  {a:"17:55",b:"20:10",t:"🔁 香港轉機（135 分鐘）",g:["🕐 比去程寬鬆"],x:"<ul><li>比去程的 95 分鐘寬鬆，就算要重新報到也夠</li><li>先看螢幕確認 CI920 的登機門，再去吃東西</li><li>🚨 <b>香港買的東西也算入台灣的免稅額</b>：行李物品 NT$35,000、酒 1.5 公升、菸 200 支</li></ul>"},
  {a:"20:10",b:"22:10",t:"🛫 CI 920 香港 → 桃園",g:["🕐 飛行 2:00"],x:"<ul><li>🚨 <b>回台灣不要帶肉製品</b>——自非洲豬瘟疫區攜帶豬肉製品，初犯罰 NT$20 萬、再犯 100 萬</li><li>肉乾、肉鬆、香腸、含肉餡糕點、<b>飛機上的肉類餐點</b>都算</li><li>台灣入境免稅額：行李物品 NT$35,000、酒 1.5 公升、菸 200 支</li></ul>"}
@@ -904,6 +928,23 @@ function renderShop(){
       '<div class="mono">AU$'+(+s.price||0).toFixed(2)+'</div>'+
       '<button data-dels="'+i+'">✕</button></div>' }).join("")+'</div>'
    : '<div class="card"><div class="empty"><b>清單是空的</b><div class="note">想買什麼先寫下來。TRS 退稅要同一家店累計滿 AU$300，先記帳才知道有沒有到。</div></div></div>';
+  h+='<div class="card"><h3>🧳 行李限重（已查證官方）</h3><div class="note">'+
+   '<b>國際線 QF30／QF29 經濟艙</b><br>'+
+   '・託運：<b>總共 30 kg</b>（重量制，可分裝多件，<b>單件不得超過 32 kg</b>）<br>'+
+   '・隨身：<b>1 件 7 kg</b>，56×36×23 cm，<b>另可帶一個放腳邊的小包</b><br>'+
+   '🚨 <b>國際線經濟艙隨身只能一件</b>——背包＋登機箱算兩件，不行<br><br>'+
+   '<b>國內線 VA0853／VA0810 經濟艙</b><br>'+
+   '・託運：<b>1 件 23 kg</b>（件數制）　・隨身：<b>7 kg</b>，國內線可帶兩件<br><br>'+
+   '🚨 <b>行動電源與鋰電池一律隨身，不能託運</b><br>'+
+   '🚨 <b>液體、噴霧、膠狀單瓶 ≤100 ml</b>，裝進一個 1 公升透明夾鏈袋<br>'+
+   '🚨 <b>藥品放隨身</b>，處方藥帶英文藥單或處方影本<br>'+
+   '💡 <b>買了 UGG 回程會變重</b>——去程留 5–8 kg 餘裕，四雙約 4–6 kg<br>'+
+   '💡 超重在機場補買最貴，<b>要加行李一定線上先買</b></div></div>';
+  h+='<div class="card"><h3>🔌 電源與插頭</h3><div class="note">'+
+   '澳洲是 <b>I 型插頭</b>（兩支斜扁腳＋一支直的），<b>230V／50Hz</b>。<br>'+
+   '🚨 <b>台灣插頭插不進去，一定要帶轉接頭</b>。<br>'+
+   '手機、相機、筆電的充電器幾乎都支援 100–240V，看變壓器上的字，<b>通常只要轉接頭不用變壓器</b>。<br>'+
+   '💡 <b>帶一條一轉多的延長線</b>——住處插座不會剛好有四個人的份。</div></div>';
   h+='<div class="card ok"><h3>💴 TRS 退稅提醒</h3><div class="note">同一個 ABN 累計滿 <b>AU$300</b>（含稅）．購買日在離境前 60 天內．要<b>原始紙本 tax invoice</b>．單筆滿 AU$1,000 發票要有護照英文姓名．退稅品放<b>隨身行李</b>．9/27 在墨爾本 T2，<b>最晚 09:45</b>。</div></div>';
   return h;
 }
@@ -1411,7 +1452,7 @@ function renderPrep(){
 /* ===== 使用說明 ===== */
 function renderHelp(){
   var d=auNow();
-  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v050</div></div>'+
+  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v054</div></div>'+
   countdownHTML()+'<div class="card ok"><h3>現在澳洲時間 '+fmt(auMins())+'</h3><div class="note">'+
    (d.getMonth()===8&&d.getDate()>=17&&d.getDate()<=27? '旅程進行中。':'旅程尚未開始。')+
    ' 澳洲東部時間比台灣快 2 小時，全程不換夏令時間。</div></div>'+
@@ -1580,61 +1621,8 @@ function fxCard(){
 
 /* ===== 景點建議：填滿自由時段 ===== */
 /* n 名稱 / w 從住處怎麼去 / t 需要多久 / p 費用 / k 體力 / x 說明 / q 導航 */
-var SPOTS={
- d2:{from:"370 Queen St",list:[
-  {n:"州立圖書館 State Library Victoria",w:"走 9 分（750 m）",t:"40–60 分",p:"免費",k:"輕鬆",
-   q:"State Library Victoria",x:"<b>La Trobe 圓形閱覽室</b>的六角形穹頂是墨爾本最好拍的室內空間，樓上還有<b>尼德・凱利的鐵甲</b>。落地第一天體力有限，這裡有位子可以坐。"},
-  {n:"維多利亞女王市場",w:"走 4 分（324 m）",t:"40–60 分",p:"免費入場",k:"輕鬆",
-   q:"Queen Victoria Market",x:"1878 年營業至今。<b>American Doughnut Kitchen 的熱果醬甜甜圈</b>是招牌。🚨 <b>週一、週三公休</b>，9/18 是週五有開。<br>🥾 <b>買 UGG 的話這裡是最便宜的</b>——E113-114 的 Jumbo UGG 是墨爾本本地工廠，⭐5.0。詳見下方 UGG 專區。"},
-  {n:"Hosier Lane 塗鴉巷",w:"電車 ＋ 走，約 15 分",t:"20–30 分",p:"免費",k:"輕鬆",
-   q:"Hosier Lane Melbourne",x:"整條巷子的牆面塗鴉<b>每次去都不一樣</b>。就在 Flinders St 車站對面，可以跟聯邦廣場一起看。"}]},
- d5:{from:"370 Queen St",list:[
-  {n:"維多利亞國家美術館 NGV International",w:"電車約 12 分",t:"1.5–2 小時",p:"常設展免費",k:"中等",
-   q:"NGV International Melbourne",x:"澳洲最古老也最多人參觀的美術館，<b>常設展完全免費</b>。門口的<b>水幕玻璃牆</b>是打卡點。🚨 在免費電車區外。"},
-  {n:"Degraves Street 咖啡巷",w:"走 12 分",t:"30–40 分",p:"一杯咖啡約 AU$5",k:"輕鬆",
-   q:"Degraves Street Melbourne",x:"墨爾本咖啡文化的縮影，整條巷子都是戶外座位。<b>離 Cuff 走路 3 分鐘</b>，吃完早餐可以順路。"},
-  {n:"聯邦廣場 ＋ Flinders St 車站",w:"走 14 分",t:"30 分",p:"免費",k:"輕鬆",
-   q:"Federation Square Melbourne",x:"黃色的 Flinders Street 車站是墨爾本最上鏡的建築。<b>今天要拖行李去機場，不要走太遠</b>。"}]},
- d6:{from:"View Sydney（北雪梨）",list:[
-  {n:"雪梨歌劇院",w:"火車到 Circular Quay 約 12 分",t:"外觀 30 分／導覽 1 小時",p:"外觀免費／導覽 AU$35–49",k:"導覽偏累",
-   q:"Sydney Opera House",x:"🚨 <b>導覽要爬約 300 階、走 2.5 公里、沒有電梯、全程不能坐</b>——要去的人先評估腳力。<br>💴 <b>導覽票價各家寫的都不一樣</b>：GetYourGuide 官方票 <b>AU$35 起</b>、多個 2026 年網站寫 <b>AU$42–43</b>、另有 <b>AU$48</b>（成人）與 <b>AU$49</b>。<b>沒有共識，抓 AU$50 預算</b>，實際以官網 sydneyoperahouse.com 為準。四人差額可能到 AU$60。<br><b>不買票也能進去</b>：大廳、酒吧、餐廳都自由進出，沿著水邊步道看外觀完全免費。<b>黃昏時帆殼變色</b>是最好看的時刻。"},
-  {n:"環形碼頭 → 曼利渡輪",w:"火車到 Circular Quay 換渡輪",t:"來回約 2.5 小時",p:"單程 AU$6.4–10.2（說法不一）",k:"輕鬆",
-   q:"Circular Quay Ferry Wharf",x:"<b>雪梨最划算的觀光</b>——從海上看歌劇院與港灣大橋，同一段航程的私營遊船要好幾倍價錢。<br>💴 <b>單程票價各來源差很多</b>：2026/7 的來源寫平日 <b>AU$6.40</b>、近期來源寫 <b>AU$8.39</b>、2026/3 的寫 <b>AU$10.20</b>。<b>沒有共識，抓 AU$10 預算</b>。<br>💰 <b>真正可靠的是每日上限，所有來源一致</b>：9/22 是<b>週二，上限 AU$19.30</b>，來回一定在上限內。<b>若改到週五或週末，上限只有 AU$9.65——當天所有交通全部封頂</b>，多搭幾趟等於免費。<br>曼利那頭有 The Corso 步行街與海灘。"},
-  {n:"皇家植物園 ＋ 麥考利夫人石椅",w:"Circular Quay 走 15 分",t:"1–1.5 小時",p:"免費",k:"中等",
-   q:"Mrs Macquaries Chair Sydney",x:"<b>能把歌劇院和港灣大橋framing 進同一張照片</b>的經典角度就在這裡。整片植物園免費，走累了草地隨處可坐。"},
-  {n:"岩石區 The Rocks",w:"Circular Quay 走 8 分",t:"1–2 小時",p:"免費",k:"輕鬆",
-   q:"The Rocks Sydney",x:"雪梨最早的殖民聚落，石板街與老酒吧。<b>週末有市集</b>，9/22 是週二沒有。"}]},
- d7:{from:"View Sydney（北雪梨）",list:[
-  {n:"塔龍加動物園 Taronga Zoo",w:"Circular Quay 4 號碼頭搭 F2 渡輪 12 分",t:"3–4 小時",p:"成人約 AU$55（線上更便宜）",k:"累（纜車停駛）",
-   q:"Taronga Zoo Sydney",x:"🚨 <b>9:30–17:00，最後入園 16:00</b>（不是 16:30）。<br>🚨 <b>Sky Safari 纜車 2026 年整修停駛</b>——這一點很關鍵。園區蓋在<b>陡峭山坡</b>上，原本可以搭纜車直達山頂再一路往下走，現在只能<b>搭接駁巴士或自己走上去</b>。🚶 <b>步行量比想像中大很多</b>，出發前先上官網確認接駁車班次。<br>長頸鹿區能一次拍到長頸鹿＋港灣＋歌劇院＋大橋。<br>🚨 <b>今天 18:15 在 Bondi 有訂位</b>，動物園要 3–4 小時，時間很緊，要去就早上去。<br>💡 <b>纜車停駛期間，考慮改去別的行程</b>——今天已經在外 12 小時 45 分。"},
-  {n:"邦代海灘 Bondi Beach",w:"從 SFJ 搭車約 30 分",t:"1–2 小時",p:"免費",k:"輕鬆",
-   q:"Bondi Beach Sydney",x:"<b>今天晚餐就在 Bondi Rd</b>，下午順路過去最省事。🚨 <b>只在紅黃旗之間下水</b>。9 月水溫仍低，多數人只散步不下水。<br><b>Bondi Icebergs 海崖泳池</b>是最有名的畫面，從海灘南端走過去約 10 分鐘。"},
-  {n:"邦代→庫吉海岸步道",w:"Bondi 海灘南端起登",t:"單程 1.5–2 小時（6 km）",p:"免費",k:"累",
-   q:"Bondi to Coogee Coastal Walk",x:"沿海崖的步道，經過 Tamarama、Bronte、Clovelly 幾個海灣。🚨 <b>全程沒有遮蔭，要帶水與防曬</b>。走完再趕 18:15 的訂位會很趕，<b>建議只走到 Bronte 就折返</b>（約 40 分）。"}]},
- d8:{from:"View Sydney（北雪梨）",list:[
-  {n:"雪梨魚市場 Sydney Fish Market",w:"火車到 Central 轉輕軌，約 35 分",t:"1–1.5 小時",p:"看你吃多少",k:"輕鬆",
-   q:"Sydney Fish Market",x:"南半球最大的魚市場。生蠔、龍蝦、生魚片現點現吃。<b>今天午餐已經在 NOMAD 吃過</b>，這裡當下午茶或買回飯店吃。🚨 <b>下午收攤早，四點後攤商陸續關</b>。"},
-  {n:"派迪斯市集 Paddy's Markets",w:"火車到 Central，走 5 分",t:"1 小時",p:"免費入場",k:"輕鬆",
-   q:"Paddys Markets Haymarket Sydney",x:"<b>買伴手禮最集中的地方</b>——澳寶、羊毛製品、無尾熊玩偶、堅果。🚨 <b>週三到週日營業，9/24 是週四有開</b>。價格可以殺，但🚨 <b>攤販多半不給 tax invoice，退不了稅</b>。"},
-  {n:"QVB 維多利亞女王大廈",w:"火車到 Town Hall 站直達",t:"1–1.5 小時",p:"免費",k:"輕鬆",
-   q:"Queen Victoria Building Sydney",x:"1898 年的羅曼式建築，彩繪玻璃穹頂與懸掛的皇家大鐘。<b>裡面是精品商場，退稅品在這裡買最保險</b>——正規店家都給 tax invoice。就在 Town Hall 站上方，下雨天的好選擇。"},
-  {n:"達令港 Darling Harbour",w:"Town Hall 站走 10 分",t:"1–2 小時",p:"免費",k:"輕鬆",
-   q:"Darling Harbour Sydney",x:"海濱步道、水族館、杜莎夫人蠟像館都在這一區。<b>傍晚的天際線是雪梨最好拍的角度之一</b>。今天不用趕晚餐，可以待到日落。"}]},
- d9:{from:"557 Little Lonsdale St",list:[
-  {n:"NGV International",w:"電車約 12 分",t:"1.5–2 小時",p:"常設展免費",k:"中等",
-   q:"NGV International Melbourne",x:"🚨 <b>今天是公定假日</b>，開放時間可能異動，出發前查官網。室內行程，下雨天的好選擇。"},
-  {n:"戰爭紀念館 Shrine of Remembrance",w:"電車約 15 分",t:"1 小時",p:"免費",k:"中等",
-   q:"Shrine of Remembrance Melbourne",x:"陽台可以免費看整個墨爾本天際線。<b>每日 11:00 有「光之射線」</b>——陽光穿過屋頂開口正好照在紀念石上。🚨 在免費電車區外。"},
-  {n:"墨爾本皇家植物園",w:"電車約 15 分",t:"1–2 小時",p:"免費",k:"輕鬆",
-   q:"Royal Botanic Gardens Melbourne",x:"38 公頃，每日 07:30 至日落，全年免費。外圍的 <b>Tan Track 是 3.8 公里環狀步道</b>。9 月是春天，正在開花。"}]},
- d10:{from:"557 Little Lonsdale St",list:[
-  {n:"維多利亞女王市場",w:"走 8 分（645 m）",t:"1 小時",p:"免費入場",k:"輕鬆",
-   q:"Queen Victoria Market",x:"🚨 <b>9/26 是週六，市場有開</b>，而且週六是最熱鬧的一天。<b>13:00 有 Reine 的訂位，11:30 前要離開</b>。<br>🥾 <b>最後一次買 UGG 的機會</b>——E113-114 的 Jumbo UGG，週六 08:00–16:00。9/27 上午只剩機場。"},
-  {n:"州立圖書館 ＋ 塗鴉巷",w:"走 10 分",t:"1–1.5 小時",p:"免費",k:"輕鬆",
-   q:"State Library Victoria",x:"兩個都在 CBD 內，走路可達，<b>不會因為總決賽的人潮受影響</b>。往東邊 MCG 方向的交通今天要避開。"},
-  {n:"Block Arcade ＋ Royal Arcade 拱廊",w:"走 10 分",t:"40 分",p:"免費",k:"輕鬆",
-   q:"Block Arcade Melbourne",x:"1892 年的維多利亞式購物拱廊，馬賽克地板與玻璃屋頂。<b>就在 Collins St 上，離 Reine 走路 3 分鐘</b>，飯前可以順路逛。"}]}
-};
+var SPOTS={};   /* 景點都已排進正式行程，這裡留空 */
+
 function spotsHTML(id){
   var S=SPOTS[id]; if(!S) return "";
   return '<div class="card"><h3>🗺️ 這段空檔可以去哪</h3>'+
@@ -1731,8 +1719,8 @@ function fareCard(){
 }
 
 /* ===== 版本與更新（依規格：抓 sw.js 讀 CACHE，繞過 SW 生命週期）===== */
-var APP_VER="050";
-var APPVER="australia-v50";            /* 與 sw.js 的 CACHE 一致 */
+var APP_VER="054";
+var APPVER="australia-v54";            /* 與 sw.js 的 CACHE 一致 */
 var VST={state:"...",note:"",latest:null};   /* ok / new / warn / ... */
 
 /* 直接抓 sw.js（約 3 KB），讀它的 CACHE 版本。
