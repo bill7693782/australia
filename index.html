@@ -303,12 +303,28 @@ td .tel{margin:2px 0}
   box-shadow:inset 0 0 0 1px var(--line)}
 .plan.hot{box-shadow:inset 0 0 0 1px #E9C4C0;background:var(--red-bg)}
 .plan b{display:block;font-size:1.02em;margin-bottom:4px}
+
+/* 🚨 320px（iPhone SE 一代、Android 小機）：把所有會撐爆的東西收好 */
+@media (max-width:340px){
+  :root{--sp:12px;--fs:17px}
+  .dep-big{font-size:1.5em;letter-spacing:-.03em}
+  .tags .tag{font-size:.72em;padding:2px 6px}
+  .acts{flex-wrap:wrap}
+  .acts .btn{flex:1 1 46%;min-width:0}
+  .roomcode{font-size:1.4em;letter-spacing:.06em}
+  table td{padding:6px 4px;font-size:.9em}
+  nav button{padding:6px 9px}
+  .card{padding:12px 11px}
+}
+/* 任何寬度都不許橫向捲動 */
+html,body{overflow-x:hidden;max-width:100%}
+img,svg,video,table{max-width:100%}
 </style>
 </head>
 <body>
 <header>
   <div class="hrow"><h1>澳洲</h1>
-    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v058 ⋯</button>
+    <button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v064 ⋯</button>
     <button class="sbtn" id="sbtn" title="搜尋行程" aria-label="搜尋">🔍</button>
     <div class="clock" id="clk"></div></div>
 
@@ -511,8 +527,8 @@ var DAYS=[
  {a:"09:15",b:"10:00",t:"🚆 出發往 Chippendale",
   walk:["View Sydney → Chippendale，約 45 分鐘",
    ["北雪梨站搭 <b>T1 線</b>到 <b>Central</b> 或 <b>Redfern</b>","Chippendale 在兩站中間，走路都約 10 分鐘","✅ <b>27 Abercrombie St, Chippendale</b>（Google 商家資料已確認）","營業週三 07:00–14:00，10:00 的訂位在時間內","找不到就打 <b>+61 468 602 770</b>"],
-   "看門牌號碼找 27 號。走到 Broadway 大路口代表過頭，退回來"],q:"Something for Jess Chippendale Sydney",g:["✅ 27 Abercrombie St"],x:"<ul><li>北雪梨 → Central 或 Redfern</li><li>⚠️ 訂位確認信<b>只寫店名，沒有地址</b>。我比對到雪梨 Chippendale 的「Something for Jess - SFJ Cafe & Coffee」，27 Abercrombie St，但<b>沒有確認</b></li><li>出發前回訂位信問地址</li></ul>"},
- {a:"10:00",b:"11:30",t:"🥑 Something for Jess",g:["🕐 週三 07:00–14:00（待確認）","💴 中價位"],x:"<ul><li>27 Abercrombie St, Chippendale（<b>待確認</b>）／+61 468 602 770</li><li><b>必點</b>：breakfast wrap／Golden Wrap、corn fritter benedict、cold brew、Verde Vibes</li><li><b>吃法</b>：① 玉米餅是核心，三道招牌都有玉米餅，四人不要重複點 ② <b>有評論說食物送來是冷的、水波蛋像預做的</b>，上桌摸一下，冷了當場退 ③ 店裡有書，10:00 人不多可以慢慢吃</li><li>🛟 <b>找不到或遲到怎麼辦</b>：<b>+61 468 602 770</b>。✅ <b>地址已確認：27 Abercrombie St, Chippendale</b>（Google 商家資料）。營業 <b>週三 07:00–14:00</b>，10:00 的訂位在營業時間內。Chippendale 一帶咖啡店密集，隨便一家都能吃早午餐。</li></ul>",q:"Something for Jess Chippendale",dead:"10:00 訂位"},
+   "看門牌號碼找 27 號。走到 Broadway 大路口代表過頭，退回來"],q:"Something for Jess Chippendale Sydney",g:["✅ 27 Abercrombie St"],x:"<ul><li>北雪梨 → Central 或 Redfern</li><li>⚠️ 訂位確認信<b>只寫店名，沒有地址</b>。我比對到雪梨 Chippendale 的「Something for Jess - SFJ Cafe & Coffee」，27 Abercrombie St，但<b>沒有確認</b></li><li>出發前一天再確認一次訂位</li></ul>"},
+ {a:"10:00",b:"11:30",t:"🥑 Something for Jess",g:["🕐 週三 07:00–14:00","💴 中價位"],x:"<ul><li><b>27 Abercrombie St, Chippendale</b>（已確認）／+61 468 602 770</li><li><b>必點</b>：breakfast wrap／Golden Wrap、corn fritter benedict、cold brew、Verde Vibes</li><li><b>吃法</b>：① 玉米餅是核心，三道招牌都有玉米餅，四人不要重複點 ② <b>有評論說食物送來是冷的、水波蛋像預做的</b>，上桌摸一下，冷了當場退 ③ 店裡有書，10:00 人不多可以慢慢吃</li><li>🛟 <b>找不到或遲到怎麼辦</b>：<b>+61 468 602 770</b>。✅ <b>地址已確認：27 Abercrombie St, Chippendale</b>（Google 商家資料）。營業 <b>週三 07:00–14:00</b>，10:00 的訂位在營業時間內。Chippendale 一帶咖啡店密集，隨便一家都能吃早午餐。</li></ul>",q:"Something for Jess Chippendale",dead:"10:00 訂位"},
  {a:"11:30",b:"14:30",t:"🦒 塔龍加動物園",g:["💴 線上約 AU$53（現場 55）","⛴️ 渡輪 12 分","🚨 纜車停駛"],x:"<ul><li>🚶 <b>另一個選擇：邦代→庫吉海岸步道</b>——沿海崖走，全程 6 km、單程 1.5–2 小時。🚨 <b>今天 18:15 在 Bondi 有訂位，全程走完會來不及</b>，建議<b>只走到 Bronte 折返</b>（約 40 分鐘），沿途有懸崖、泳池、公墓景觀</li><li>🚨 <b>線上先買省最多 20%</b>，也不用排售票窗口</li><li>⛴️ <b>Circular Quay 搭 F2 渡輪 12 分鐘</b>，這段航程本身就是景點</li><li>🚨 <b>Sky Safari 纜車 2026 年整修停駛</b>，園區在陡坡上，只能搭接駁巴士或自己走</li><li>🕐 <b>9:30–17:00，最後入園 16:00</b></li><li>📸 <b>長頸鹿區能一次拍到長頸鹿＋港灣＋歌劇院＋大橋</b></li><li>🎤 <b>飼育員解說免費</b>：長頸鹿 10:40、狐獴 11:30、黑猩猩 12:00、<b>無尾熊 14:30</b>。提早 5 分鐘到</li><li>🛟 <b>不想走山坡就改去邦代海灘</b>（平路免費），晚餐本來就在那一區</li><li>🚨 <b>10:00 吃完早餐，18:15 才是 Totti's，中間要自己補一餐</b></li><li>🚨 若順道去海灘：<b>只在有救生員的沙灘、紅黃旗之間下水</b></li><li>澳洲水域每年約 280 人溺水，遠超蛇（1–2 人）與蜘蛛（自 1979–80 年後無死亡紀錄）</li><li>被離岸流帶走<b>不要逆游</b>，舉手握拳呼救，讓身體浮著</li></ul>"},
  {a:"14:30",b:"16:30",t:"😴 回飯店休息或就近找地方坐",g:["🛏️ 車程 10 分鐘","🛏️ 建議休息"],x:"<ul><li>🚨 <b>今天在外 12 小時 45 分</b>，晚上還要去 Bondi</li><li><b>去了塔龍加動物園的話一定要休息</b>——那是山坡地形，3–4 小時走下來腿會很酸</li><li>回 View Sydney 只要 10 分鐘車程，櫃檯 24 小時有人</li><li>🚨 <b>今晚 18:15 的 Totti's 在 Bondi，過去要抓滿 60 分鐘</b>，而且餐廳在酒吧樓上要走樓梯</li><li>💡 直接去 Bondi 也可以——<b>海灘旁有很多長椅與咖啡店</b>，提早到那邊坐著等，比在市區奔波好</li></ul>"},
  {a:"16:30",b:"17:15",t:"🧴 出門前整理",g:["🌬️ Bondi 海邊風大"],x:"<ul><li>Bondi 在海邊，<b>晚上比市區冷</b>，帶件外套</li><li>🚨 餐廳<b>在 The Royal 酒吧樓上</b>，要走樓梯，穿好走的鞋</li></ul>"},
@@ -528,7 +544,7 @@ var DAYS=[
     "<b>餐廳在酒吧的樓上</b>，不在一樓",
     "從一樓酒吧內的樓梯上去，或看門口的 Totti's 指標"],
    "如果你站在沙灘上，代表坐過站了，往回走一站。🚨 走進去發現店名是 Bar Totti's 或 Totti's Rozelle 就是跑錯分店"]},
- {a:"20:30",b:"22:00",t:"🚌 回北雪梨",g:["🕐 約 60 分鐘"],x:"<ul><li>要過雪梨港灣大橋，比去程更久</li><li>累了就叫車，四人分攤划算</li></ul>",q:"View Sydney North Sydney"}
+ {a:"20:30",b:"22:00",t:"🚌 回北雪梨",g:["🕐 車程約 60 分","🕐 抓 90 分較保險"],x:"<ul><li>要過雪梨港灣大橋，<b>比去程更久</b></li><li>🚨 <b>行程排 90 分鐘是刻意多留 30 分</b>——晚上班次變少，Bondi 那一帶等公車可能等 15–20 分</li><li>累了就叫車，四人分攤划算</li><li>💡 <b>明天 NOMAD 是 12:30 不用早起</b>，今晚晚一點回去沒關係</li></ul>",q:"View Sydney North Sydney"}
 ]},
 
 {id:"d8",date:"9/24",dow:"四",title:"NOMAD 午餐 · 今晚要早睡",sub:"明天 05:30 就要出門",slots:[
@@ -981,7 +997,66 @@ function renderShop(){
    '<div class="note" style="margin-top:12px">💡 <b>其餘景點都免費、不用訂</b>——'+
    'NGV 常設展、州立圖書館、戰爭紀念館、皇家植物園、QVB、岩石區、塗鴉巷、拱廊、女王市場。</div>'+
    '</div>';
-  h+='<div class="card"><h3>🧳 行李限重（已查證官方）</h3><div class="note">'+
+      h+='<div class="card ok"><h3>💰 四人總預算（實際加總）</h3>'+
+   '<div class="note">不含機票、住宿與兩個已付的一日團。</div>'+
+   '<table style="margin-top:8px">'+
+   '<tr><td><b>交通與門票</b><br><span class="note">四趟 maxi taxi、歌劇院、塔龍加、兩城交通</span></td>'+
+     '<td class="mono">AU$1,072–1,444</td></tr>'+
+   '<tr><td><b>吃飯</b><br><span class="note">八家訂位 ＋ 約 12 餐自理</span></td>'+
+     '<td class="mono">AU$2,160–3,870</td></tr>'+
+   '<tr><td><b>購物</b><br><span class="note">UGG 四雙 ＋ 伴手禮</span></td>'+
+     '<td class="mono">AU$600–1,300</td></tr>'+
+   '<tr><td><b>合計（四人）</b></td><td class="mono"><b>AU$3,832–6,614</b></td></tr>'+
+   '<tr><td><b>每人</b></td><td class="mono"><b>AU$958–1,654</b></td></tr>'+
+   '<tr><td>換成台幣（匯率 21.5）</td><td class="mono">每人約 <b>NT$20,600–35,600</b></td></tr>'+
+   '</table>'+
+   '<div class="note" style="margin-top:10px">'+
+   '🚨 <b>差距這麼大是因為吃飯</b>——八家餐廳點得省或點得兇，差可以到兩倍。<br>'+
+   '✅ <b>TRS 退稅可以退回約 AU$36–73</b>（UGG 部分，四雙同一家開一張發票）。<br>'+
+   '💡 <b>抓中間值 AU$5,200／四人比較實際</b>，每人約 NT$28,000。'+
+   '</div></div>';
+  h+='<div class="card"><h3>💵 現金帶多少</h3><table>'+
+   '<tr><td>9/20 導遊服務費</td><td class="mono">AU$20</td></tr>'+
+   '<tr><td>市場攤販、小店</td><td class="mono">AU$100</td></tr>'+
+   '<tr><td>緊急備用</td><td class="mono">AU$100</td></tr>'+
+   '<tr><td><b>四人共</b></td><td class="mono"><b>AU$220</b></td></tr></table>'+
+   '<div class="note" style="margin-top:8px">'+
+   '🚨 <b>9/20 的導遊服務費只收現金</b>，一定要準備 AU$5 面額。<br>'+
+   '💡 澳洲刷卡很普及，<b>現金主要是備用</b>。行李清單寫 AU$200–300，與此試算一致。'+
+   '</div></div>';
+h+='<div class="card warn"><h3>💳 刷卡的三個坑（實際踩過的人整理）</h3><div class="note">'+
+   '<b>① 🚨 機器問「台幣還是澳幣結帳」→ 一定選澳幣</b><br>'+
+   '這叫 DCC 動態貨幣轉換，選台幣看起來貼心，<b>但匯率被商家自訂，通常比銀行差 3–5%</b>。'+
+   '選澳幣讓你的發卡行換匯才划算。<br><br>'+
+   '<b>② 刷卡附加費（surcharge）合法，但不能超過成本</b><br>'+
+   '澳洲很多餐廳、甚至大型超市都會加 1–2%。<b>依 ACCC 規定不得超過商家的實際成本</b>——'+
+   '有人被收 3%，查出只該收 1%，爭取到退款。<br>'+
+   '🚨 <b>金額大又覺得比例離譜就當場問</b>，或事後打 <b>1300 55 81 81</b>（維州）／<b>13 32 20</b>（新州）。<br>'+
+   '💡 <b>2026 年起澳洲禁收簽帳金融卡附加費</b>，但過渡期到 2026/10，'+
+   '<b>你們 9 月去還是會遇到</b>。<br><br>'+
+   '<b>③ 假日與週末加成</b><br>'+
+   '澳洲餐廳普遍有 <b>public holiday surcharge</b>，因為員工假日工資較高。<br>'+
+   '🚨 <b>9/25（五）是維州公定假日，La Cucina 加 15%</b><br>'+
+   '🚨 <b>9/26（六）週六，Reine 加 10%</b><br>'+
+   '這是合法且公開標示的，通常寫在菜單第一頁或門口。'+
+   '</div></div>';
+  h+='<div class="card"><h3>🧳 行李寄放（9/21 用得到）</h3><div class="note">'+
+   '<b>9/21 早上 08:00 退房，但 13:00 才去機場</b>——中間五小時拖著四件行李逛市區很累。<br><br>'+
+   '<b>車站寄物櫃</b>：Southern Cross 有，<b>但 A$12–26／天，而且常故障、沒有保障</b><br>'+
+   '<b>App 寄放服務更便宜可靠</b>：<br>'+
+   '・<b>Bounce</b> 約 A$3.50／件／天　・<b>Stasher</b> 約 A$3–5.5<br>'+
+   '・<b>LuggageHero</b> 約 A$1.49／小時　・<b>Nannybag</b> A$7.50／天<br>'+
+   '都是跟咖啡店、旅館合作，線上先訂，<b>有失竊損壞保障</b>。<br><br>'+
+   '💡 <b>最省的做法：直接問 370 Queen St 的房東能不能退房後寄放</b>，多半免費。'+
+   '9/25 的 557 Little Lonsdale 同理（那天 15:00 才能入住）。'+
+   '</div></div>';
+  h+='<div class="card ok"><h3>🛡️ 治安</h3><div class="note">'+
+   '<b>澳洲治安在已開發國家裡屬於良好</b>，不像歐洲有職業扒手、割包這類問題，'+
+   '在地台灣人普遍說「背後背包完全沒問題」。<br>'+
+   '🚨 但仍要避免：<b>深夜獨自走燈光昏暗的小巷或人少的公園</b>。<br>'+
+   '💡 <b>你們四個人一起行動，實際風險很低</b>。真正要小心的是<b>刷卡的坑和買到假 UGG</b>，不是治安。'+
+   '</div></div>';
+h+='<div class="card"><h3>🧳 行李限重（已查證官方）</h3><div class="note">'+
    '<b>國際線 QF30／QF29 經濟艙</b><br>'+
    '・託運：<b>總共 30 kg</b>（重量制，可分裝多件，<b>單件不得超過 32 kg</b>）<br>'+
    '・隨身：<b>1 件 7 kg</b>，56×36×23 cm，<b>另可帶一個放腳邊的小包</b><br>'+
@@ -994,7 +1069,7 @@ function renderShop(){
    '💡 <b>買了 UGG 回程會變重</b>——去程留 5–8 kg 餘裕，四雙約 4–6 kg<br>'+
    '💡 超重在機場補買最貴，<b>要加行李一定線上先買</b></div></div>';
   h+='<div class="card"><h3>🔌 電源與插頭</h3><div class="note">'+
-   '澳洲是 <b>I 型插頭</b>（兩支斜扁腳＋一支直的），<b>230V／50Hz</b>。<br>'+
+   '澳洲是 <b>I 型插頭</b>（兩支斜扁腳＋一支直的），<b>230V／50Hz</b>（AS/NZS 3112 全國標準）。<br>💡 <b>有些資料寫 240V 也不算錯</b>——西澳與昆士蘭實際供電接近 240V，但 <b>230V 的設備在 220–240V 範圍都正常運作</b>，不用管。<br>'+
    '🚨 <b>台灣插頭插不進去，一定要帶轉接頭</b>。<br>'+
    '手機、相機、筆電的充電器幾乎都支援 100–240V，看變壓器上的字，<b>通常只要轉接頭不用變壓器</b>。<br>'+
    '💡 <b>帶一條一轉多的延長線</b>——住處插座不會剛好有四個人的份。</div></div>';
@@ -1006,7 +1081,21 @@ var PACK=["護照（效期 6 個月以上）","ETA 核准截圖（離線相簿�
  "信用卡 ×2（不同發卡行）","現金 AU$200–300 含 AU$5 零鈔","I 型三腳轉接頭","行動電源（放隨身）",
  "充電線","eSIM 或 SIM 卡","防風外套","毛帽、圍巾（9/20 企鵝島）","可綁住的帽子（9/19 海崖）",
  "太陽眼鏡","SPF30+ 防曬","雨傘或雨衣","好走的包鞋","薄毯或坐墊（企鵝觀景臺）",
- "暈車藥","常備藥（原包裝＋藥單）","盥洗用品","洗衣袋","購物袋（澳洲不給免費塑膠袋）","空行李箱空間（回程伴手禮）"];
+ "暈車藥","常備藥（原包裝＋藥單）","盥洗用品","洗衣袋","購物袋（澳洲不給免費塑膠袋）","空行李箱空間（回程伴手禮）",
+ "護照影本或手機備份（分開放）",
+ "眼罩、耳塞、頸枕（9/17 機上九小時）",
+ "壓力襪（長途飛行防腿腫）",
+ "一轉多延長線（住處插座不夠四個人）",
+ "小包或斜背包（9/22 歌劇院大包不能寄）",
+ "水壺（9/19 在外 13 小時）",
+ "行動糧（9/19 車上禁食，早餐要吃飽）",
+ "手電筒或手機手電筒（9/20 企鵝島散場很暗）",
+ "OK 繃、水泡貼（全程走很多路）",
+ "痠痛貼布（9/23 塔龍加纜車停駛要走山坡）",
+ "護唇膏（含防曬）",
+ "乳液或護手霜（澳洲乾）",
+ "發票收納袋（TRS 退稅要原始發票）",
+ "手機清出空間或雲端備份"];
 function renderPack(){
   var all=PACK.concat(ST.pack).filter(function(x,i){ return !ST.packHide[x] });
   var h='<div class="dayhead"><h2>行李</h2><div class="sub">打勾表示已放進行李</div></div>';
@@ -1039,6 +1128,10 @@ var PHRASES=[
  ["Just tap water, please.","給自來水就好（不然會送要錢的瓶裝水）"],
  ["Could we get the bill, please?","可以結帳嗎？"],
  ["Is there a card surcharge?","刷卡要另外收手續費嗎？"],
+ ["Please charge in Australian dollars, not TWD.","請用澳幣結帳，不要用台幣"],
+ ["Is this made in Australia? Can I see the label?","這是澳洲製的嗎？可以看標籤嗎"],
+ ["Any discount if we buy four pairs?","買四雙有折扣嗎？"],
+ ["Is that your best price?","這是最低價了嗎？"],
  ["Can I have a tax invoice, please?","可以給我 tax invoice 嗎？（退稅要用）"],
  ["Could you put my name on the invoice?","發票可以打上我的名字嗎？（滿 AU$1,000 要）"],
  ["Does this train stop at Armadale?","這班車有停 Armadale 嗎？"],
@@ -1046,6 +1139,11 @@ var PHRASES=[
  ["Can I get a maxi taxi for four with luggage?","四個人加行李，可以派大車嗎？"],
  ["Could you wait here for a moment?","可以在這裡等一下嗎？"],
  ["Can I leave my bags here?","行李可以寄放在這裡嗎？"],
+ ["I have a booking under the name ___.","我有訂位，名字是 ___"],
+ ["Sorry we are late. Is our table still available?","抱歉遲到了，位子還在嗎？"],
+ ["Where is the toilet?","廁所在哪裡？"],
+ ["Is there somewhere we can sit down?","有地方可以坐嗎？"],
+ ["Is there a lift?","有電梯嗎？"],
  ["What time do you close?","你們幾點關？"],
  ["Where's the nearest chemist?","最近的藥局在哪？"],
  ["I need help, please call 000.","我需要幫忙，請打 000。"]];
@@ -1487,7 +1585,53 @@ function renderPrep(){
    '白天在澳洲的大太陽底下用<b>亮</b>比較看得清楚，晚上或飛機上用<b>暗</b>比較不刺眼。</div>'+
    '<div class="thbar" id="thbar" style="margin:10px 0 0"></div></div>';
   h+=geoCard("prep");
-  h+='<div class="card ok"><h3>👤 你登入的身分</h3><div class="note">'+
+    h+='<div class="card warn"><h3>📋 出發前待辦（按時間排）</h3>'+
+   '<div class="note">打勾的功能在「行李」頁，這裡只是提醒順序。</div>'+
+
+   '<div class="sec-t">🔴 現在就要做</div><table>'+
+   '<tr><td><b>C、D 辦 ETA</b></td><td>手機 App「Australian ETA」，AU$20／人<br>'+
+     '<span class="note">🚨 這是唯一「沒做就走不了」的</span></td></tr>'+
+   '<tr><td><b>訂歌劇院導覽</b></td><td>sydneyoperahouse.com，9/22 上午場<br>'+
+     '<span class="note">每團 35 人，現場不保證有位。走不動 300 階的訂 Mobility Access Tour</span></td></tr>'+
+   '<tr><td>買旅平險</td><td>四人都要，含醫療與行李</td></tr>'+
+   '</table>'+
+
+   '<div class="sec-t">🟠 出發前一週</div><table>'+
+   '<tr><td>線上買塔龍加票</td><td>taronga.org.au/buy-tickets，省 15–20%</td></tr>'+
+   '<tr><td>線上買 SkyBus</td><td>skybus.com.au，票效期 12 個月<br>'+
+     '<span class="note">或決定叫車，兩者價差不大</span></td></tr>'+
+   '<tr><td><b>確認行李直掛</b></td><td>qantas.com 輸入 <b>EAYH8Q</b><br>'+
+     '<span class="note">🚨 沒直掛的話 9/17 香港轉機只有 5 分鐘，做不到</span></td></tr>'+
+   '<tr><td>下載 My TRS Claim</td><td>把發票輸進去產生 QR code</td></tr>'+
+   '<tr><td>問 370 Queen St 房東</td><td>9/21 退房後能否寄放行李</td></tr>'+
+   '<tr><td>告知餐廳飲食限制</td><td>八家都可以先回訂位信講</td></tr>'+
+   '</table>'+
+
+   '<div class="sec-t">🟡 出發前一兩天</div><table>'+
+   '<tr><td><b>ETA 核准截圖存相簿</b></td><td>加到「最愛」<br>'+
+     '<span class="note">過海關那一刻相簿比開 App 快 3–5 秒</span></td></tr>'+
+   '<tr><td>護照影本或手機備份</td><td>跟正本分開放</td></tr>'+
+   '<tr><td><b>四人都加到主畫面</b></td><td>並用房號登入完成</td></tr>'+
+   '<tr><td>換現金 AU$220</td><td>🚨 要有 AU$5 面額（9/20 導遊費）</td></tr>'+
+   '<tr><td>手機清出空間</td><td>或設定雲端自動備份</td></tr>'+
+   '</table>'+
+
+   '<div class="sec-t">🧳 9/16（三）晚上</div><table>'+
+   '<tr><td>20:00 最後打包</td><td>對照「行李」頁 38 項</td></tr>'+
+   '<tr><td>21:00 手機準備</td><td>eSIM、離線地圖、充飽電</td></tr>'+
+   '<tr><td>21:30 現金與證件</td><td>分兩處放</td></tr>'+
+   '<tr><td><b>22:00 早睡</b></td><td>🚨 隔天 16:40 起飛，但落地當天中午就有訂位</td></tr>'+
+   '</table>'+
+
+   '<div class="sec-t">✈️ 旅程中會冒出來的</div><table>'+
+   '<tr><td><b>9/18 18:00 前</b></td><td>收 9/19 大洋路出團通知並<b>回覆確認</b><br>'+
+     '<span class="note">🚨 沒回覆可能被當放棄</span></td></tr>'+
+   '<tr><td><b>9/19 晚</b></td><td>確認收到 9/20 的出發時間</td></tr>'+
+   '<tr><td><b>9/24 晚</b></td><td>訂 9/25 早上 05:00 的 maxi taxi</td></tr>'+
+   '<tr><td><b>9/26 晚</b></td><td>訂 9/27 早上 07:00 的 maxi taxi<br>'+
+     '<span class="note">13cabs 13 2227</span></td></tr>'+
+   '</table></div>';
+h+='<div class="card ok"><h3>👤 你登入的身分</h3><div class="note">'+
    '目前是 <b>'+esc(ST.myName||"（未設定）")+'</b>，排在成員 '+((ST.me!=null?ST.me:0)+1)+' 的位置。'+
    '<br>改名字直接改下面「成員 '+((ST.me!=null?ST.me:0)+1)+'」那一欄。</div></div>';
   h+='<div class="card"><h3>我是誰</h3><div class="note">選一個，位置共享和分帳才知道哪一筆是你。</div>'+
@@ -1505,7 +1649,7 @@ function renderPrep(){
 /* ===== 使用說明 ===== */
 function renderHelp(){
   var d=auNow();
-  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v058</div></div>'+
+  return '<div class="dayhead"><h2>澳洲之旅</h2><div class="sub">2026/9/17（四）－ 9/27（日）．4 人．版本：v064</div></div>'+
   countdownHTML()+'<div class="card ok"><h3>現在澳洲時間 '+fmt(auMins())+'</h3><div class="note">'+
    (d.getMonth()===8&&d.getDate()>=17&&d.getDate()<=27? '旅程進行中。':'旅程尚未開始。')+
    ' 澳洲東部時間比台灣快 2 小時，全程不換夏令時間。</div></div>'+
@@ -1772,8 +1916,8 @@ function fareCard(){
 }
 
 /* ===== 版本與更新（依規格：抓 sw.js 讀 CACHE，繞過 SW 生命週期）===== */
-var APP_VER="058";
-var APPVER="australia-v58";            /* 與 sw.js 的 CACHE 一致 */
+var APP_VER="064";
+var APPVER="australia-v64";            /* 與 sw.js 的 CACHE 一致 */
 var VST={state:"...",note:"",latest:null};   /* ok / new / warn / ... */
 
 /* 直接抓 sw.js（約 3 KB），讀它的 CACHE 版本。
@@ -2562,6 +2706,10 @@ function wearAdvice(lo,hi,rain,uv){
 
 /* ===== 指差對話：講不通就把螢幕轉給對方看 ===== */
 var POINT=[
+ ["報到","I have a booking under the name ___.","我有訂位，名字是 ___"],
+ ["報到","Booking for four at ___.","___ 點四位的訂位"],
+ ["報到","Sorry we are late. Is our table still available?","抱歉遲到了，我們的位子還在嗎"],
+ ["報到","Where should I check in for the tour?","導覽在哪裡報到"],
  ["點餐","A table for four, please.","四位"],
  ["點餐","Just tap water, thank you.","給自來水就好"],
  ["點餐","Could we get one at a time, please?","主菜請一道一道上"],
